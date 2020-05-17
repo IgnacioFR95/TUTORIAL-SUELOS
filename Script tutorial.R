@@ -1,20 +1,5 @@
 ################################################################################
 ################################################################################
-################################################################################
-#  CAMBIOS V.4:                                   #
-# Á  É  Í  Ó  Ú  á  é  í  ó ú
-# 1. Corrección en krigging de PH ->Eliminación del log de la fórmula del krige.
-
-# 2. Revisión del código. (cambios en nombres de objetos y correcciones varias).
-
-# 3. Revisión y mejora de las #aclaraciones y explicaciones#.
-
-# 4. Introducción de mapas Arena, Limo, Arcillas.
-
-
-
-################################################################################
-################################################################################
 
 #__________________________ CARGAMOS LOS DATOS ________________________________#
 suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
@@ -28,7 +13,7 @@ load("data/AerialRoot.community.corregido.Rdata")
 # procesos y así ahorrar tiempo.También te asegura que tienes cargados todos los
 # complementos necesarios y que la versión de R es apta para trabajar.
 source("start/setup.R")
-source("start/curatingdata.R") ##Â¡SÓLO SE PUEDE CARGAR UNA VEZ!
+source("start/curatingdata.R") ##¡SÓLO SE PUEDE CARGAR UNA VEZ!
 
 
 #____________________________ CARGA DE LOS PAQUETES ___________________________#
@@ -79,7 +64,7 @@ p1 <- Polygon(esquinas.parcela[,1:2])
 
 
 # Esta es una función diferente a la anterior, esta es "Polygons" con s al final.
-# Aún no he entendido la diferencia leyéndome el manual. Â¡Â¡Â¡Â¡Â¡Â¡OJO AHÍ!!!!!!
+# Aún no he entendido la diferencia leyéndome el manual.
 ps1 <- Polygons(list(p1),1)
 
 # Creamos un nuevo objeto para convertir "ps1" de la clase "Polygons" a

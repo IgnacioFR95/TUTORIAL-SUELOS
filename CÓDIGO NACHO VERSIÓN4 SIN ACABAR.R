@@ -2,14 +2,14 @@
 ################################################################################
 ################################################################################
 #  CAMBIOS V.4:                                   #
-# √Å  √â  √ç  √ì  √ö  √°  √©  √≠  √≥ √∫
-# 1. Correcci√≥n en krigging de PH ->Eliminaci√≥n del log de la f√≥rmula del krige.
+# ¡  …  Õ  ”  ⁄  ·  È  Ì  Û ˙
+# 1. CorrecciÛn en krigging de PH ->EliminaciÛn del log de la fÛrmula del krige.
 
-# 2. Revisi√≥n del c√≥digo. (cambios en nombres de objetos y correcciones varias).
+# 2. RevisiÛn del cÛdigo. (cambios en nombres de objetos y correcciones varias).
 
-# 3. Revisi√≥n y mejora de las #aclaraciones y explicaciones#.
+# 3. RevisiÛn y mejora de las #aclaraciones y explicaciones#.
 
-# 4. Introducci√≥n de mapas Arena, Limo, Arcillas.
+# 4. IntroducciÛn de mapas Arena, Limo, Arcillas.
 
 
 
@@ -23,12 +23,12 @@ suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 load("data/AerialRoot.community.corregido.Rdata")
 
 
-# ____________________CARGA DE C√ìDIGOS INICIALES (source) _____________________#
-# Esto carga algunos par√°metros y comandos imprescindibles, se hace para acortar
-# procesos y as√≠ ahorrar tiempo.Tambi√©n te asegura que tienes cargados todos los
-# complementos necesarios y que la versi√≥n de R es apta para trabajar.
+# ____________________CARGA DE C”DIGOS INICIALES (source) _____________________#
+# Esto carga algunos par·metros y comandos imprescindibles, se hace para acortar
+# procesos y asÌ ahorrar tiempo.TambiÈn te asegura que tienes cargados todos los
+# complementos necesarios y que la versiÛn de R es apta para trabajar.
 source("start/setup.R")
-source("start/curatingdata.R") ##¬°S√ìLO SE PUEDE CARGAR UNA VEZ!
+source("start/curatingdata.R") ##¬°S”LO SE PUEDE CARGAR UNA VEZ!
 
 
 #____________________________ CARGA DE LOS PAQUETES ___________________________#
@@ -43,7 +43,7 @@ library(automap)
 
 ################################################################################
 
-# Damos como coordenadas los valores de Xlocal e Ylocal en relaci√≥n a "suelo2",
+# Damos como coordenadas los valores de Xlocal e Ylocal en relaciÛn a "suelo2",
 # al dar coordenadas a los datos de suelo2 los convierte deun objeto "data.frame"
 # a un objeto "SpatialPointDataFrame".
 
@@ -53,50 +53,50 @@ coordinates(suelo2) <- ~ Xlocal + Ylocal
 # "SpatialPointsDataFrame"
 class(suelo2)
 
-#Este c√≥digo limita el n√∫mero de decimales a 10, de aqu√≠ en adelante.
+#Este cÛdigo limita el n˙mero de decimales a 10, de aquÌ en adelante.
 options(digits=10)
 
-#_____________________ PREPARACI√ìN DE LA ZONA DE ESTUDIO:______________________#
+#_____________________ PREPARACI”N DE LA ZONA DE ESTUDIO:______________________#
 # En este proceso vamos a hacer dos cosas:
 #
-# 1. Crear un pol√≠gono que cubra la superficie del √°rea estudiada.
+# 1. Crear un polÌgono que cubra la superficie del ·rea estudiada.
 
-# 2. Adaptar los datos de suelo2 al tama√±o y forma del pol√≠gono, para poder
+# 2. Adaptar los datos de suelo2 al tama√±o y forma del polÌgono, para poder
 #    trabajar luego encima de esta.
 
 #------------------------------------------------------------------------------#
 
-# 1. CREACI√ìN DEL POL√çGONO:
-# Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro √°rea de
+# 1. CREACI”N DEL POLÕGONO:
+# Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro ·rea de
 # estudio para generarla. Hemos cargado una matriz llamada "esquinas.parcela".
-# Esta matriz tiene los datos en Xlocal e Ylocal de d√≥nde se sit√∫an los vertices
-# del rect√°ngulo que forma nuestra parcela. Con estos datos, crearemos un
-# pol√≠gono rectangular que cubra exactamente el √°rea de estudio.
+# Esta matriz tiene los datos en Xlocal e Ylocal de dÛnde se sit˙an los vertices
+# del rect·ngulo que forma nuestra parcela. Con estos datos, crearemos un
+# polÌgono rectangular que cubra exactamente el ·rea de estudio.
 
-# Creamos el objeto "p1", que es b√°sicamente el objeto que se forma al dibujar la
+# Creamos el objeto "p1", que es b·sicamente el objeto que se forma al dibujar la
 # matriz de esquinas.parcela.
 p1 <- Polygon(esquinas.parcela[,1:2])
 
 
-# Esta es una funci√≥n diferente a la anterior, esta es "Polygons" con s al final.
-# A√∫n no he entendido la diferencia ley√©ndome el manual. ¬°¬°¬°¬°¬°¬°OJO AH√ç!!!!!!
+# Esta es una funciÛn diferente a la anterior, esta es "Polygons" con s al final.
+# A˙n no he entendido la diferencia leyÈndome el manual. ¬°¬°¬°¬°¬°¬°OJO AHÕ!!!!!!
 ps1 <- Polygons(list(p1),1)
 
 # Creamos un nuevo objeto para convertir "ps1" de la clase "Polygons" a
 # un "SpatialPolygons" llamado sps1.
 sps1 <- SpatialPolygons(list(ps1))
 
-#Podemos ver qu√© clase es "sps1" con el comando "class()" y cerciorarnos.
+#Podemos ver quÈ clase es "sps1" con el comando "class()" y cerciorarnos.
 class(sps1)
 
 
-# CREACI√ìN DE LA MALLA:
-# En esta operaci√≥n crearemos la malla de trabajo gracias al pol√≠gono que hemos
-# creado en el paso anterior; el tama√±o de los recuadros ser√°n de 0,05 x 0,05 m
-# y eliminaremos los puntos que queden fuera de este rect√°ngulo.
+# CREACI”N DE LA MALLA:
+# En esta operaciÛn crearemos la malla de trabajo gracias al polÌgono que hemos
+# creado en el paso anterior; el tama√±o de los recuadros ser·n de 0,05 x 0,05 m
+# y eliminaremos los puntos que queden fuera de este rect·ngulo.
 
 
-# El comando dice: Cre√°me una malla regular con los datos de suelo2, donde el
+# El comando dice: Cre·me una malla regular con los datos de suelo2, donde el
 # tama√±o de celda sean 5 cm
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05, 0.05))
 
@@ -119,130 +119,130 @@ coordinates(pts1) <- c("Xlocal", "Ylocal")
 
 pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.frame"), tolerance=0.077)
 
-#Podemos observar c√≥mo quedar√≠a gr√°ficamente el objeto "pts1".
+#Podemos observar cÛmo quedarÌa gr·ficamente el objeto "pts1".
 plot(pts1)
 
 # Asignamos un sistema de coordenadas a la malla:
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
 
 
-#_________________________ NORMALIZACI√ìN DE LAS VARIABLES _____________________#
+#_________________________ NORMALIZACI”N DE LAS VARIABLES _____________________#
 
-# Para la realizaci√≥n de los mapas, utilizaremos la t√©cnica de krigging, que es
-# un m√©todo de interpolaci√≥n geoestad√≠stico de estimaci√≥n de puntos.Este m√©todo
-# requiere que los datos de cada variable sigan una tendencia m√°s o menos
+# Para la realizaciÛn de los mapas, utilizaremos la tÈcnica de krigging, que es
+# un mÈtodo de interpolaciÛn geoestadÌstico de estimaciÛn de puntos.Este mÈtodo
+# requiere que los datos de cada variable sigan una tendencia m·s o menos
 # normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el
 # objetivo de normalizarlos.
 
-# Observaremos gr√°ficamente si los datos est√°n normalizados visualizando el
-# histograma y el qqnorm que representan; por √∫ltimo observaremos el p-valor
+# Observaremos gr·ficamente si los datos est·n normalizados visualizando el
+# histograma y el qqnorm que representan; por ˙ltimo observaremos el p-valor
 # obtenido del test de shapiro, si este indicador es mayor al 0.07, indica que
-# los datos se adaptan a un patr√≥n normalizado.
+# los datos se adaptan a un patrÛn normalizado.
 
 
 #############  GLUCOSIDASA  #############
-hist(suelo2$GLUC) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$GLUC) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$GLUC)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$GLUC) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$GLUC) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$GLUC)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
 
-hist(log(suelo2$GLUC)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$GLUC)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$GLUC)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$GLUC)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$GLUC)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$GLUC)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 # Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC)
 
 
 #############  FOSFATASA  #############
-hist(suelo2$FOSF) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$FOSF) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$FOSF)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$FOSF) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$FOSF) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$FOSF)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
-hist(log(suelo2$FOSF)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$FOSF)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$FOSF)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$FOSF)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$FOSF)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$FOSF)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 # Utilizaremos el logaritmo de la fosfatasa para el mapeado --> LOG(FOSF)
 
 
-#############  NITR√ìGENO  #############
-hist(suelo2$N) # Muestra un patr√≥n normalizado.
-qqnorm(suelo2$N) # Muestra un patr√≥n normalizado.
-shapiro.test((suelo2$N)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+#############  NITR”GENO  #############
+hist(suelo2$N) # Muestra un patrÛn normalizado.
+qqnorm(suelo2$N) # Muestra un patrÛn normalizado.
+shapiro.test((suelo2$N)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
-# Utilizaremos directamente el valor de Nitr√≥geno para el mapeado --> (N)
-
-
-#############  F√ìSFORO  #############
-hist(suelo2$P) # Muestra un patr√≥n normalizado.
-qqnorm(suelo2$P) # Muestra un patr√≥n normalizado.
-shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+# Utilizaremos directamente el valor de NitrÛgeno para el mapeado --> (N)
 
 
-# Utilizaremos directamente el valor de F√≥sforo para el mapeado --> (P)
+#############  F”SFORO  #############
+hist(suelo2$P) # Muestra un patrÛn normalizado.
+qqnorm(suelo2$P) # Muestra un patrÛn normalizado.
+shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
+
+
+# Utilizaremos directamente el valor de FÛsforo para el mapeado --> (P)
 
 
 #############  POTASIO  #############  DUDA TOTAL
-hist(suelo2$K) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$K) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$K)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$K) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$K) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$K)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
-hist(log(suelo2$K)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$K)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$K)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$K)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$K)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$K)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 hist(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
 qqnorm(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
 shapiro.test(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
 
-hist(log(suelo2$K+1)) # No muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$K+1)) # No muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$K+1)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(log(suelo2$K+1)) # No muestra un patrÛn normalizado.
+qqnorm(log(suelo2$K+1)) # No muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$K+1)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
 
 # Utilizaremos el logaritmo del potasio  para el mapeado --> LOG(K)
 
 
 ############# CARBONO  #############
-hist(suelo2$C) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$C) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$C)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$C) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$C) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$C)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
-hist(log(suelo2$C)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$C)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$C)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$C)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$C)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$C)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 # Utilizaremos el logaritmo del carbono para el mapeado --> LOG(C)
 
 
 ############# pH  #############  DUDA TOTAL
-hist(suelo2$pH) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$pH) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$pH)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$pH) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$pH) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$pH)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
-hist(log(suelo2$pH)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$pH)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$pH)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$pH)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$pH)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$pH)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
-hist(log(suelo2$pH+1)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$pH+1)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$pH+1)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$pH+1)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$pH+1)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$pH+1)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 hist(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
 qqnorm(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
 shapiro.test(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
 
-hist((sqrt(suelo2$pH))) # No muestra un patr√≥n normalizado.
-qqnorm((sqrt(suelo2$pH))) # No muestra un patr√≥n normalizado.
-shapiro.test((sqrt(suelo2$pH))) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist((sqrt(suelo2$pH))) # No muestra un patrÛn normalizado.
+qqnorm((sqrt(suelo2$pH))) # No muestra un patrÛn normalizado.
+shapiro.test((sqrt(suelo2$pH))) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
 # Utilizaremos el logaritmo del pH para el mapeado --> LOG(pH)
 
 
 #############  Arena  #############
-hist(suelo2$Arena) # Muestra un patr√≥n normalizado.
-qqnorm(suelo2$Arena) # Muestra un patr√≥n normalizado.
-shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(suelo2$Arena) # Muestra un patrÛn normalizado.
+qqnorm(suelo2$Arena) # Muestra un patrÛn normalizado.
+shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 
 # Utilizaremos directamente el valor de Arena para el mapeado --> (Arena)
@@ -250,13 +250,13 @@ shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patr√≥n norma
 
 
 ############# LIMO  #############
-hist(suelo2$Limo) # No muestra un patr√≥n normalizado.
-qqnorm(suelo2$Limo) # No muestra un patr√≥n normalizado.
-shapiro.test((suelo2$Limo)) # El p-valor es muy bajo, No muestra un patr√≥n normalizado.
+hist(suelo2$Limo) # No muestra un patrÛn normalizado.
+qqnorm(suelo2$Limo) # No muestra un patrÛn normalizado.
+shapiro.test((suelo2$Limo)) # El p-valor es muy bajo, No muestra un patrÛn normalizado.
 
-hist(log(suelo2$Limo)) # Muestra un patr√≥n normalizado.
-qqnorm(log(suelo2$Limo)) # Muestra un patr√≥n normalizado.
-shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patr√≥n normalizado.
+hist(log(suelo2$Limo)) # Muestra un patrÛn normalizado.
+qqnorm(log(suelo2$Limo)) # Muestra un patrÛn normalizado.
+shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patrÛn normalizado.
 
 # Utilizaremos el logaritmo del Limo para el mapeado --> LOG(Limo)
 
@@ -272,12 +272,12 @@ shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patr√≥n nor
 #______________________________NOTAS PARA HACER MAPAS__________________________#
 
 # Hay dos formas de hacer este proceso:
-# 1.Autom√°ticamente con la funci√≥n autokrigging:El propio R te realiza los
-#  c√°lculos y el sistema con una mejor relaci√≥n con la realidad.
+# 1.Autom·ticamente con la funciÛn autokrigging:El propio R te realiza los
+#  c·lculos y el sistema con una mejor relaciÛn con la realidad.
 
-# 2.Krigging manual: Ejecutamos cinco modelos matem√°ticos con y sin tendencia
+# 2.Krigging manual: Ejecutamos cinco modelos matem·ticos con y sin tendencia
 # y observamos cual se adapta mejor a lo que queremos, posteriormente, se genera
-# ese modelo en cartograf√≠a.
+# ese modelo en cartografÌa.
 
 
 #_____________________________MAPITA DE GLUCOSIDASA___________________________#
@@ -295,18 +295,18 @@ Autok.GLUC.CT <- autoKrige(log(GLUC+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.GLUC.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL GLUCOSIDASA ###
+### PREPARACI”N KRIGGING MANUAL GLUCOSIDASA ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizGLUC <- matrix(NA,2,5)
@@ -327,20 +327,20 @@ MatrizGLUC[2,3] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Gau")
 MatrizGLUC[2,4] <- autofitVariogram(log(GLUC) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
 
-# En este caso nos dice que "STE CON TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "STE CON TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" con tendencia:
 v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL GLUCOSIDASA ###
+### REALIZACI”N KRIGGING MANUAL GLUCOSIDASA ###
 GLUC.mapa <- krige(log(GLUC+1) ~  Xlocal, suelo2, pts1, v.fitGLUCsteCT)
 
 
-plot(GLUC.mapa, main= "GLUCOSIDASA") #En el intercomillado va el t√≠tulo.
+plot(GLUC.mapa, main= "GLUCOSIDASA") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -360,13 +360,13 @@ Autok.FOSF.CT <- autoKrige(log(FOSF+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.FOSF.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL DE LA FOSFATASA ###
+### PREPARACI”N KRIGGING MANUAL DE LA FOSFATASA ###
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizFOSF <- matrix(NA,2,5)
@@ -387,27 +387,27 @@ MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Gau")
 MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 
-# En este caso nos dice que "GAU SIN TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "GAU SIN TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "Gau" sin tendencia:
 v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL FOSFATASA ###
+### REALIZACI”N KRIGGING MANUAL FOSFATASA ###
 FOSF.mapa <- krige(log(FOSF+1) ~  1, suelo2, pts1, v.fitFOSFgauST)
 
 
-plot(FOSF.mapa, main= "FOSFATASA") #En el intercomillado va el t√≠tulo.
+plot(FOSF.mapa, main= "FOSFATASA") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
 
-#____________________________ MAPITA DE NITR√ìGENO _____________________________#
+#____________________________ MAPITA DE NITR”GENO _____________________________#
 
-### AUTOKRIGGING NITR√ìGENO ###
+### AUTOKRIGGING NITR”GENO ###
 
 # Autokrigging sin tendencia:
 Autok.N.ST <- autoKrige(log(N+1) ~ 1, suelo2, pts1 )
@@ -420,13 +420,13 @@ Autok.N.CT <- autoKrige(log(N+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.N.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL DE LA NITR√ìGENO ###
+### PREPARACI”N KRIGGING MANUAL DE LA NITR”GENO ###
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizN <- matrix(NA,2,5)
@@ -447,20 +447,20 @@ MatrizN[2,3] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Gau"))$sser
 MatrizN[2,4] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizN[2,5] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizN) == min(MatrizN), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "Ste" sin tendencia:
 v.fitNsteST = autofitVariogram(log(N) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL NITR√ìGENO ###
+### REALIZACI”N KRIGGING MANUAL NITR”GENO ###
 N.mapa <- krige(log(N+1) ~  1, suelo2, pts1, v.fitNsteST)
 
 
-plot(N.mapa, main= "NITR√ìGENO") #En el intercomillado va el t√≠tulo.
+plot(N.mapa, main= "NITR”GENO") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -481,18 +481,18 @@ Autok.K.CT <- autoKrige(log(K+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.K.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL POTASIO ###
+### PREPARACI”N KRIGGING MANUAL POTASIO ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizK <- matrix(NA,2,5)
@@ -513,20 +513,20 @@ MatrizK[2,3] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Gau"))$sser
 MatrizK[2,4] <- autofitVariogram(log(K) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizK[2,5] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizK) == min(MatrizK), arr.ind=TRUE)
 
-# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" con tendencia:
 v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL POTASIO ###
+### REALIZACI”N KRIGGING MANUAL POTASIO ###
 K.mapa <- krige(log(K+1) ~  Xlocal, suelo2, pts1, v.fitKlinCT)
 
 
-plot(K.mapa, main= "POTASIO") #En el intercomillado va el t√≠tulo.
+plot(K.mapa, main= "POTASIO") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -545,18 +545,18 @@ Autok.C.CT <- autoKrige(log(C+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.C.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL CARBONO ###
+### PREPARACI”N KRIGGING MANUAL CARBONO ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizC <- matrix(NA,2,5)
@@ -577,20 +577,20 @@ MatrizC[2,3] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Gau"))$sser
 MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizC) == min(MatrizC), arr.ind=TRUE)
 
-# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" con tendencia:
 v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL CARBONO ###
+### REALIZACI”N KRIGGING MANUAL CARBONO ###
 C.mapa <- krige(log(C+1) ~  Xlocal, suelo2, pts1, v.fitCgauCT)
 
 
-plot(C.mapa, main= "CARBONO") #En el intercomillado va el t√≠tulo.
+plot(C.mapa, main= "CARBONO") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -610,18 +610,18 @@ Autok.pH.CT <- autoKrige((pH) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.pH.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL pH ###
+### PREPARACI”N KRIGGING MANUAL pH ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizpH <- matrix(NA,2,5)
@@ -642,20 +642,20 @@ MatrizpH[2,3] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
 MatrizpH[2,4] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizpH[2,5] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" sin tendencia:
 v.fitpHsteST = autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL pH ###
+### REALIZACI”N KRIGGING MANUAL pH ###
 pH.mapa <- krige((pH+1) ~  1, suelo2, pts1, v.fitpHsteST)
 
 
-plot(pH.mapa, main= "pH") #En el intercomillado va el t√≠tulo.
+plot(pH.mapa, main= "pH") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -675,18 +675,18 @@ Autok.Arena.CT <- autoKrige(log(Arena+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.Arena.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL CONTENIDO EN ARENAS ###
+### PREPARACI”N KRIGGING MANUAL CONTENIDO EN ARENAS ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizArena <- matrix(NA,2,5)
@@ -707,20 +707,20 @@ MatrizArena[2,3] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Gau
 MatrizArena[2,4] <- autofitVariogram(log(Arena) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizArena[2,5] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" sin tendencia:
 v.fitArenasteST = autofitVariogram(log(Arena) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL CONTENIDO EN ARENAS ###
+### REALIZACI”N KRIGGING MANUAL CONTENIDO EN ARENAS ###
 Arena.mapa <- krige(log(Arena+1) ~  1, suelo2, pts1, v.fitArenasteST)
 
 
-plot(Arena.mapa, main= "CONTENIDO EN ARENAS") #En el intercomillado va el t√≠tulo.
+plot(Arena.mapa, main= "CONTENIDO EN ARENAS") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -740,18 +740,18 @@ Autok.Limo.CT <- autoKrige(log(Limo+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.Limo.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL CONTENIDO EN LIMO ###
+### PREPARACI”N KRIGGING MANUAL CONTENIDO EN LIMO ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizLimo <- matrix(NA,2,5)
@@ -772,20 +772,20 @@ MatrizLimo[2,3] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Gau")
 MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizLimo[2,5] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "ste" sin tendencia:
 v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL CONTENIDO EN LIMO ###
+### REALIZACI”N KRIGGING MANUAL CONTENIDO EN LIMO ###
 Limo.mapa <- krige(log(Limo+1) ~  1, suelo2, pts1, v.fitLimosteST)
 
 
-plot(Limo.mapa, main= "CONTENIDO EN LIMO") #En el intercomillado va el t√≠tulo.
+plot(Limo.mapa, main= "CONTENIDO EN LIMO") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
@@ -805,18 +805,18 @@ Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.Arcilla.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
+### PREPARACI”N KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizArcilla <- matrix(NA,2,5)
@@ -837,28 +837,28 @@ MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("
 MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
 
-# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "Lin" con tendencia:
 v.fitArcillalinCT = autofitVariogram(log(Arcilla) ~ Xlocal, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
+### REALIZACI”N KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
 Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, suelo2, pts1, v.fitArcillalinCT)
 
 
-plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS") #En el intercomillado va el t√≠tulo.
+plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################
 
 
-#_____________________________MAPITA DE F√ìSFORO ___________________________#
+#_____________________________MAPITA DE F”SFORO ___________________________#
 
-### AUTOKRIGGING F√ìSFORO ###
+### AUTOKRIGGING F”SFORO ###
 
 # Autokrigging sin tendencia:
 Autok.P.ST <- autoKrige(log(P+1) ~ 1, suelo2, pts1 )
@@ -871,18 +871,18 @@ Autok.P.CT <- autoKrige(log(P+1) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.P.CT)
 
 
-### PREPARACI√ìN KRIGGING MANUAL F√ìSFORO ###
+### PREPARACI”N KRIGGING MANUAL F”SFORO ###
 
 # Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo autom√°ticamente con la funci√≥n
+#  y poniendo las diferentes variables o hacerlo autom·ticamente con la funciÛn
 # "(autofitVariogram)".
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vac√≠a donde poner los resultados de los
+# Vamos a crear una matriz (una tabla) vacÌa donde poner los resultados de los
 # 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
 
-# Estamos creando una matriz vac√≠a donde poner todos los resultados de los
+# Estamos creando una matriz vacÌa donde poner todos los resultados de los
 # posibles modelos:
 
 MatrizP <- matrix(NA,2,5)
@@ -903,20 +903,20 @@ MatrizP[2,3] <- autofitVariogram(log(P+1) ~ Xlocal, suelo2,model = c("Gau"))$sse
 MatrizP[2,4] <- autofitVariogram(log(P+1) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizP[2,5] <- autofitVariogram(log(P+1) ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor ser√° el que tenga un valor m√°s bajo.
-# Con el siguiente comando sabremos qu√© modelo nos aporta la semivarianza m√≠nima.
+# El modelo que se ajuste mejor ser· el que tenga un valor m·s bajo.
+# Con el siguiente comando sabremos quÈ modelo nos aporta la semivarianza mÌnima.
 which((MatrizP) == min(MatrizP), arr.ind=TRUE)
 
-# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, as√≠ que lo usaremos.
+# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, asÌ que lo usaremos.
 # Realizamos un autofitting del modelo "Gau" con tendencia:
 v.fitPgauCT = autofitVariogram(log(P+1) ~ Xlocal, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACI√ìN KRIGGING MANUAL F√ìSFORO ###
+### REALIZACI”N KRIGGING MANUAL F”SFORO ###
 P.mapa <- krige(log(P+1) ~  Xlocal, suelo2, pts1, v.fitPgauCT)
 
 
-plot(P.mapa, main= "F√ìSFORO") #En el intercomillado va el t√≠tulo.
+plot(P.mapa, main= "F”SFORO") #En el intercomillado va el tÌtulo.
 
 ################################################################################
 ################################################################################

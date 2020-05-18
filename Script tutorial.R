@@ -37,6 +37,8 @@
 #   
 # |2|  PREPARACIÓN ÁREA DE ESTUDIO
 #    ??? |2.1| Generación del mapa base.
+#          ??? 2.1.a Generación del polígono
+#          ??? 2.1.b Generación de la malla
 #    ??? |2.2| Adaptación de los datos a mapa base.
 #
 # |3|  NORMALIZACIÓN DE LAS VARIABLES
@@ -159,15 +161,21 @@ options(digits=10)
 ################################################################################
 
 # En este proceso vamos a generar el mapa base desde el cual vamos a realizar 
-# posteriormente los mapas. En esta fase indicaremos el tamaño del área de 
-# estudio, las coordenadas que poseen y el tamaño de malla que utilizaremos para
-# el posterior análisis por krigging. También adaptaremos los datos al tamaño y 
-# forma del área estudiada.
+# posteriormente los mapas de cada variable. En esta fase indicaremos el tamaño 
+# del área de estudio, las coordenadas que poseen y el tamaño de malla que 
+# utilizaremos para el posterior análisis por krigging.También adaptaremos los 
+# datos al tamaño y forma del área estudiada.
+# 
 
 
-#------------------------------------------------------------------------------#
+#_______________________  2.1 GENERACIÓN DEL MAPA BASE ________________________#
 
-# 1. CREACIÓN DEL POLÍGONO:
+
+# 2.1.a Creacion del polígono base: 
+# Generaremos un rectángulo con dimensiones iguales al área de estudio donde
+# posteriormente plasmaremos los diferentes mapas que generemos.
+
+
 # Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de
 # estudio para generarla. Hemos cargado una matriz llamada "esquinas.parcela".
 # Esta matriz tiene los datos en Xlocal e Ylocal de dónde se sitúan los vertices
@@ -190,11 +198,12 @@ sps1 <- SpatialPolygons(list(ps1))
 #Podemos ver qué clase es "sps1" con el comando "class()" y cerciorarnos.
 class(sps1)
 
-
-# CREACIÓN DE LA MALLA:
-# En esta operación crearemos la malla de trabajo gracias al polígono que hemos
-# creado en el paso anterior; el tamaño de los recuadros serán de 0,05 x 0,05 m
-# y eliminaremos los puntos que queden fuera de este rectángulo.
+# 2.1.b Generación de la malla:
+# Generaremos una malla con la ayuda del polígono creado en el paso anterior que 
+# nos servirá para los posteriores análisis estadísticos de kriage.el tamaño de 
+# la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de
+# este rectángulo.
+ 
 
 
 # El comando dice: Creáme una malla regular con los datos de suelo2, donde el

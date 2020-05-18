@@ -16,26 +16,35 @@
 # |_____|  \__,_|  \__,_| |_|   |_|  \___|  \__,_|
 #                                                   Por: Ignacio Fernández Ruiz
 
+
 ################################################################################
 ################################################################################
 
 #¡ANTENCIÓN! LEER ANTENTAMENTE EL ARCHIVO README ANTES DE INICIAR ESTE TUTORIAL.
 
 # Para cualquier información adicional sobre el funcionamiento de algún comando,
-# puedes utilizar "?NombreDelComando". Lo que te abrirá una nueva pestaña con más
+# puedes utilizar "?NombreDelComando". Lo que abrirá una nueva pestaña con más
 # información sobre su uso y la gramática que utiliza.
 
+
 #_________________________ PASO 1: CARGAR LOS DATOS ___________________________#
+
 # Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué
-# datos vamos a trabajar. En nuestro caso, hemos generdo en formato ".txt" los
+# datos vamos a trabajar. En nuestro caso, hemos generado en formato ".txt" los
 # datos a partir de un archivo de excel ".xlsx". De esta forma podremos trabajar
 # con ellos en forma de código (Eliminando la necesidad de programas externos).
 
-# El comando que utilizaremos será "read.delim" este comando lee un archivo y 
-# crea un nuevo objeto con la información de este archivo
+# El comando que utilizaremos será "read.delim", este comando lee un archivo y 
+# crea un nuevo objeto con la información de este archivo como una si fuera una
+# base de datos.
 
 suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
+
+# Este comando dice: Crea un nuevo objeto con el archivo de texto Brea/Orusco su
+# separación será con barras, el símbolo que marca el decimal es un coma y la 
+# primera fila del código corresponde al enunciado de las variables (por eso es
+# T que equivale a TRUE)
 
 load("data/AerialRoot.community.corregido.Rdata")
 

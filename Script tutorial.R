@@ -46,7 +46,7 @@
 #          ??? 3.1.a Histograma
 #          ??? 3.1.b Gráfico cuantil-cuantil
 #          ??? 3.1.c Test de shapiro
-
+#          ??? 3.1.d Modificación de los datos
 #    ??? 3.2 Normalización variable GLUCOSIDASA
 #    ??? 3.3 Normalización variable FOSFATASA
 #    ??? 3.4 Normalización variable NITRÓGENO
@@ -127,7 +127,7 @@ library(spatstat)
 library(raster)
 library(automap)
 
-
+        
 #______ 1.4 RECLASIFICACIÓN DE LOS DATOS ORIGINALES A DATOS ESPACIALES ________#
 
 #  Con las siguientes operaciones vamos a modificar el tipo de objeto que son los 
@@ -290,6 +290,20 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 # Para realizar esta comprobación, utilizaremos el comando "shapiro.test()".
 
 
+# 3.1.d Modificación de los datos:
+
+# En caso de que los datos no se ajusten a la tendecia normalidad, debemos 
+# ejecutar transformaciones de los datos para intentar que se adapten. Para ello
+# podemos hacer algunas de las siguientes transformaciones:
+
+# 1º Realizar el logaritmo                          --> Log(variable)
+# 2º Realizar el logaritmo +1                       --> Log (variable+1)
+# 3º Realizar (Variable - media)/desviación estándar--> var-median(var)/sd(var)
+# 4º Realizar raíz cuadrada                         --> sqrt(variable)
+# 5º Realizar box-cox*                              --> boxcox(variable)
+
+# *NOTA: Para el uso de la función boxcox() debemos abrir antes library(MASS)*
+
 #__________________  3.2 NORMALIZACIÓN DE VARIABLE GLUCOSIDADA ________________#
 
 hist(suelo2$GLUC) # No muestra un patrón normalizado.
@@ -303,8 +317,8 @@ shapiro.test(log(suelo2$GLUC)) # El p-valor es aceptable. Muestra un patrón norm
 
 # Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC)
 
+#__________________  3.3 NORMALIZACIÓN DE VARIABLE FOSFATASA ________________#
 
-#############  FOSFATASA  #############
 hist(suelo2$FOSF) # No muestra un patrón normalizado.
 qqnorm(suelo2$FOSF) # No muestra un patrón normalizado.
 shapiro.test((suelo2$FOSF)) # El p-valor es muy bajo, No muestra un patrón normalizado.
@@ -316,7 +330,8 @@ shapiro.test(log(suelo2$FOSF)) # El p-valor es aceptable. Muestra un patrón norm
 # Utilizaremos el logaritmo de la fosfatasa para el mapeado --> LOG(FOSF)
 
 
-#############  NITRÓGENO  #############
+#___________________  3.4 NORMALIZACIÓN DE VARIABLE NITRÓGENO _________________#
+
 hist(suelo2$N) # Muestra un patrón normalizado.
 qqnorm(suelo2$N) # Muestra un patrón normalizado.
 shapiro.test((suelo2$N)) # El p-valor es aceptable. Muestra un patrón normalizado.
@@ -324,7 +339,8 @@ shapiro.test((suelo2$N)) # El p-valor es aceptable. Muestra un patrón normalizad
 # Utilizaremos directamente el valor de Nitrógeno para el mapeado --> (N)
 
 
-#############  FÓSFORO  #############
+#____________________  3.5 NORMALIZACIÓN DE VARIABLE FÓSFORO __________________#
+
 hist(suelo2$P) # Muestra un patrón normalizado.
 qqnorm(suelo2$P) # Muestra un patrón normalizado.
 shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patrón normalizado.
@@ -333,7 +349,8 @@ shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patrón normalizad
 # Utilizaremos directamente el valor de Fósforo para el mapeado --> (P)
 
 
-#############  POTASIO  #############  DUDA TOTAL
+#____________________  3.6 NORMALIZACIÓN DE VARIABLE POTASIO __________________#
+
 hist(suelo2$K) # No muestra un patrón normalizado.
 qqnorm(suelo2$K) # No muestra un patrón normalizado.
 shapiro.test((suelo2$K)) # El p-valor es muy bajo, No muestra un patrón normalizado.
@@ -342,19 +359,12 @@ hist(log(suelo2$K)) # Muestra un patrón normalizado.
 qqnorm(log(suelo2$K)) # Muestra un patrón normalizado.
 shapiro.test(log(suelo2$K)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
-hist(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
-qqnorm(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
-shapiro.test(((suelo2$K-median(suelo2$K))/sd(suelo2$K)))
-
-hist(log(suelo2$K+1)) # No muestra un patrón normalizado.
-qqnorm(log(suelo2$K+1)) # No muestra un patrón normalizado.
-shapiro.test(log(suelo2$K+1)) # El p-valor es muy bajo, No muestra un patrón normalizado.
-
 
 # Utilizaremos el logaritmo del potasio  para el mapeado --> LOG(K)
 
 
-############# CARBONO  #############
+#____________________  3.7 NORMALIZACIÓN DE VARIABLE CARBONO __________________#
+
 hist(suelo2$C) # No muestra un patrón normalizado.
 qqnorm(suelo2$C) # No muestra un patrón normalizado.
 shapiro.test((suelo2$C)) # El p-valor es muy bajo, No muestra un patrón normalizado.
@@ -366,7 +376,9 @@ shapiro.test(log(suelo2$C)) # El p-valor es aceptable. Muestra un patrón normali
 # Utilizaremos el logaritmo del carbono para el mapeado --> LOG(C)
 
 
-############# pH  #############  DUDA TOTAL
+#______________________  3.8 NORMALIZACIÓN DE VARIABLE pH _____________________#
+##### ECHARLE UN OJO ####
+
 hist(suelo2$pH) # No muestra un patrón normalizado.
 qqnorm(suelo2$pH) # No muestra un patrón normalizado.
 shapiro.test((suelo2$pH)) # El p-valor es muy bajo, No muestra un patrón normalizado.
@@ -379,18 +391,11 @@ hist(log(suelo2$pH+1)) # Muestra un patrón normalizado.
 qqnorm(log(suelo2$pH+1)) # Muestra un patrón normalizado.
 shapiro.test(log(suelo2$pH+1)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
-hist(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
-qqnorm(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
-shapiro.test(((suelo2$pH-median(suelo2$pH))/sd(suelo2$pH)))
-
-hist((sqrt(suelo2$pH))) # No muestra un patrón normalizado.
-qqnorm((sqrt(suelo2$pH))) # No muestra un patrón normalizado.
-shapiro.test((sqrt(suelo2$pH))) # El p-valor es muy bajo, No muestra un patrón normalizado.
-
-# Utilizaremos el logaritmo del pH para el mapeado --> LOG(pH)
+# Utilizaremos el logaritmo del pH para el mapeado --> LOG(pH+1)
 
 
-#############  Arena  #############
+#____________________  3.9 NORMALIZACIÓN DE VARIABLE ARENA ____________________#
+
 hist(suelo2$Arena) # Muestra un patrón normalizado.
 qqnorm(suelo2$Arena) # Muestra un patrón normalizado.
 shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patrón normalizado.
@@ -399,8 +404,8 @@ shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patrón normal
 # Utilizaremos directamente el valor de Arena para el mapeado --> (Arena)
 
 
+#____________________  3.10 NORMALIZACIÓN DE VARIABLE LIMO ____________________#
 
-############# LIMO  #############
 hist(suelo2$Limo) # No muestra un patrón normalizado.
 qqnorm(suelo2$Limo) # No muestra un patrón normalizado.
 shapiro.test((suelo2$Limo)) # El p-valor es muy bajo, No muestra un patrón normalizado.
@@ -412,11 +417,34 @@ shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patrón norm
 # Utilizaremos el logaritmo del Limo para el mapeado --> LOG(Limo)
 
 
+#___________________  3.11 NORMALIZACIÓN DE VARIABLE ARCILLA __________________#
+##NI IDEA DE CUAL USAR##
 
+hist(suelo2$Arcilla) #No muestra un patrón normalizado.
+qqnorm(suelo2$Arcilla) #No muestra un patrón normalizado.
+shapiro.test((suelo2$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
+hist(log(suelo2$Arcilla)) #No muestra un patrón normalizado.
+qqnorm(log(suelo2$Arcilla)) #No muestra un patrón normalizado.
+shapiro.test(log(suelo2$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
+hist(log(suelo2$Arcilla)+1) # No muestra un patrón normalizado.
+qqnorm(log(suelo2$Arcilla)+1) # No muestra un patrón normalizado.
+shapiro.test(log(suelo2$Arcilla)+1) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
+hist(sqrt(suelo2$Arcilla)) #  No muestra un patrón normalizado.
+qqnorm(sqrt(suelo2$Arcilla)) # No muestra un patrón normalizado.
+shapiro.test(sqrt(suelo2$Arcilla)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
+hist((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+#No muestra un patrón normalizado.
+qqnorm((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+#No muestra un patrón normalizado.
+shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+#El p-valor es muy bajo, No muestra un patrón normalizado.
+
+##NI IDEA DE CUAL USAR USO LOG QUE TIENE EL P-Valor más bajo##
+# Utilizaremos el logaritmo del Arcilla para el mapeado --> LOG(Arcilla)
 
 
 

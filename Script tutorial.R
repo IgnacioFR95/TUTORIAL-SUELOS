@@ -28,30 +28,31 @@
 
 ################################### ÍNDICE #####################################
 # |1|  PREPARACIÓN DE DATOS:
-#    ??? 1.1 Carga de datos iniciales.
-#    ??? 1.2 Carga de paquetes.
-#    ??? 1.3
+#    ??? |1.1| Carga de datos iniciales.
+#    ??? |1.2| Carga de códigos iniciales (source). 
+#                           NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
+#    ??? |1.3| Carga de paquetes R necesarios.
 #
 # |2|  
-#    ??? 2.1 
-#    ??? 2.2 
-#    ??? 2.3
+#    ??? |2.1| 
+#    ??? |2.2|
+#    ??? |2.3|
 #
 # |3|  
-#    ??? 3.1 Carga de datos iniciales.
-#    ??? 3.2 Carga de paquetes.
+#    ??? 3.1 
+#    ??? 3.2 
 #    ??? 3.3
 #
 
 
 
+############################# 1 PREPARACIÓN DE DATOS ###########################
 
 
 
 
 
-
-#_________________________ PASO 1: CARGAR LOS DATOS ___________________________#
+#_______________________  1.1 CARGA DE DATOS INICIALES ________________________#
 
 # Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué
 # datos vamos a trabajar. En nuestro caso, hemos generado en formato ".txt" los
@@ -65,23 +66,29 @@
 suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 
-# Este comando dice: Crea un nuevo objeto con el archivo de texto Brea/Orusco su
+# Este comando dice: "Crea un nuevo objeto con el archivo de .txt Brea/Orusco su
 # separación será con barras, el símbolo que marca el decimal es un coma y la 
 # primera fila del código corresponde al enunciado de las variables (por eso es
-# T que equivale a TRUE)
+# T, que equivale a TRUE)".
 
 load("data/AerialRoot.community.corregido.Rdata")
 
 
-# ____________________CARGA DE CÓDIGOS INICIALES (source) _____________________#
+#______________________  1.1 CARGA DE CÓDIGOS INICIALES _______________________#
+
 # Esto carga algunos parámetros y comandos imprescindibles, se hace para acortar
 # procesos y así ahorrar tiempo.También te asegura que tienes cargados todos los
 # complementos necesarios y que la versión de R es apta para trabajar.
+
 source("start/setup.R")
 source("start/curatingdata.R") ##¡SÓLO SE PUEDE CARGAR UNA VEZ!
 
 
-#____________________________ CARGA DE LOS PAQUETES ___________________________#
+#___________________  1.3 CARGA DE PAQUETES DE R NECESARIOS ___________________#
+
+# En el paso 1.2 hemos descargado los paquetes de R que necesitamos para hacer 
+# el tutorial.Vamos a cargarlos usando el comando "library(NombreDelPaquete)"
+
 library(lattice)
 library(sp)
 library(gstat)

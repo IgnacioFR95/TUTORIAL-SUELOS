@@ -19,6 +19,11 @@
 ################################################################################
 ################################################################################
 
+#¡ANTENCIÓN! LEER ANTENTAMENTE EL ARCHIVO README ANTES DE INICIAR ESTE TUTORIAL.
+
+# Para cualquier información adicional sobre el funcionamiento de algún comando,
+# puedes utilizar "?NombreDelComando". Lo que te abrirá una nueva pestaña con más
+# información sobre su uso y la gramática que utiliza.
 
 #_________________________ PASO 1: CARGAR LOS DATOS ___________________________#
 # Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué

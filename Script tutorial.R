@@ -32,10 +32,11 @@
 #    ??? |1.2| Carga de códigos iniciales (source). 
 #                           NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
 #    ??? |1.3| Carga de paquetes R necesarios.
-#
-# |2|  
-#    ??? |2.1| 
-#    ??? |2.2|
+#    ??? |1.4| Reclasificación datos originales a datos espaciales.
+#   
+# |2|  PREPARACIÓN ÁREA DE ESTUDIO:
+#    ??? |2.1| Generación del mapa base.
+#    ??? |2.2| Adaptación de los datos a mapa base.
 #    ??? |2.3|
 #
 # |3|  
@@ -45,10 +46,14 @@
 #
 
 
-
+################################################################################
 ############################# 1 PREPARACIÓN DE DATOS ###########################
+################################################################################
 
-
+# En esta fase, realizaremos todas las operaciones previas a la generación de la
+# cartografía. Comprobaremos las versiones utilizadas, descargaremos los datos y 
+# paquetes necesarios para las fases posteriores y transformaremos los datos a 
+# los formatos espaciales necesarios.
 
 
 
@@ -63,18 +68,17 @@
 # crea un nuevo objeto con la información de este archivo como una si fuera una
 # base de datos.
 
-suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 
-# Este comando dice: "Crea un nuevo objeto con el archivo de .txt Brea/Orusco su
-# separación será con barras, el símbolo que marca el decimal es un coma y la 
-# primera fila del código corresponde al enunciado de las variables (por eso es
-# T, que equivale a TRUE)".
+# Este comando dice: "Crea un nuevo objeto con el archivo de .txt con los datos, 
+# su separación será con barras, el símbolo que marca el decimal es coma "," y la 
+# primera fila de los datos corresponde al enunciado de las variables (por eso 
+# le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)".
 
 load("data/AerialRoot.community.corregido.Rdata")
 
 
-#______________________  1.1 CARGA DE CÓDIGOS INICIALES _______________________#
+#______________________  1.2 CARGA DE CÓDIGOS INICIALES _______________________#
 
 # Esto carga algunos parámetros y comandos imprescindibles, se hace para acortar
 # procesos y así ahorrar tiempo.También te asegura que tienes cargados todos los
@@ -98,28 +102,48 @@ library(raster)
 library(automap)
 
 
-################################################################################
+#______ 1.4 RECLASIFICACIÓN DE LOS DATOS ORIGINALES A DATOS ESPACIALES ________#
 
-# Damos como coordenadas los valores de Xlocal e Ylocal en relación a "suelo2",
-# al dar coordenadas a los datos de suelo2 los convierte deun objeto "data.frame"
-# a un objeto "SpatialPointDataFrame".
+#  Con las siguientes operaciones vamos a modificar el tipo de objeto que son los 
+# datos, para así poder trabajar con ellos espacialmente. Para ello, asignaremos 
+# al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales
+# que puedan tener los datos a 10.
+
+# Como trabajaremos de forma local, no necesitamos coordenadas globales, y por 
+# ello utilizaremos como nuevas coordenadas los valores de Xlocal e Ylocal en
+# relación a "suelo2". Al dar coordenadas a los datos de suelo2 los convierte de 
+# un objeto "data.frame" a un objeto "SpatialPointDataFrame".
+
+# Para esta operación utilizaremos el comando "coordinates()". Este comando dice:
+# "Utiliza como coordenadas x e y para los datos recogidos en el objeto suelo2, 
+# los valores de las columnas Xlocal e Ylocal respectivamente".
 
 coordinates(suelo2) <- ~ Xlocal + Ylocal
 
 # Con este comando podemos cerciorarnos si suelo2 ha cambiado su clase a
-# "SpatialPointsDataFrame"
+# "SpatialPointsDataFrame".
+
 class(suelo2)
 
-#Este código limita el número de decimales a 10, de aquí en adelante.
+##Efectivamente, ahora es un "SpatialPointsDataFrame".##
+
+
+#Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar
+# cifras excesivamente largas, para ello usaremos el siguiente comando:
+
 options(digits=10)
 
-#_____________________ PREPARACIÓN DE LA ZONA DE ESTUDIO:______________________#
-# En este proceso vamos a hacer dos cosas:
-#
-# 1. Crear un polígono que cubra la superficie del área estudiada.
 
-# 2. Adaptar los datos de suelo2 al tamaño y forma del polígono, para poder
-#    trabajar luego encima de esta.
+################################################################################
+############################# 1 PREPARACIÓN DE DATOS ###########################
+################################################################################
+
+# En este proceso vamos a generar el mapa base desde el cual vamos a realizar 
+# posteriormente los mapas. En esta fase indicaremos el tamaño del área de 
+# estudio, las coordenadas que poseen y el tamaño de malla que utilizaremos para
+# el posterior análisis por krigging. También adaptaremos los datos al tamaño y 
+# forma del área estudiada.
+
 
 #------------------------------------------------------------------------------#
 

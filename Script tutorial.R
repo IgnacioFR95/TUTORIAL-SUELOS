@@ -1,7 +1,34 @@
+#   _____           _                    _           _ 
+#  |_   _|  _   _  | |_    ___    _ __  (_)   __ _  | |
+#    | |   | | | | | __|  / _ \  | '__| | |  / _` | | |
+#    | |   | |_| | | |_  | (_) | | |    | | | (_| | | |
+#    |_|    \__,_|  \__|  \___/  |_|    |_|  \__,_| |_|
+#    ____                  _                                     __    _         
+#   / ___|   __ _   _ __  | |_    ___     __ _   _ __    __ _   / _| /_/   __ _ 
+#  | |      / _` | | '__| | __|  / _ \   / _` | | '__|  / _` | | |_  | |  / _` |
+#  | |___  | (_| | | |    | |_  | (_) | | (_| | | |    | (_| | |  _| | | | (_| |
+#   \____|  \__,_| |_|     \__|  \___/   \__, | |_|     \__,_| |_|   |_|  \__,_|
+#                      __                |___/                                             
+#  _____       _      /_/   __   _                
+# | ____|   __| |   __ _   / _| (_)   ___    __ _ 
+# |  _|    / _` |  / _` | | |_  | |  / __|  / _` |
+# | |___  | (_| | | (_| | |  _| | | | (__  | (_| |
+# |_____|  \__,_|  \__,_| |_|   |_|  \___|  \__,_|
+#                                                   Por: Ignacio Fernández Ruiz
+
 ################################################################################
 ################################################################################
 
-#__________________________ CARGAMOS LOS DATOS ________________________________#
+
+#_________________________ PASO 1: CARGAR LOS DATOS ___________________________#
+# Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué
+# datos vamos a trabajar. En nuestro caso, hemos generdo en formato ".txt" los
+# datos a partir de un archivo de excel ".xlsx". De esta forma podremos trabajar
+# con ellos en forma de código (Eliminando la necesidad de programas externos).
+
+# El comando que utilizaremos será "read.delim" este comando lee un archivo y 
+# crea un nuevo objeto con la información de este archivo
+
 suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 

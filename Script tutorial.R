@@ -8,7 +8,7 @@
 #  | |      / _` | | '__| | __|  / _ \   / _` | | '__|  / _` | | |_  | |  / _` |
 #  | |___  | (_| | | |    | |_  | (_) | | (_| | | |    | (_| | |  _| | | | (_| |
 #   \____|  \__,_| |_|     \__|  \___/   \__, | |_|     \__,_| |_|   |_|  \__,_|
-#                      __                |___/                                             
+#                      __                |___/                                           
 #  _____       _      /_/   __   _                
 # | ____|   __| |   __ _   / _| (_)   ___    __ _ 
 # |  _|    / _` |  / _` | | |_  | |  / __|  / _` |
@@ -27,24 +27,43 @@
 # información sobre su uso y la gramática que utiliza.
 
 ################################### ÍNDICE #####################################
-# |1|  PREPARACIÓN DE DATOS:
+
+# |1|  PREPARACIÓN DE DATOS
 #    ??? |1.1| Carga de datos iniciales.
 #    ??? |1.2| Carga de códigos iniciales (source). 
 #                           NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
 #    ??? |1.3| Carga de paquetes R necesarios.
 #    ??? |1.4| Reclasificación datos originales a datos espaciales.
 #   
-# |2|  PREPARACIÓN ÁREA DE ESTUDIO:
+# |2|  PREPARACIÓN ÁREA DE ESTUDIO
 #    ??? |2.1| Generación del mapa base.
 #    ??? |2.2| Adaptación de los datos a mapa base.
-#    ??? |2.3|
 #
-# |3|  
-#    ??? 3.1 
-#    ??? 3.2 
-#    ??? 3.3
+# |3|  NORMALIZACIÓN DE LAS VARIABLES
+#    ??? 3.1 Metodología de normalización de variables
+#    ??? 3.2 Normalización variable GLUCOSIDASA
+#    ??? 3.3 Normalización variable FOSFATASA
+#    ??? 3.4 Normalización variable NITRÓGENO
+#    ??? 3.4 Normalización variable FÓSFORO
+#    ??? 3.5 Normalización variable POTASIO
+#    ??? 3.6 Normalización variable CARBONO
+#    ??? 3.7 Normalización variable pH
+#    ??? 3.8 Normalización variable ARENA
+#    ??? 3.9 Normalización variable LIMO
+#    ??? 3.10 Normalización variable ArRCILLA
 #
-
+# |4|  GENERACIÓN DE CARTOGRAFÍA EDÁFICA
+#    ??? 4.1 Metodología de cartografía edáfica
+#    ??? 4.2 Cartografía de variable GLUCOSIDASA
+#    ??? 4.3 Cartografía de variable FOSFATASA
+#    ??? 4.4 Cartografía de variable NITRÓGENO
+#    ??? 4.4 Cartografía de variable FÓSFORO
+#    ??? 4.5 Cartografía de variable POTASIO
+#    ??? 4.6 Cartografía de variable CARBONO
+#    ??? 4.7 Cartografía de variable pH
+#    ??? 4.8 Cartografía de variable ARENA
+#    ??? 4.9 Cartografía de variable LIMO
+#    ??? 4.10 Cartografía de variable ARCILLA
 
 ################################################################################
 ############################# 1 PREPARACIÓN DE DATOS ###########################
@@ -68,6 +87,7 @@
 # crea un nuevo objeto con la información de este archivo como una si fuera una
 # base de datos.
 
+suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 
 # Este comando dice: "Crea un nuevo objeto con el archivo de .txt con los datos, 
@@ -135,7 +155,7 @@ options(digits=10)
 
 
 ################################################################################
-############################# 1 PREPARACIÓN DE DATOS ###########################
+######################## 2 PREPARACIÓN ÁREA DE ESTUDIO #########################
 ################################################################################
 
 # En este proceso vamos a generar el mapa base desde el cual vamos a realizar 

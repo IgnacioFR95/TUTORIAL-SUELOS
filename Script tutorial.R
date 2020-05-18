@@ -46,7 +46,7 @@ options(digits=10)
 #
 # 1. Crear un polígono que cubra la superficie del área estudiada.
 
-# 2. Adaptar los datos de suelo2 al tamaÃ±o y forma del polígono, para poder
+# 2. Adaptar los datos de suelo2 al tamaño y forma del polígono, para poder
 #    trabajar luego encima de esta.
 
 #------------------------------------------------------------------------------#
@@ -77,12 +77,12 @@ class(sps1)
 
 # CREACIÓN DE LA MALLA:
 # En esta operación crearemos la malla de trabajo gracias al polígono que hemos
-# creado en el paso anterior; el tamaÃ±o de los recuadros serán de 0,05 x 0,05 m
+# creado en el paso anterior; el tamaño de los recuadros serán de 0,05 x 0,05 m
 # y eliminaremos los puntos que queden fuera de este rectángulo.
 
 
 # El comando dice: Creáme una malla regular con los datos de suelo2, donde el
-# tamaÃ±o de celda sean 5 cm
+# tamaño de celda sean 5 cm
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05, 0.05))
 
 # Con este comando eliminaremos los puntos que quedan fuera de nuestro grid.

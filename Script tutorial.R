@@ -43,6 +43,10 @@
 #
 # |3|  NORMALIZACIÓN DE LAS VARIABLES
 #    ??? 3.1 Metodología de normalización de variables
+#          ??? 3.1.a Histograma
+#          ??? 3.1.b Gráfico cuantil-cuantil
+#          ??? 3.1.c Test de shapiro
+
 #    ??? 3.2 Normalización variable GLUCOSIDASA
 #    ??? 3.3 Normalización variable FOSFATASA
 #    ??? 3.4 Normalización variable NITRÓGENO
@@ -52,7 +56,7 @@
 #    ??? 3.7 Normalización variable pH
 #    ??? 3.8 Normalización variable ARENA
 #    ??? 3.9 Normalización variable LIMO
-#    ??? 3.10 Normalización variable ArRCILLA
+#    ??? 3.10 Normalización variable ARCILLA
 #
 # |4|  GENERACIÓN DE CARTOGRAFÍA EDÁFICA
 #    ??? 4.1 Metodología de cartografía edáfica
@@ -177,13 +181,13 @@ options(digits=10)
 
 
 # Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de
-# estudio para generarla. Hemos cargado una matriz llamada "esquinas.parcela".
+# estudio. Hemos cargado una matriz llamada "esquinas.parcela".
 # Esta matriz tiene los datos en Xlocal e Ylocal de dónde se sitúan los vertices
 # del rectángulo que forma nuestra parcela. Con estos datos, crearemos un
 # polígono rectangular que cubra exactamente el área de estudio.
 
-# Creamos el objeto "p1", que es básicamente el objeto que se forma al dibujar la
-# matriz de esquinas.parcela.
+# Creamos el objeto "p1", que es básicamente el cuadrado que se forma al dibujar 
+# la matriz de "esquinas.parcela".
 p1 <- Polygon(esquinas.parcela[,1:2])
 
 
@@ -198,6 +202,8 @@ sps1 <- SpatialPolygons(list(ps1))
 #Podemos ver qué clase es "sps1" con el comando "class()" y cerciorarnos.
 class(sps1)
 
+##Observamos que la clase es efectivamente "SpatialPolygons".
+
 # 2.1.b Generación de la malla:
 # Generaremos una malla con la ayuda del polígono creado en el paso anterior que 
 # nos servirá para los posteriores análisis estadísticos de kriage.el tamaño de 
@@ -206,11 +212,12 @@ class(sps1)
  
 
 
-# El comando dice: Creáme una malla regular con los datos de suelo2, donde el
-# tamaño de celda sean 5 cm
+# El siguiente comando dice: "Creáme una malla regular con los datos de suelo2, 
+# donde el tamaño de celda sean 5 cm".
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05, 0.05))
 
-# Con este comando eliminaremos los puntos que quedan fuera de nuestro grid.
+# Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de 
+# nuestro grid.
 pts1 <- as.data.frame(grid[!is.na(over(grid, sps1,))])
 
 # Al ser una parcela independiente y no tener que relacionarla con otros lugares,
@@ -220,7 +227,7 @@ pts1 <- as.data.frame(grid[!is.na(over(grid, sps1,))])
 
 # Cambiamos el nombre de las coordenadas de X e Y; los llamaremos Xlocal, Ylocal
 # ya que en el paso siguiente, lo que haremos es cambiar el sist. de coordenadas,
-# pasando de unas cordenadas globales (X,Y) a las coordenadas locales (X e Y local).
+# pasando de unas cordenadas globales (X,Y) a las coordenadas locales (X e Ylocal).
 names(pts1) <- c("Xlocal", "Ylocal")
 
 # Hacemos que pts1 asocie como coordenadas las columnas de Xlocal e Ylocal.
@@ -236,7 +243,17 @@ plot(pts1)
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
 
 
-#_________________________ NORMALIZACIÓN DE LAS VARIABLES _____________________#
+################################################################################
+########################## 3 NORMALIZACIÓN DE LAS VARIABLES ####################
+################################################################################
+
+# En esta tercera fase vamos a transformar los datos brutos para conseguir que 
+# sigan una tendecia normalizada. Esto nos permitirá realizar la cartografía de
+# cada variable utilizando el método de krigging y autokrigging en la fase 4.
+
+
+#_______________  3.1 METODOLOGÍA DE NORMALIZACIÓN DE VARIABLES _______________#
+
 
 # Para la realización de los mapas, utilizaremos la técnica de krigging, que es
 # un método de interpolación geoestadístico de estimación de puntos.Este método
@@ -244,13 +261,37 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 # normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el
 # objetivo de normalizarlos.
 
-# Observaremos gráficamente si los datos están normalizados visualizando el
-# histograma y el qqnorm que representan; por último observaremos el p-valor
-# obtenido del test de shapiro, si este indicador es mayor al 0.07, indica que
-# los datos se adaptan a un patrón normalizado.
+# Observaremos gráficamente si los datos están normalizados visualizando 
+# gráficamente su histograma y su gráfico cuantil-cuantil. Por último se hará un
+# test de shapiro para comprobar si cumple con una tendencia normalizada.
+
+# 3.1.a Histograma: 
+
+# Representación de distribuciones de frecuencias, en el que se emplean rectángulos
+# dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida "???"
+# en la parte central del dibujo, tendrá una tendencia normalizada.
+# Para realizar este gráfico, utilizaremos el comando "hist()".
 
 
-#############  GLUCOSIDASA  #############
+# 3.1.b Gráfico cuantil-cuantil: 
+
+# También denominada "qqnorm" nos permite observar cómo de cerca está la 
+# distribución observada a una distribución normal idealizada. Si la línea del
+# gráfico dibuja una linea recta y ascendente "/" indicará que los valores siguen
+# una tendencia normalizada. 
+# Para realizar este gráfico, utilizaremos el comando "qqnorm()".
+
+
+# 3.1.c Test de Shapiro:
+
+# Es una prueba estadística para contrastar la normalidad de un conjunto de datos.
+# El test nos dará un p-valor,si este indicador es mayor al 0.07, indica que los
+# datos se adaptan a un patrón normalizado.
+# Para realizar esta comprobación, utilizaremos el comando "shapiro.test()".
+
+
+#__________________  3.2 NORMALIZACIÓN DE VARIABLE GLUCOSIDADA ________________#
+
 hist(suelo2$GLUC) # No muestra un patrón normalizado.
 qqnorm(suelo2$GLUC) # No muestra un patrón normalizado.
 shapiro.test((suelo2$GLUC)) # El p-valor es muy bajo, No muestra un patrón normalizado.

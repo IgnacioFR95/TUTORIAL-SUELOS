@@ -26,6 +26,30 @@
 # puedes utilizar "?NombreDelComando". Lo que abrirá una nueva pestaña con más
 # información sobre su uso y la gramática que utiliza.
 
+################################### ÍNDICE #####################################
+# |1|  PREPARACIÓN DE DATOS:
+#    ??? 1.1 Carga de datos iniciales.
+#    ??? 1.2 Carga de paquetes.
+#    ??? 1.3
+#
+# |2|  
+#    ??? 2.1 
+#    ??? 2.2 
+#    ??? 2.3
+#
+# |3|  
+#    ??? 3.1 Carga de datos iniciales.
+#    ??? 3.2 Carga de paquetes.
+#    ??? 3.3
+#
+
+
+
+
+
+
+
+
 
 #_________________________ PASO 1: CARGAR LOS DATOS ___________________________#
 

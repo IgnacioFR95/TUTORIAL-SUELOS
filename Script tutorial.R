@@ -533,12 +533,12 @@ autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
 
 # Autokriging sin tendencia:
 Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+#Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.GLUC.ST)
 
 # Autokriging con tendencia
 Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+#Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.GLUC.CT)
 
 
@@ -603,18 +603,18 @@ plot(GLUC.mapa, main= "GLUCOSIDASA")
 
 
 
-#____________________________ MAPITA DE FOSFATASA _____________________________#
+#__________________  4.3 CARTOGRAFÍA DE VARIABLE FOSFATASA ____________________#
 
-### AUTOkriging FOSFATASA ###
+# 4.3.a Autokrigging de Fosfatasa:
 
 # Autokriging sin tendencia:
-Autok.FOSF.ST <- autoKrige(log(FOSF+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, suelo2, pts1 )
+#Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.FOSF.ST)
 
 # Autokriging con tendencia
-Autok.FOSF.CT <- autoKrige(log(FOSF+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, suelo2, new_data=pts1 )
+#Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.FOSF.CT)
 
 
@@ -669,12 +669,12 @@ plot(FOSF.mapa, main= "FOSFATASA") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.N.ST <- autoKrige(log(N+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.N.ST)
 
 # Autokriging con tendencia
 Autok.N.CT <- autoKrige(log(N+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.N.CT)
 
 
@@ -730,12 +730,12 @@ plot(N.mapa, main= "NITRÓGENO") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.K.ST <- autoKrige(log(K+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.K.ST)
 
 # Autokriging con tendencia
 Autok.K.CT <- autoKrige(log(K+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.K.CT)
 
 
@@ -794,12 +794,12 @@ plot(K.mapa, main= "POTASIO") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.C.ST <- autoKrige(log(C+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.C.ST)
 
 # Autokriging con tendencia
 Autok.C.CT <- autoKrige(log(C+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.C.CT)
 
 
@@ -859,12 +859,12 @@ plot(C.mapa, main= "CARBONO") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.pH.ST <- autoKrige((pH) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.pH.ST)
 
 # Autokriging con tendencia
 Autok.pH.CT <- autoKrige((pH) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.pH.CT)
 
 
@@ -924,12 +924,12 @@ plot(pH.mapa, main= "pH") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.Arena.ST <- autoKrige(log(Arena+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arena.ST)
 
 # Autokriging con tendencia
 Autok.Arena.CT <- autoKrige(log(Arena+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arena.CT)
 
 
@@ -989,12 +989,12 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS") #En el intercomillado va el título
 
 # Autokriging sin tendencia:
 Autok.Limo.ST <- autoKrige(log(Limo+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Limo.ST)
 
 # Autokriging con tendencia
 Autok.Limo.CT <- autoKrige(log(Limo+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Limo.CT)
 
 
@@ -1054,12 +1054,12 @@ plot(Limo.mapa, main= "CONTENIDO EN LIMO") #En el intercomillado va el título.
 
 # Autokriging sin tendencia:
 Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arcilla.ST)
 
 # Autokriging con tendencia
 Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arcilla.CT)
 
 
@@ -1120,12 +1120,12 @@ plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS") #En el intercomillado va el tí
 
 # Autokriging sin tendencia:
 Autok.P.ST <- autoKrige(log(P+1) ~ 1, suelo2, pts1 )
-#Visualizamos como queda sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.P.ST)
 
 # Autokriging con tendencia
 Autok.P.CT <- autoKrige(log(P+1) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como queda con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.P.CT)
 
 

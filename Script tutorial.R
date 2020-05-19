@@ -912,77 +912,86 @@ plot(K.mapa, main= "POTASIO")
 
 
 
+#___________________  4.7 CARTOGRAFÍA DE VARIABLE CARBONO _____________________#
 
-################################################################################
-################################################################################
-#_____________________________MAPITA DE CARBONO ___________________________#
-
-### AUTOkriging CARBONO ###
+# 4.7.a Autokriging de Carbono:
 
 # Autokriging sin tendencia:
-Autok.C.ST <- autoKrige(log(C+1) ~ 1, suelo2, pts1 )
+Autok.C.ST <- autoKrige(log(C) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.C.ST)
 
 # Autokriging con tendencia
-Autok.C.CT <- autoKrige(log(C+1) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.C.CT <- autoKrige(log(C) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.C.CT)
 
 
-### PREPARACIÓN kriging MANUAL CARBONO ###
+# 4.7.b Kriging manual de Carbono:
 
-# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
-# ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo automáticamente con la función
-# "(autofitVariogram)".
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
-
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizC <- matrix(NA,2,5)
 colnames(MatrizC) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizC) <- c("Sin tendencia", "Con tendencia")
 
-#Rellenamos con los datos de cada modelo:
-#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+# Rellenamos con los datos de cada modelo:
+
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+# Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 MatrizC[1,1] <- autofitVariogram(log(C) ~ 1, suelo2, model = c("Exp"))$sserr
 MatrizC[1,2] <- autofitVariogram(log(C) ~ 1, suelo2, model = c("Sph"))$sserr
 MatrizC[1,3] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Gau"))$sserr
 MatrizC[1,4] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Lin"))$sserr
 MatrizC[1,5] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Ste"))$sserr
-#Con tendencia (Utilizamos Xlocal como tendencia):
+# Con tendencia (Utilizamos Xlocal como tendencia):
 MatrizC[2,1] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
 MatrizC[2,2] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
 MatrizC[2,3] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
 MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
+
 which((MatrizC) == min(MatrizC), arr.ind=TRUE)
 
-# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "ste" con tendencia:
+# En este caso nos dice que "GAU CON TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+# "Gau" con tendencia:
+
 v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACIÓN kriging MANUAL CARBONO ###
-C.mapa <- krige(log(C+1) ~  Xlocal, suelo2, pts1, v.fitCgauCT)
+# A continuación podemos realizar el kriaje del Carbono.
+
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Gau" con tendencia en la 
+## malla pts1".
+
+C.mapa <- krige(log(C) ~  Xlocal, suelo2, pts1, v.fitCgauCT)
+
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de Carbono:
+
+## La siguiente función expresa "Genera un gráfico del objeto C.mapa (que es el
+## resultado del kriaje de los datos) y cuyo título sea "CARBONO".
+
+plot(C.mapa, main= "CARBONO")
 
 
-plot(C.mapa, main= "CARBONO") #En el intercomillado va el título.
+#______________________  4.8 CARTOGRAFÍA DE VARIABLE pH _______________________#
 
-################################################################################
-################################################################################
-
-#_____________________________MAPITA DE pH ___________________________#
-
-### AUTOkriging pH ###
+# 4.6.a Autokriging de pH:
 
 # Autokriging sin tendencia:
 Autok.pH.ST <- autoKrige((pH) ~ 1, suelo2, pts1 )
@@ -995,52 +1004,65 @@ Autok.pH.CT <- autoKrige((pH) ~ Xlocal, suelo2, new_data=pts1 )
 plot(Autok.pH.CT)
 
 
-### PREPARACIÓN kriging MANUAL pH ###
+# 4.8.b Kriging manual de pH:
 
-# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
-# ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo automáticamente con la función
-# "(autofitVariogram)".
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
-
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizpH <- matrix(NA,2,5)
 colnames(MatrizpH) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizpH) <- c("Sin tendencia", "Con tendencia")
 
 #Rellenamos con los datos de cada modelo:
+
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 MatrizpH[1,1] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Exp"))$sserr
 MatrizpH[1,2] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizpH[1,3] <- autofitVariogram((pH)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizpH[1,4] <- autofitVariogram((pH)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizpH[1,5] <- autofitVariogram((pH)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizpH[1,3] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Gau"))$sserr
+MatrizpH[1,4] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Lin"))$sserr
+MatrizpH[1,5] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizpH[2,1] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizpH[2,2] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizpH[2,3] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
+MatrizpH[2,1] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Exp"))$sserr
+MatrizpH[2,2] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Sph"))$sserr
+MatrizpH[2,3] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Gau"))$sserr
 MatrizpH[2,4] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizpH[2,5] <- autofitVariogram((pH)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizpH[2,5] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
+
 which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "ste" sin tendencia:
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Ste" sin tendencia:
+
 v.fitpHsteST = autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$var_model
 
+# A continuación podemos realizar el kriaje del pH.
 
-### REALIZACIÓN kriging MANUAL pH ###
-pH.mapa <- krige((pH+1) ~  1, suelo2, pts1, v.fitpHsteST)
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## malla pts1".
 
+pH.mapa <- krige((pH) ~  1, suelo2, pts1, v.fitpHsteST)
 
-plot(pH.mapa, main= "pH") #En el intercomillado va el título.
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de pH:
+
+## La siguiente función expresa "Genera un gráfico del objeto pH.mapa (que es el
+## resultado del kriaje de los datos) y cuyo título sea "pH".
+
+plot(pH.mapa, main= "pH") 
 
 ################################################################################
 ################################################################################

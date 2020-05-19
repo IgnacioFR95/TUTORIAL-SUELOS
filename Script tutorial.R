@@ -991,7 +991,7 @@ plot(C.mapa, main= "CARBONO")
 
 #______________________  4.8 CARTOGRAFÍA DE VARIABLE pH _______________________#
 
-# 4.6.a Autokriging de pH:
+# 4.8.a Autokriging de pH:
 
 # Autokriging sin tendencia:
 Autok.pH.ST <- autoKrige((pH) ~ 1, suelo2, pts1 )
@@ -1064,135 +1064,161 @@ pH.mapa <- krige((pH) ~  1, suelo2, pts1, v.fitpHsteST)
 
 plot(pH.mapa, main= "pH") 
 
-################################################################################
-################################################################################
 
-#_____________________________MAPITA DE CONTENIDO EN ARENAS ___________________________#
 
-### AUTOkriging CONTENIDO EN ARENAS ###
+#______________________  4.9 CARTOGRAFÍA DE VARIABLE ARENA _______________________#
+
+# 4.9.a Autokriging de Arena:
 
 # Autokriging sin tendencia:
-Autok.Arena.ST <- autoKrige(log(Arena+1) ~ 1, suelo2, pts1 )
+Autok.Arena.ST <- autoKrige((Arena) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arena.ST)
 
 # Autokriging con tendencia
-Autok.Arena.CT <- autoKrige(log(Arena+1) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arena.CT)
 
 
-### PREPARACIÓN kriging MANUAL CONTENIDO EN ARENAS ###
+# 4.9.b Kriging manual de Arena:
 
-# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
-# ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo automáticamente con la función
-# "(autofitVariogram)".
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
-
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizArena <- matrix(NA,2,5)
 colnames(MatrizArena) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizArena) <- c("Sin tendencia", "Con tendencia")
 
 #Rellenamos con los datos de cada modelo:
-#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizArena[1,1] <- autofitVariogram(log(Arena) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizArena[1,2] <- autofitVariogram(log(Arena) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizArena[1,3] <- autofitVariogram(log(Arena)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizArena[1,4] <- autofitVariogram(log(Arena)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizArena[1,5] <- autofitVariogram(log(Arena)  ~ 1, suelo2, model = c("Ste"))$sserr
-#Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizArena[2,1] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizArena[2,2] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizArena[2,3] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizArena[2,4] <- autofitVariogram(log(Arena) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizArena[2,5] <- autofitVariogram(log(Arena)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+MatrizArena[1,1] <- autofitVariogram((Arena) ~ 1, suelo2, model = c("Exp"))$sserr
+MatrizArena[1,2] <- autofitVariogram((Arena) ~ 1, suelo2, model = c("Sph"))$sserr
+MatrizArena[1,3] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Gau"))$sserr
+MatrizArena[1,4] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Lin"))$sserr
+MatrizArena[1,5] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Ste"))$sserr
+#Con tendencia (Utilizamos Xlocal como tendencia):
+MatrizArena[2,1] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
+MatrizArena[2,2] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
+MatrizArena[2,3] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
+MatrizArena[2,4] <- autofitVariogram((Arena) ~ Xlocal, suelo2,model = c("Lin"))$sserr
+MatrizArena[2,5] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
+
 which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "ste" sin tendencia:
-v.fitArenasteST = autofitVariogram(log(Arena) ~ 1, suelo2, model = c("Ste"))$var_model
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Ste" sin tendencia:
+
+v.fitArenasteST = autofitVariogram((Arena) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN kriging MANUAL CONTENIDO EN ARENAS ###
-Arena.mapa <- krige(log(Arena+1) ~  1, suelo2, pts1, v.fitArenasteST)
+# A continuación podemos realizar el kriaje de la Arena.
+
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## malla pts1"
+
+Arena.mapa <- krige((Arena) ~  1, suelo2, pts1, v.fitArenasteST)
+
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de Arena:
+
+## La siguiente función expresa "Genera un gráfico del objeto Arena.mapa (que es 
+## el resultado del kriaje de los datos) y cuyo título sea "CONTENIDO EN ARENAS".
 
 
-plot(Arena.mapa, main= "CONTENIDO EN ARENAS") #En el intercomillado va el título.
+plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 
-################################################################################
-################################################################################
 
-#_____________________________MAPITA DE CONTENIDO EN LIMO ___________________________#
 
-### AUTOkriging CONTENIDO EN LIMO ###
+#______________________  4.10 CARTOGRAFÍA DE VARIABLE LIMO _______________________#
+
+# 4.10.a Autokriging de Limo:
 
 # Autokriging sin tendencia:
-Autok.Limo.ST <- autoKrige(log(Limo+1) ~ 1, suelo2, pts1 )
+Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Limo.ST)
 
 # Autokriging con tendencia
-Autok.Limo.CT <- autoKrige(log(Limo+1) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Limo.CT)
 
 
-### PREPARACIÓN kriging MANUAL CONTENIDO EN LIMO ###
+# 4.10.b Kriging manual de Limo:
 
-# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
-# ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo automáticamente con la función
-# "(autofitVariogram)".
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
-
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizLimo <- matrix(NA,2,5)
 colnames(MatrizLimo) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizLimo) <- c("Sin tendencia", "Con tendencia")
 
 #Rellenamos con los datos de cada modelo:
+
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Exp"))$sserr
 MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizLimo[1,3] <- autofitVariogram(log(Limo)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizLimo[1,4] <- autofitVariogram(log(Limo)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizLimo[1,5] <- autofitVariogram(log(Limo)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Gau"))$sserr
+MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Lin"))$sserr
+MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizLimo[2,1] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizLimo[2,2] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizLimo[2,3] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
+MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Exp"))$sserr
+MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Sph"))$sserr
+MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Gau"))$sserr
 MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizLimo[2,5] <- autofitVariogram(log(Limo)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
+
 which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "ste" sin tendencia:
+# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Ste" sin tendencia:
+
 v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$var_model
 
+# A continuación podemos realizar el kriaje de la variable Limos.
 
-### REALIZACIÓN kriging MANUAL CONTENIDO EN LIMO ###
-Limo.mapa <- krige(log(Limo+1) ~  1, suelo2, pts1, v.fitLimosteST)
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## malla pts1".
 
+Limo.mapa <- krige(log(Limo) ~  1, suelo2, pts1, v.fitLimosteST)
 
-plot(Limo.mapa, main= "CONTENIDO EN LIMO") #En el intercomillado va el título.
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de Limos:
+
+## La siguiente función expresa "Genera un gráfico del objeto Limo.mapa (que es 
+## el resultado del kriaje de los datos) y cuyo título sea "CONTENIDO EN LIMO".
+
+plot(Limo.mapa, main= "CONTENIDO EN LIMO") 
 
 ################################################################################
 ################################################################################

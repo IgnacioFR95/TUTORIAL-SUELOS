@@ -1066,7 +1066,7 @@ plot(pH.mapa, main= "pH")
 
 
 
-#______________________  4.9 CARTOGRAFÍA DE VARIABLE ARENA _______________________#
+#_____________________  4.9 CARTOGRAFÍA DE VARIABLE ARENA _____________________#
 
 # 4.9.a Autokriging de Arena:
 
@@ -1145,7 +1145,7 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 
 
 
-#______________________  4.10 CARTOGRAFÍA DE VARIABLE LIMO _______________________#
+#_____________________  4.10 CARTOGRAFÍA DE VARIABLE LIMO _____________________#
 
 # 4.10.a Autokriging de Limo:
 
@@ -1220,71 +1220,89 @@ Limo.mapa <- krige(log(Limo) ~  1, suelo2, pts1, v.fitLimosteST)
 
 plot(Limo.mapa, main= "CONTENIDO EN LIMO") 
 
-################################################################################
-################################################################################
 
-#_____________________________MAPITA DE CONTENIDO EN ARCILLAS ___________________________#
+#____________________  4.11 CARTOGRAFÍA DE VARIABLE ARCILLA ____________________#
 
-### AUTOkriging CONTENIDO EN ARCILLAS ###
+# 4.11.a Autokriging de Arcilla:
+
 
 # Autokriging sin tendencia:
-Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, suelo2, pts1 )
+Autok.Arcilla.ST <- autoKrige((Arcilla) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arcilla.ST)
 
-# Autokriging con tendencia
-Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
+# Autokriging con tendencia:
+Autok.Arcilla.CT <- autoKrige((Arcilla) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arcilla.CT)
 
 
-### PREPARACIÓN kriging MANUAL CONTENIDO EN ARCILLAS ###
+# 4.11.b Kriging manual de Arcillas:
 
-# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
-# ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
-#  y poniendo las diferentes variables o hacerlo automáticamente con la función
-# "(autofitVariogram)".
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
-
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizArcilla <- matrix(NA,2,5)
 colnames(MatrizArcilla) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizArcilla) <- c("Sin tendencia", "Con tendencia")
 
 #Rellenamos con los datos de cada modelo:
-#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizArcilla[1,1] <- autofitVariogram(log(Arcilla) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizArcilla[1,2] <- autofitVariogram(log(Arcilla) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizArcilla[1,3] <- autofitVariogram(log(Arcilla) ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizArcilla[1,4] <- autofitVariogram(log(Arcilla) ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizArcilla[1,5] <- autofitVariogram(log(Arcilla) ~ 1, suelo2, model = c("Ste"))$sserr
-#Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizArcilla[2,1] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizArcilla[2,2] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla) ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+MatrizArcilla[1,1] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Exp"))$sserr
+MatrizArcilla[1,2] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Sph"))$sserr
+MatrizArcilla[1,3] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Gau"))$sserr
+MatrizArcilla[1,4] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Lin"))$sserr
+MatrizArcilla[1,5] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Ste"))$sserr
+#Con tendencia (Utilizamos Xlocal como tendencia):
+MatrizArcilla[2,1] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Exp"))$sserr
+MatrizArcilla[2,2] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Sph"))$sserr
+MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Gau"))$sserr
+MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Lin"))$sserr
+MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Ste"))$sserr
+
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
+
 which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
 
-# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "Lin" con tendencia:
-v.fitArcillalinCT = autofitVariogram(log(Arcilla) ~ Xlocal, suelo2, model = c("Lin"))$var_model
+# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Lin" con tendencia:
+
+v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACIÓN kriging MANUAL CONTENIDO EN ARCILLAS ###
+# A continuación podemos realizar el kriaje de las arcillas:
+
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Lin" con tendencia en la 
+## malla pts1".
+
 Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, suelo2, pts1, v.fitArcillalinCT)
 
 
-plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS") #En el intercomillado va el título.
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de Arcilla:
 
+## La siguiente función expresa "Genera un gráfico del objeto Arcilla.mapa (que 
+## es el resultado del kriaje de los datos) y cuyo título sea "CONTENIDO EN 
+## ARCILLA".
+
+plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS")
+
+
+################################################################################
+################################################################################
 ################################################################################
 ################################################################################
 

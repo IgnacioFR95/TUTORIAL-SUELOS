@@ -167,7 +167,7 @@ options(digits=10)
 # En este proceso vamos a generar el mapa base desde el cual vamos a realizar 
 # posteriormente los mapas de cada variable. En esta fase indicaremos el tamaño 
 # del área de estudio, las coordenadas que poseen y el tamaño de malla que 
-# utilizaremos para el posterior análisis por krigging.También adaptaremos los 
+# utilizaremos para el posterior análisis por kriging.También adaptaremos los 
 # datos al tamaño y forma del área estudiada.
 # 
 
@@ -243,19 +243,20 @@ plot(pts1)
 grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
 
 
+
 ################################################################################
 ########################## 3 NORMALIZACIÓN DE LAS VARIABLES ####################
 ################################################################################
 
 # En esta tercera fase vamos a transformar los datos brutos para conseguir que 
 # sigan una tendecia normalizada. Esto nos permitirá realizar la cartografía de
-# cada variable utilizando el método de krigging y autokrigging en la fase 4.
+# cada variable utilizando el método de kriging y autokriging en la fase 4.
 
 
 #_______________  3.1 METODOLOGÍA DE NORMALIZACIÓN DE VARIABLES _______________#
 
 
-# Para la realización de los mapas, utilizaremos la técnica de krigging, que es
+# Para la realización de los mapas, utilizaremos la técnica de kriging, que es
 # un método de interpolación geoestadístico de estimación de puntos.Este método
 # requiere que los datos de cada variable sigan una tendencia más o menos
 # normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el
@@ -304,6 +305,7 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 
 # *NOTA: Para el uso de la función boxcox() debemos abrir antes library(MASS)*
 
+
 #__________________  3.2 NORMALIZACIÓN DE VARIABLE GLUCOSIDADA ________________#
 
 hist(suelo2$GLUC) # No muestra un patrón normalizado.
@@ -316,6 +318,7 @@ qqnorm(log(suelo2$GLUC)) # Muestra un patrón normalizado.
 shapiro.test(log(suelo2$GLUC)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC)
+
 
 #__________________  3.3 NORMALIZACIÓN DE VARIABLE FOSFATASA ________________#
 
@@ -448,35 +451,75 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 
 
 
-#______________________________NOTAS PARA HACER MAPAS__________________________#
+################################################################################
+######################## 4 GENERACIÓN DE CARTOGRAFÍA EDÁFICA ###################
+################################################################################
 
-# Hay dos formas de hacer este proceso:
-# 1.Automáticamente con la función autokrigging:El propio R te realiza los
-#  cálculos y el sistema con una mejor relación con la realidad.
-
-# 2.Krigging manual: Ejecutamos cinco modelos matemáticos con y sin tendencia
-# y observamos cual se adapta mejor a lo que queremos, posteriormente, se genera
-# ese modelo en cartografía.
+# En esta última fase, vamos a realizar los mapas de cada una de las variables
+# utilizando el método de interpolación estadístico de estimación denominado
+# Kriging. Esta técnica de interpolación, utiliza un modelo de variograma para
+# obtener los ponderadores para poder estimar el resto del área intermedia donde
+# no se tiene un dato real recogido directamente del campo.
 
 
-#_____________________________MAPITA DE GLUCOSIDASA___________________________#
+#__________________  4.1 METODOLOGÍA DE CARTOGRAFÍA EDÁFICA ___________________#
 
-### AUTOKRIGGING GLUCOSIDASA ###
+# Existen dos formas para la realización de cartografía edáfica utilizando el 
+# método de kriaje:
 
-# Autokrigging sin tendencia:
+# 4.1.a Automáticamente con la función "autokriging()": 
+# El propio programa estadístico R, realiza los cálculos y elige el sistema con 
+# una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, 
+# suelen incurrir en cierto error, este puede ser asumible dependiendo del grado
+# de precisión que desee el estudio.
+
+# 4.1.b Kriging manual: 
+# Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se
+# adapta mejor a lo que queremos, posteriormente, se genera ese modelo en
+# cartografía.
+
+# Antes de realizar el kriging manual y, para mejorar la precisión del kriging, 
+# necesitamos observar a qué modelo matemático concreto se ajusta el variograma 
+# con mayor exactitud. 
+ 
+# Esto, podemos observarlo mediante el comando "autofitVariogram" seguido de los
+# diferentes modelos estudiados: Exponencial (Exp), Esférico (Sph), Gausiano(Gau)
+# Lineal(Lin) y la parametrización de Stein (Ste).
+
+# Ejemplo:
+autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
+
+# Esta línea de código nos informará cómo se adapta el variograma de datos de la
+# Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará
+# como salida un valor de semivarianza, cuanto más cercano esté este valor a 0,
+# mayor se ajustará los datos a la modelización Exponencial (en este caso).
+
+# Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) 
+# vacía donde poner los resultados de semivarianza sin tendencia o con ella 
+# (utilizando Xlocal como valores de tendencia) de los 5 modelos estudiados. De
+# esta forma, podremos observar qué valor de semivarianza es menor (es decir, a 
+# qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para
+# producir la cartografía mediante el kriging.
+
+
+#__________________  4.1 METODOLOGÍA DE CARTOGRAFÍA EDÁFICA ___________________#
+
+### AUTOKRIGING GLUCOSIDASA ###
+
+# Autokriging sin tendencia:
 Autok.GLUC.ST <- autoKrige(log(GLUC+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.GLUC.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.GLUC.CT <- autoKrige(log(GLUC+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.GLUC.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL GLUCOSIDASA ###
+### PREPARACIÓN kriging MANUAL GLUCOSIDASA ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -515,7 +558,7 @@ which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
 v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL GLUCOSIDASA ###
+### REALIZACIÓN kriging MANUAL GLUCOSIDASA ###
 GLUC.mapa <- krige(log(GLUC+1) ~  Xlocal, suelo2, pts1, v.fitGLUCsteCT)
 
 
@@ -526,20 +569,20 @@ plot(GLUC.mapa, main= "GLUCOSIDASA") #En el intercomillado va el título.
 
 #____________________________ MAPITA DE FOSFATASA _____________________________#
 
-### AUTOKRIGGING FOSFATASA ###
+### AUTOkriging FOSFATASA ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.FOSF.ST <- autoKrige(log(FOSF+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.FOSF.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.FOSF.CT <- autoKrige(log(FOSF+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.FOSF.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL DE LA FOSFATASA ###
+### PREPARACIÓN kriging MANUAL DE LA FOSFATASA ###
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
 # Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
@@ -575,7 +618,7 @@ which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL FOSFATASA ###
+### REALIZACIÓN kriging MANUAL FOSFATASA ###
 FOSF.mapa <- krige(log(FOSF+1) ~  1, suelo2, pts1, v.fitFOSFgauST)
 
 
@@ -586,20 +629,20 @@ plot(FOSF.mapa, main= "FOSFATASA") #En el intercomillado va el título.
 
 #____________________________ MAPITA DE NITRÓGENO _____________________________#
 
-### AUTOKRIGGING NITRÓGENO ###
+### AUTOkriging NITRÓGENO ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.N.ST <- autoKrige(log(N+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.N.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.N.CT <- autoKrige(log(N+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.N.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL DE LA NITRÓGENO ###
+### PREPARACIÓN kriging MANUAL DE LA NITRÓGENO ###
 
 # Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
 # Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
@@ -635,7 +678,7 @@ which((MatrizN) == min(MatrizN), arr.ind=TRUE)
 v.fitNsteST = autofitVariogram(log(N) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL NITRÓGENO ###
+### REALIZACIÓN kriging MANUAL NITRÓGENO ###
 N.mapa <- krige(log(N+1) ~  1, suelo2, pts1, v.fitNsteST)
 
 
@@ -647,22 +690,22 @@ plot(N.mapa, main= "NITRÓGENO") #En el intercomillado va el título.
 
 #_____________________________MAPITA DE POTASIO___________________________#
 
-### AUTOKRIGGING POTASIO ###
+### AUTOkriging POTASIO ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.K.ST <- autoKrige(log(K+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.K.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.K.CT <- autoKrige(log(K+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.K.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL POTASIO ###
+### PREPARACIÓN kriging MANUAL POTASIO ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -701,7 +744,7 @@ which((MatrizK) == min(MatrizK), arr.ind=TRUE)
 v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL POTASIO ###
+### REALIZACIÓN kriging MANUAL POTASIO ###
 K.mapa <- krige(log(K+1) ~  Xlocal, suelo2, pts1, v.fitKlinCT)
 
 
@@ -711,22 +754,22 @@ plot(K.mapa, main= "POTASIO") #En el intercomillado va el título.
 ################################################################################
 #_____________________________MAPITA DE CARBONO ___________________________#
 
-### AUTOKRIGGING CARBONO ###
+### AUTOkriging CARBONO ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.C.ST <- autoKrige(log(C+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.C.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.C.CT <- autoKrige(log(C+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.C.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL CARBONO ###
+### PREPARACIÓN kriging MANUAL CARBONO ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -765,7 +808,7 @@ which((MatrizC) == min(MatrizC), arr.ind=TRUE)
 v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL CARBONO ###
+### REALIZACIÓN kriging MANUAL CARBONO ###
 C.mapa <- krige(log(C+1) ~  Xlocal, suelo2, pts1, v.fitCgauCT)
 
 
@@ -776,22 +819,22 @@ plot(C.mapa, main= "CARBONO") #En el intercomillado va el título.
 
 #_____________________________MAPITA DE pH ___________________________#
 
-### AUTOKRIGGING pH ###
+### AUTOkriging pH ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.pH.ST <- autoKrige((pH) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.pH.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.pH.CT <- autoKrige((pH) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.pH.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL pH ###
+### PREPARACIÓN kriging MANUAL pH ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -830,7 +873,7 @@ which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)
 v.fitpHsteST = autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL pH ###
+### REALIZACIÓN kriging MANUAL pH ###
 pH.mapa <- krige((pH+1) ~  1, suelo2, pts1, v.fitpHsteST)
 
 
@@ -841,22 +884,22 @@ plot(pH.mapa, main= "pH") #En el intercomillado va el título.
 
 #_____________________________MAPITA DE CONTENIDO EN ARENAS ___________________________#
 
-### AUTOKRIGGING CONTENIDO EN ARENAS ###
+### AUTOkriging CONTENIDO EN ARENAS ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.Arena.ST <- autoKrige(log(Arena+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.Arena.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.Arena.CT <- autoKrige(log(Arena+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.Arena.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL CONTENIDO EN ARENAS ###
+### PREPARACIÓN kriging MANUAL CONTENIDO EN ARENAS ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -895,7 +938,7 @@ which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
 v.fitArenasteST = autofitVariogram(log(Arena) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL CONTENIDO EN ARENAS ###
+### REALIZACIÓN kriging MANUAL CONTENIDO EN ARENAS ###
 Arena.mapa <- krige(log(Arena+1) ~  1, suelo2, pts1, v.fitArenasteST)
 
 
@@ -906,22 +949,22 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS") #En el intercomillado va el título
 
 #_____________________________MAPITA DE CONTENIDO EN LIMO ___________________________#
 
-### AUTOKRIGGING CONTENIDO EN LIMO ###
+### AUTOkriging CONTENIDO EN LIMO ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.Limo.ST <- autoKrige(log(Limo+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.Limo.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.Limo.CT <- autoKrige(log(Limo+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.Limo.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL CONTENIDO EN LIMO ###
+### PREPARACIÓN kriging MANUAL CONTENIDO EN LIMO ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -960,7 +1003,7 @@ which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL CONTENIDO EN LIMO ###
+### REALIZACIÓN kriging MANUAL CONTENIDO EN LIMO ###
 Limo.mapa <- krige(log(Limo+1) ~  1, suelo2, pts1, v.fitLimosteST)
 
 
@@ -971,22 +1014,22 @@ plot(Limo.mapa, main= "CONTENIDO EN LIMO") #En el intercomillado va el título.
 
 #_____________________________MAPITA DE CONTENIDO EN ARCILLAS ___________________________#
 
-### AUTOKRIGGING CONTENIDO EN ARCILLAS ###
+### AUTOkriging CONTENIDO EN ARCILLAS ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.Arcilla.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.Arcilla.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
+### PREPARACIÓN kriging MANUAL CONTENIDO EN ARCILLAS ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -1025,7 +1068,7 @@ which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
 v.fitArcillalinCT = autofitVariogram(log(Arcilla) ~ Xlocal, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL CONTENIDO EN ARCILLAS ###
+### REALIZACIÓN kriging MANUAL CONTENIDO EN ARCILLAS ###
 Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, suelo2, pts1, v.fitArcillalinCT)
 
 
@@ -1037,22 +1080,22 @@ plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS") #En el intercomillado va el tí
 
 #_____________________________MAPITA DE FÓSFORO ___________________________#
 
-### AUTOKRIGGING FÓSFORO ###
+### AUTOkriging FÓSFORO ###
 
-# Autokrigging sin tendencia:
+# Autokriging sin tendencia:
 Autok.P.ST <- autoKrige(log(P+1) ~ 1, suelo2, pts1 )
 #Visualizamos como queda sin tendencia:
 plot(Autok.P.ST)
 
-# Autokrigging con tendencia
+# Autokriging con tendencia
 Autok.P.CT <- autoKrige(log(P+1) ~ Xlocal, suelo2, new_data=pts1 )
 #Visualizamos como queda con tendencia:
 plot(Autok.P.CT)
 
 
-### PREPARACIÓN KRIGGING MANUAL FÓSFORO ###
+### PREPARACIÓN kriging MANUAL FÓSFORO ###
 
-# Como hemos dicho anteriormente, antes de realizar el krigging manual necesitamos
+# Como hemos dicho anteriormente, antes de realizar el kriging manual necesitamos
 # ajustar el variograma. Se puede hacer manualmente con el comando "(f(x) fitvariogram)"
 #  y poniendo las diferentes variables o hacerlo automáticamente con la función
 # "(autofitVariogram)".
@@ -1091,7 +1134,7 @@ which((MatrizP) == min(MatrizP), arr.ind=TRUE)
 v.fitPgauCT = autofitVariogram(log(P+1) ~ Xlocal, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACIÓN KRIGGING MANUAL FÓSFORO ###
+### REALIZACIÓN kriging MANUAL FÓSFORO ###
 P.mapa <- krige(log(P+1) ~  Xlocal, suelo2, pts1, v.fitPgauCT)
 
 

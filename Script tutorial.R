@@ -533,12 +533,12 @@ autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
 
 # Autokriging sin tendencia:
 Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, suelo2, pts1 )
-#Visualizamos como sería la representación gráfica sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.GLUC.ST)
 
 # Autokriging con tendencia
 Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como sería la representación gráfica con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.GLUC.CT)
 
 
@@ -553,18 +553,18 @@ MatrizGLUC <- matrix(NA,2,5)
 colnames(MatrizGLUC) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizGLUC) <- c("Sin tendencia", "Con tendencia")
 
-#Rellenamos con los datos de cada modelo:
+# Rellenamos con los datos de cada modelo:
 ## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
 ## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
-#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+# Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 MatrizGLUC[1,1] <- autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
 MatrizGLUC[1,2] <- autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Sph"))$sserr
 MatrizGLUC[1,3] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Gau"))$sserr
 MatrizGLUC[1,4] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Lin"))$sserr
 MatrizGLUC[1,5] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Ste"))$sserr
-#Con tendencia (Utilizamos Xlocal como tendencia):
+# Con tendencia (Utilizamos Xlocal como tendencia):
 MatrizGLUC[2,1] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
 MatrizGLUC[2,2] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
 MatrizGLUC[2,3] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
@@ -609,29 +609,32 @@ plot(GLUC.mapa, main= "GLUCOSIDASA")
 
 # Autokriging sin tendencia:
 Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, suelo2, pts1 )
-#Visualizamos como sería la representación gráfica sin tendencia:
+# Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.FOSF.ST)
 
 # Autokriging con tendencia
 Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, suelo2, new_data=pts1 )
-#Visualizamos como sería la representación gráfica con tendencia:
+# Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.FOSF.CT)
 
 
-### PREPARACIÓN kriging MANUAL DE LA FOSFATASA ###
+# 4.2.b Kriging manual de Fosfatasa:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
+
 
 MatrizFOSF <- matrix(NA,2,5)
 colnames(MatrizFOSF) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizFOSF) <- c("Sin tendencia", "Con tendencia")
 
-#Rellenamos con los datos de cada modelo:
+# Rellenamos con los datos de cada modelo:
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 MatrizFOSF[1,1] <- autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Exp"))$sserr
 MatrizFOSF[1,2] <- autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Sph"))$sserr
@@ -645,20 +648,32 @@ MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Gau")
 MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
 MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
 which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 
-# En este caso nos dice que "GAU SIN TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "Gau" sin tendencia:
+# En este caso nos dice que "GAU SIN TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Gau" sin tendencia:
+
 v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Gau"))$var_model
 
 
-### REALIZACIÓN kriging MANUAL FOSFATASA ###
-FOSF.mapa <- krige(log(FOSF+1) ~  1, suelo2, pts1, v.fitFOSFgauST)
+# A continuación podemos realizar el kriaje de la fosfatasa:
 
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Gau" sin tendencia en la 
+## malla pts1".
+FOSF.mapa <- krige(log(FOSF) ~  1, suelo2, pts1, v.fitFOSFgauST)
 
-plot(FOSF.mapa, main= "FOSFATASA") #En el intercomillado va el título.
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de glucosidasa:
+
+## La siguiente función expresa "Genera un gráfico del objeto FOSF.mapa (que es
+## el resultado del kriaje de los datos) y cuyo título sea "FOSFATASA".
+
+plot(FOSF.mapa, main= "FOSFATASA")
 
 ################################################################################
 ################################################################################

@@ -31,47 +31,70 @@
 ################################### ÍNDICE #####################################
 
 # |1|  PREPARACIÓN DE DATOS
-#    ??? |1.1| Carga de datos iniciales.
-#    ??? |1.2| Carga de códigos iniciales (source). 
-#                           NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
-#    ??? |1.3| Carga de paquetes R necesarios.
-#    ??? |1.4| Reclasificación datos originales a datos espaciales.
+#      |1.1| Carga de datos iniciales.
+#      |1.2| Carga de códigos iniciales (source). 
+#                         ##NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
+#      |1.3| Carga de paquetes R necesarios.
+#      |1.4| Reclasificación datos originales a datos espaciales.
 #   
 # |2|  PREPARACIÓN ÁREA DE ESTUDIO
-#    ??? |2.1| Generación del mapa base.
-#          ??? 2.1.a Generación del polígono
-#          ??? 2.1.b Generación de la malla
-#    ??? |2.2| Adaptación de los datos a mapa base.
+#      |2.1| Generación del mapa base.
+#              2.1.a Generación del polígono
+#              2.1.b Generación de la malla
+#      |2.2| Adaptación de los datos a mapa base.
 #
 # |3|  NORMALIZACIÓN DE LAS VARIABLES
-#    ??? 3.1 Metodología de normalización de variables
-#          ??? 3.1.a Histograma
-#          ??? 3.1.b Gráfico cuantil-cuantil
-#          ??? 3.1.c Test de shapiro
-#          ??? 3.1.d Modificación de los datos
-#    ??? 3.2 Normalización variable GLUCOSIDASA
-#    ??? 3.3 Normalización variable FOSFATASA
-#    ??? 3.4 Normalización variable NITRÓGENO
-#    ??? 3.4 Normalización variable FÓSFORO
-#    ??? 3.5 Normalización variable POTASIO
-#    ??? 3.6 Normalización variable CARBONO
-#    ??? 3.7 Normalización variable pH
-#    ??? 3.8 Normalización variable ARENA
-#    ??? 3.9 Normalización variable LIMO
-#    ??? 3.10 Normalización variable ARCILLA
+#      |3.1| Metodología de normalización de variables
+#              3.1.a Histograma
+#              3.1.b Gráfico cuantil-cuantil
+#              3.1.c Test de shapiro
+#              3.1.d Modificación de los datos
+#      |3.2| Normalización variable GLUCOSIDASA
+#      |3.3| Normalización variable FOSFATASA
+#      |3.4| Normalización variable NITRÓGENO
+#      |3.4| Normalización variable FÓSFORO
+#      |3.5| Normalización variable POTASIO
+#      |3.6| Normalización variable CARBONO
+#      |3.7| Normalización variable pH
+#      |3.8| Normalización variable ARENA
+#      |3.9| Normalización variable LIMO
+#      |3.10| Normalización variable ARCILLA
 #
 # |4|  GENERACIÓN DE CARTOGRAFÍA EDÁFICA
-#    ??? 4.1 Metodología de cartografía edáfica
-#    ??? 4.2 Cartografía de variable GLUCOSIDASA
-#    ??? 4.3 Cartografía de variable FOSFATASA
-#    ??? 4.4 Cartografía de variable NITRÓGENO
-#    ??? 4.4 Cartografía de variable FÓSFORO
-#    ??? 4.5 Cartografía de variable POTASIO
-#    ??? 4.6 Cartografía de variable CARBONO
-#    ??? 4.7 Cartografía de variable pH
-#    ??? 4.8 Cartografía de variable ARENA
-#    ??? 4.9 Cartografía de variable LIMO
-#    ??? 4.10 Cartografía de variable ARCILLA
+#      |4.1| Metodología de cartografía edáfica
+#              4.1.a Función "autokriging()"
+#              4.1.b Kriging manual
+#      |4.2| Cartografía de variable GLUCOSIDASA
+#              4.2.a Autokrigging de Glucosidasa
+#              4.2.b Kriging manual de Glucosidasa
+#      |4.3| Cartografía de variable FOSFATASA
+#              4.3.a Autokrigging de Fosfatasa
+#              4.3.b Kriging manual de Fosfatasa
+#      |4.4| Cartografía de variable NITRÓGENO
+#              4.4.a Autokrigging de Nitrógeno
+#              4.4.b Kriging manual de Nitrógeno
+#      |4.5| Cartografía de variable FÓSFORO
+#              4.5.a Autokrigging de Fósforo
+#              4.5.b Kriging manual de Fósforo
+#      |4.6| Cartografía de variable POTASIO
+#              4.6.a Autokrigging de Potasio
+#              4.6.b Kriging manual de Potasio
+#      |4.7| Cartografía de variable CARBONO
+#              4.7.a Autokrigging de Carbono
+#              4.7.b Kriging manual de Carbono
+#      |4.8| Cartografía de variable pH
+#              4.8.a Autokrigging de pH
+#              4.8.b Kriging manual de pH
+#      |4.9| Cartografía de variable ARENA
+#              4.9.a Autokrigging de Arena
+#              4.9.b Kriging manual de Arena
+#      |4.10| Cartografía de variable LIMO
+#              4.10.a Autokrigging de Limo
+#              4.10.b Kriging manual de Limo
+#      |4.11| Cartografía de variable ARCILLA 
+#              4.11.a Autokrigging de Arcilla
+#              4.11.b Kriging manual de Arcilla
+
 
 ################################################################################
 ############################# 1 PREPARACIÓN DE DATOS ###########################
@@ -129,7 +152,7 @@ library(spatstat)
 library(raster)
 library(automap)
 
-        
+
 #______ 1.4 RECLASIFICACIÓN DE LOS DATOS ORIGINALES A DATOS ESPACIALES ________#
 
 #  Con las siguientes operaciones vamos a modificar el tipo de objeto que son los 
@@ -211,7 +234,7 @@ class(sps1)
 # nos servirá para los posteriores análisis estadísticos de kriage.el tamaño de 
 # la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de
 # este rectángulo.
- 
+
 
 
 # El siguiente comando dice: "Creáme una malla regular con los datos de suelo2, 
@@ -271,7 +294,7 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 # 3.1.a Histograma: 
 
 # Representación de distribuciones de frecuencias, en el que se emplean rectángulos
-# dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida "???"
+# dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida
 # en la parte central del dibujo, tendrá una tendencia normalizada.
 # Para realizar este gráfico, utilizaremos el comando "hist()".
 
@@ -483,7 +506,7 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 # Antes de realizar el kriging manual y, para mejorar la precisión del kriging, 
 # necesitamos observar a qué modelo matemático concreto se ajusta el variograma 
 # con mayor exactitud. 
- 
+
 # Esto, podemos observarlo mediante el comando "autofitVariogram" seguido de los
 # diferentes modelos estudiados: Exponencial (Exp), Esférico (Sph), Gausiano(Gau)
 # Lineal(Lin) y la parametrización de Stein (Ste).
@@ -1153,6 +1176,6 @@ P.mapa <- krige(log(P+1) ~  Xlocal, suelo2, pts1, v.fitPgauCT)
 
 plot(P.mapa, main= "FÓSFORO") #En el intercomillado va el título.
 
-################################################################################
-################################################################################
 
+################################################################################
+################################################################################

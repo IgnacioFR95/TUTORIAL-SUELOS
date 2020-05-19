@@ -24,7 +24,9 @@
 
 # Para cualquier información adicional sobre el funcionamiento de algún comando,
 # puedes utilizar "?NombreDelComando". Lo que abrirá una nueva pestaña con más
-# información sobre su uso y la gramática que utiliza.
+# información sobre su uso y la gramática que utiliza. Si el comando pertenece a
+# un paquete de R concreto, puedes utilizar el comando "??NombreDelComando" para
+# recibir la misma información.
 
 ################################### ÍNDICE #####################################
 

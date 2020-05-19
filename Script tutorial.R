@@ -574,8 +574,8 @@ MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Ste")
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
 
-## Con el siguiente comando le decimos al programa "Dime qué coordenada de la
-## matriz tiene un valor menor".
+## El siguiente comando le decimos al programa "Dime qué coordenada de la matriz
+## tiene un valor menor".
 which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
 
 # En este caso nos dice que "STE CON TENDENCIA" es el mejor, así que será el 
@@ -651,6 +651,8 @@ MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Ste")
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
 
+## El siguiente comando le decimos al programa "Dime qué coordenada de la matriz
+## tiene un valor menor".
 which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 
 # En este caso nos dice que "GAU SIN TENDENCIA" es el mejor, así que será el 
@@ -675,65 +677,81 @@ FOSF.mapa <- krige(log(FOSF) ~  1, suelo2, pts1, v.fitFOSFgauST)
 
 plot(FOSF.mapa, main= "FOSFATASA")
 
-################################################################################
-################################################################################
 
-#____________________________ MAPITA DE NITRÓGENO _____________________________#
+#__________________  4.4 CARTOGRAFÍA DE VARIABLE NITRÓGENO ____________________#
 
-### AUTOkriging NITRÓGENO ###
+# 4.4.a Autokrigging de Nitrógeno:
 
 # Autokriging sin tendencia:
-Autok.N.ST <- autoKrige(log(N+1) ~ 1, suelo2, pts1 )
+Autok.N.ST <- autoKrige((N) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.N.ST)
 
 # Autokriging con tendencia
-Autok.N.CT <- autoKrige(log(N+1) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.N.CT <- autoKrige((N) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.N.CT)
 
 
-### PREPARACIÓN kriging MANUAL DE LA NITRÓGENO ###
+# 4.4.b Kriging manual de Nitrógeno:
 
-# Buscaremos manualmente cual es el mejor modelo y lo utlizaremos.
-# Vamos a crear una matriz (una tabla) vacía donde poner los resultados de los
-# 5 modelos que estudiaremos y si lo hacemos con tendencia o sin tendencia.
+# Generamos una matriz donde exponer las semivarianzas de cada modelo:
 
-# Estamos creando una matriz vacía donde poner todos los resultados de los
-# posibles modelos:
+## Le decimos al programa "genera una matriz de 2x5 y nombra las columnas y las 
+## filas con los nombres de los modelos y la tendencia respectivamente".
 
 MatrizN <- matrix(NA,2,5)
 colnames(MatrizN) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizN) <- c("Sin tendencia", "Con tendencia")
 
 #Rellenamos con los datos de cada modelo:
-#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizN[1,1] <- autofitVariogram(log(N) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizN[1,2] <- autofitVariogram(log(N) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizN[1,3] <- autofitVariogram(log(N)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizN[1,4] <- autofitVariogram(log(N)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizN[1,5] <- autofitVariogram(log(N)  ~ 1, suelo2, model = c("Ste"))$sserr
-#Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizN[2,1] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizN[2,2] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizN[2,3] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizN[2,4] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizN[2,5] <- autofitVariogram(log(N)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
 
-# El modelo que se ajuste mejor será el que tenga un valor más bajo.
+## Le decimos al programa "rellena la matriz generada con la semivarianza de cada
+## modelo matemático y con o sin tendencia". Se debe asegurar de introducir los
+## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+#Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+MatrizN[1,1] <- autofitVariogram((N) ~ 1, suelo2, model = c("Exp"))$sserr
+MatrizN[1,2] <- autofitVariogram((N) ~ 1, suelo2, model = c("Sph"))$sserr
+MatrizN[1,3] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Gau"))$sserr
+MatrizN[1,4] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Lin"))$sserr
+MatrizN[1,5] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Ste"))$sserr
+#Con tendencia (Utilizamos Xlocal como tendencia):
+MatrizN[2,1] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
+MatrizN[2,2] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
+MatrizN[2,3] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
+MatrizN[2,4] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
+MatrizN[2,5] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+
+# El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+## El siguiente comando le decimos al programa "Dime qué coordenada de la
+## matriz tiene un valor menor".
 which((MatrizN) == min(MatrizN), arr.ind=TRUE)
 
-# En este caso nos dice que "STE SIN TENDENCIA" es el mejor, así que lo usaremos.
-# Realizamos un autofitting del modelo "Ste" sin tendencia:
-v.fitNsteST = autofitVariogram(log(N) ~ 1, suelo2, model = c("Ste"))$var_model
+# En este caso nos dice que "LIN CON TENDENCIA" es el mejor, así que será el 
+# utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
+#"Lin" con tendencia:
+
+v.fitNlinCT = autofitVariogram((N) ~ 1, suelo2, model = c("Lin"))$var_model
 
 
-### REALIZACIÓN kriging MANUAL NITRÓGENO ###
-N.mapa <- krige(log(N+1) ~  1, suelo2, pts1, v.fitNsteST)
+# A continuación podemos realizar el kriaje del Nitrógeno.
 
+## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
+## kriaje de los datos de suelo2 adaptados al modelo "Lin" con tendencia en la 
+## malla pts1".
 
-plot(N.mapa, main= "NITRÓGENO") #En el intercomillado va el título.
+N.mapa <- krige((N) ~  1, suelo2, pts1, v.fitNlinCT)
+
+# Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
+# de la zona en el que se observan las concentraciones de Nitrógeno:
+
+## La siguiente función expresa "Genera un gráfico del objeto GLUC.N (que es el
+## resultado del kriaje de los datos) y cuyo título sea "NITRÓGENO".
+
+plot(N.mapa, main= "NITRÓGENO") 
 
 ################################################################################
 ################################################################################

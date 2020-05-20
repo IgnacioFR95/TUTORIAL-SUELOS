@@ -194,7 +194,7 @@ options(digits=10)
 # del área de estudio, las coordenadas que poseen y el tamaño de malla que 
 # utilizaremos para el posterior análisis por kriging.También adaptaremos los 
 # datos al tamaño y forma del área estudiada.
-# 
+
 
 
 #_______________________  2.1 GENERACIÓN DEL MAPA BASE ________________________#
@@ -261,7 +261,7 @@ coordinates(pts1) <- c("Xlocal", "Ylocal")
 
 pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.frame"), tolerance=0.077)
 
-#Podemos observar cómo quedaría gráficamente el objeto "pts1".
+# Podemos observar cómo quedaría gráficamente el objeto "pts1".
 plot(pts1)
 
 # Asignamos un sistema de coordenadas a la malla:
@@ -419,7 +419,7 @@ hist(log(suelo2$pH+1)) # Muestra un patrón normalizado.
 qqnorm(log(suelo2$pH+1)) # Muestra un patrón normalizado.
 shapiro.test(log(suelo2$pH+1)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
-# Utilizaremos el logaritmo del pH para el mapeado --> LOG(pH+1)
+# Utilizaremos el logaritmo del pH para el mapeado --> (pH)
 
 
 #____________________  3.9 NORMALIZACIÓN DE VARIABLE ARENA ____________________#
@@ -472,7 +472,7 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 #El p-valor es muy bajo, No muestra un patrón normalizado.
 
 ##NI IDEA DE CUAL USAR USO LOG QUE TIENE EL P-Valor más bajo##
-# Utilizaremos el logaritmo del Arcilla para el mapeado --> LOG(Arcilla)
+# Utilizaremos el logaritmo del Arcilla +1 para el mapeado --> LOG(Arcilla)+1
 
 
 
@@ -1227,12 +1227,12 @@ plot(Limo.mapa, main= "CONTENIDO EN LIMO")
 
 
 # Autokriging sin tendencia:
-Autok.Arcilla.ST <- autoKrige((Arcilla) ~ 1, suelo2, pts1 )
+Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, suelo2, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arcilla.ST)
 
 # Autokriging con tendencia:
-Autok.Arcilla.CT <- autoKrige((Arcilla) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arcilla.CT)
 

@@ -20,12 +20,12 @@
 ################################################################################
 ################################################################################
 
-#¡ANTENCIÓN! LEER ANTENTAMENTE EL ARCHIVO README ANTES DE INICIAR ESTE TUTORIAL.
+#¡ANTENCIÓN! LEA ANTENTAMENTE EL ARCHIVO README ANTES DE INICIAR ESTE TUTORIAL.
 
 # Para cualquier información adicional sobre el funcionamiento de algún comando,
-# puedes utilizar "?NombreDelComando". Lo que abrirá una nueva pestaña con más
+# puede utilizar "?NombreDelComando". Lo que abrirá una nueva pestaña con más
 # información sobre su uso y la gramática que utiliza. Si el comando pertenece a
-# un paquete de R concreto, puedes utilizar el comando "??NombreDelComando" para
+# un paquete de R concreto, puede utilizar el comando "??NombreDelComando" para
 # recibir la misma información.
 
 ################################### ÍNDICE #####################################
@@ -65,34 +65,34 @@
 #              4.1.a Función "autokriging()"
 #              4.1.b Kriging manual
 #      |4.2| Cartografía de variable GLUCOSIDASA
-#              4.2.a Autokrigging de Glucosidasa
+#              4.2.a Autokriging de Glucosidasa
 #              4.2.b Kriging manual de Glucosidasa
 #      |4.3| Cartografía de variable FOSFATASA
-#              4.3.a Autokrigging de Fosfatasa
+#              4.3.a Autokriging de Fosfatasa
 #              4.3.b Kriging manual de Fosfatasa
 #      |4.4| Cartografía de variable NITRÓGENO
-#              4.4.a Autokrigging de Nitrógeno
+#              4.4.a Autokriging de Nitrógeno
 #              4.4.b Kriging manual de Nitrógeno
 #      |4.5| Cartografía de variable FÓSFORO
-#              4.5.a Autokrigging de Fósforo
+#              4.5.a Autokriging de Fósforo
 #              4.5.b Kriging manual de Fósforo
 #      |4.6| Cartografía de variable POTASIO
-#              4.6.a Autokrigging de Potasio
+#              4.6.a Autokriging de Potasio
 #              4.6.b Kriging manual de Potasio
 #      |4.7| Cartografía de variable CARBONO
-#              4.7.a Autokrigging de Carbono
+#              4.7.a Autokriging de Carbono
 #              4.7.b Kriging manual de Carbono
 #      |4.8| Cartografía de variable pH
-#              4.8.a Autokrigging de pH
+#              4.8.a Autokriging de pH
 #              4.8.b Kriging manual de pH
 #      |4.9| Cartografía de variable ARENA
-#              4.9.a Autokrigging de Arena
+#              4.9.a Autokriging de Arena
 #              4.9.b Kriging manual de Arena
 #      |4.10| Cartografía de variable LIMO
-#              4.10.a Autokrigging de Limo
+#              4.10.a Autokriging de Limo
 #              4.10.b Kriging manual de Limo
 #      |4.11| Cartografía de variable ARCILLA 
-#              4.11.a Autokrigging de Arcilla
+#              4.11.a Autokriging de Arcilla
 #              4.11.b Kriging manual de Arcilla
 
 
@@ -121,19 +121,20 @@
 suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
 suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 
-# Este comando dice: "Crea un nuevo objeto con el archivo de .txt con los datos, 
-# su separación será con barras, el símbolo que marca el decimal es coma "," y la 
-# primera fila de los datos corresponde al enunciado de las variables (por eso 
-# le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)".
+## Este comando dice: "Crea un nuevo objeto con el archivo de .txt con los datos, 
+## su separación será con barras, el símbolo que marca el decimal es coma "," y la 
+## primera fila de los datos corresponde al enunciado de las variables (por eso 
+## le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)".
 
 load("data/AerialRoot.community.corregido.Rdata")
 
 
 #______________________  1.2 CARGA DE CÓDIGOS INICIALES _______________________#
 
-# Esto carga algunos parámetros y comandos imprescindibles, se hace para acortar
-# procesos y así ahorrar tiempo.También te asegura que tienes cargados todos los
-# complementos necesarios y que la versión de R es apta para trabajar.
+# El comando source() carga algunos parámetros y comandos imprescindibles, se 
+# hace para acortar procesos y así ahorrar tiempo.También te asegura que se  
+# tienen cargados todos los complementos necesarios y que la versión de R es  
+# apta para trabajar.
 
 source("start/setup.R")
 source("start/curatingdata.R") ##¡SÓLO SE PUEDE CARGAR UNA VEZ!
@@ -155,7 +156,7 @@ library(automap)
 
 #______ 1.4 RECLASIFICACIÓN DE LOS DATOS ORIGINALES A DATOS ESPACIALES ________#
 
-#  Con las siguientes operaciones vamos a modificar el tipo de objeto que son los 
+# Con las siguientes operaciones vamos a modificar el tipo de objeto que son los 
 # datos, para así poder trabajar con ellos espacialmente. Para ello, asignaremos 
 # al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales
 # que puedan tener los datos a 10.
@@ -176,10 +177,10 @@ coordinates(suelo2) <- ~ Xlocal + Ylocal
 
 class(suelo2)
 
-##Efectivamente, ahora es un "SpatialPointsDataFrame".##
+## Efectivamente, ahora es un "SpatialPointsDataFrame".##
 
 
-#Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar
+# Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar
 # cifras excesivamente largas, para ello usaremos el siguiente comando:
 
 options(digits=10)
@@ -216,26 +217,26 @@ options(digits=10)
 p1 <- Polygon(esquinas.parcela[,1:2])
 
 
-# Esta es una función diferente a la anterior, esta es "Polygons" con s al final.
-# Aún no he entendido la diferencia leyéndome el manual.
+# Ahora dotaremos a este polígono de un atributo espacial, utilizando el comando
+# "Polygons()".
+
 ps1 <- Polygons(list(p1),1)
 
 # Creamos un nuevo objeto para convertir "ps1" de la clase "Polygons" a
 # un "SpatialPolygons" llamado sps1.
 sps1 <- SpatialPolygons(list(ps1))
 
-#Podemos ver qué clase es "sps1" con el comando "class()" y cerciorarnos.
+# Podemos ver qué clase es "sps1" con el comando "class()" y cerciorarnos.
 class(sps1)
 
-##Observamos que la clase es efectivamente "SpatialPolygons".
+## Observamos que la clase es efectivamente "SpatialPolygons".
 
 # 2.1.b Generación de la malla:
+
 # Generaremos una malla con la ayuda del polígono creado en el paso anterior que 
-# nos servirá para los posteriores análisis estadísticos de kriage.el tamaño de 
+# nos servirá para los posteriores análisis estadísticos de kriaje.el tamaño de 
 # la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de
 # este rectángulo.
-
-
 
 # El siguiente comando dice: "Creáme una malla regular con los datos de suelo2, 
 # donde el tamaño de celda sean 5 cm".
@@ -529,7 +530,7 @@ autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
 
 #__________________  4.2 CARTOGRAFÍA DE VARIABLE GLUCOSIDASA ___________________#
 
-# 4.2.a Autokrigging de Glucosidasa:
+# 4.2.a Autokriging de Glucosidasa:
 
 # Autokriging sin tendencia:
 Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, suelo2, pts1 )
@@ -605,7 +606,7 @@ plot(GLUC.mapa, main= "GLUCOSIDASA")
 
 #__________________  4.3 CARTOGRAFÍA DE VARIABLE FOSFATASA ____________________#
 
-# 4.3.a Autokrigging de Fosfatasa:
+# 4.3.a Autokriging de Fosfatasa:
 
 # Autokriging sin tendencia:
 Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, suelo2, pts1 )
@@ -680,7 +681,7 @@ plot(FOSF.mapa, main= "FOSFATASA")
 
 #__________________  4.4 CARTOGRAFÍA DE VARIABLE NITRÓGENO ____________________#
 
-# 4.4.a Autokrigging de Nitrógeno:
+# 4.4.a Autokriging de Nitrógeno:
 
 # Autokriging sin tendencia:
 Autok.N.ST <- autoKrige((N) ~ 1, suelo2, pts1 )
@@ -756,7 +757,7 @@ plot(N.mapa, main= "NITRÓGENO")
 
 #__________________  4.5 CARTOGRAFÍA DE VARIABLE FÓSFORO ____________________#
 
-# 4.5.a Autokrigging de Fósforo:
+# 4.5.a Autokriging de Fósforo:
 
 # Autokriging sin tendencia:
 Autok.P.ST <- autoKrige((P) ~ 1, suelo2, pts1 )

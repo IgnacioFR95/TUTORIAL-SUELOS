@@ -30,14 +30,14 @@
 
 ################################### ÍNDICE #####################################
 
-# |1|  PREPARACIÓN DE DATOS
+# |1|  PREPARACIÓN DE LOS DATOS
 #      |1.1| Carga de datos iniciales.
 #      |1.2| Carga de códigos iniciales (source). 
 #                         ##NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
 #      |1.3| Carga de paquetes R necesarios.
 #      |1.4| Reclasificación datos originales a datos espaciales.
 #   
-# |2|  PREPARACIÓN ÁREA DE ESTUDIO
+# |2|  PREPARACIÓN DEL ÁREA DE ESTUDIO
 #      |2.1| Generación del mapa base.
 #              2.1.a Generación del polígono
 #              2.1.b Generación de la malla
@@ -60,7 +60,7 @@
 #      |3.9| Normalización variable LIMO
 #      |3.10| Normalización variable ARCILLA
 #
-# |4|  GENERACIÓN DE CARTOGRAFÍA EDÁFICA
+# |4|  GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA
 #      |4.1| Metodología de cartografía edáfica
 #              4.1.a Función "autokriging()"
 #              4.1.b Kriging manual

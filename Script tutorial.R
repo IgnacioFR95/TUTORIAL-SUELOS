@@ -274,8 +274,8 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 ########################## 3 NORMALIZACIÓN DE LAS VARIABLES ####################
 ################################################################################
 
-# En esta tercera fase vamos a transformar los datos brutos para conseguir que 
-# sigan una tendecia normalizada. Esto nos permitirá realizar la cartografía de
+# En esta tercera fase, vamos a transformar los datos brutos para conseguir que 
+# sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de
 # cada variable utilizando el método de kriging y autokriging en la fase 4.
 
 
@@ -478,14 +478,14 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 
 
 ################################################################################
-######################## 4 GENERACIÓN DE CARTOGRAFÍA EDÁFICA ###################
+##################### 4 GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA ###################
 ################################################################################
 
 # En esta última fase, vamos a realizar los mapas de cada una de las variables
-# utilizando el método de interpolación estadístico de estimación denominado
-# Kriging. Esta técnica de interpolación, utiliza un modelo de variograma para
-# obtener los ponderadores para poder estimar el resto del área intermedia donde
-# no se tiene un dato real recogido directamente del campo.
+# utilizando el método de estimación geoestadístico denominado kriging.Esta 
+# técnica de interpolación, utiliza un modelo de variograma para poder estimar 
+# el resto de puntos intermedios donde no se tiene un dato real recogido 
+# directamente del campo
 
 
 #__________________  4.1 METODOLOGÍA DE CARTOGRAFÍA EDÁFICA ___________________#
@@ -501,8 +501,8 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 
 # 4.1.b Kriging manual: 
 # Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se
-# adapta mejor a lo que queremos, posteriormente, se genera ese modelo en
-# cartografía.
+# adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado
+# partiendo de ese modelo y se visualiza cómo quedaría gráficamente.
 
 # Antes de realizar el kriging manual y, para mejorar la precisión del kriging, 
 # necesitamos observar a qué modelo matemático concreto se ajusta el variograma 

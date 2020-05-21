@@ -190,11 +190,11 @@ options(digits=10)
 ######################## 2 PREPARACIÓN ÁREA DE ESTUDIO #########################
 ################################################################################
 
-# En este proceso vamos a generar el mapa base desde el cual vamos a realizar 
-# posteriormente los mapas de cada variable. En esta fase indicaremos el tamaño 
+# En este proceso, vamos a generar el mapa base desde el cual vamos a realizar 
+# posteriormente el mapa de cada variable. En esta fase indicaremos el tamaño 
 # del área de estudio, las coordenadas que poseen y el tamaño de malla que 
-# utilizaremos para el posterior análisis por kriging.También adaptaremos los 
-# datos al tamaño y forma del área estudiada.
+# utilizaremos para el posterior análisis por kriging.También refinaremos y 
+# adaptaremos los datos al tamaño y forma del área estudiada.
 
 
 

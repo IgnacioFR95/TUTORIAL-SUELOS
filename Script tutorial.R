@@ -169,19 +169,19 @@ if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio 
 
 # 1.2.c) Verificación de los paquetes CRAN:
 # Comprobaremos si los paquetes necesarios están instalados.
-CRAN_needed <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
+PaquetesNecesarios <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
 installed_packages <- .packages(all.available = TRUE)
-CRAN_needed2 <- CRAN_needed[!CRAN_needed %in% installed_packages]
+PaquetesNecesarios2 <- PaquetesNecesarios[!PaquetesNecesarios %in% installed_packages]
 
 # Descarga de paquetes faltantes de CRAN: 
 
-if(length(CRAN_needed2) > 0){install.packages(CRAN_needed2)}
-stopifnot(all(c(CRAN_needed) %in% .packages(all.available = TRUE)))
+if(length(PaquetesNecesarios2) > 0){install.packages(PaquetesNecesarios2)}
+stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))
 
 
 # 1.2.d) Finalización de las comprobaciones:
 
-rm(CRAN_needed, CRAN_needed2, installed_packages)
+rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)
 
 ## El comando "rm()" elimina los objetos puestos entre paréntesis, en este caso 
 ## los objetos que hemos utilizado para confirmar que los paquetes están instalados.
@@ -232,8 +232,8 @@ library(automap)
 # un objeto "data.frame" a un objeto "SpatialPointDataFrame".
 
 # Para esta operación utilizaremos el comando "coordinates()". Este comando dice:
-# "Utiliza como coordenadas x e y para los datos recogidos en el objeto VariablesSuelo, 
-# los valores de las columnas Xlocal e Ylocal respectivamente".
+# "Utiliza como coordenadas x e y para los datos recogidos en el objeto  
+# VariablesSuelo, los valores de las columnas Xlocal e Ylocal respectivamente".
 
 coordinates(VariablesSuelo) <- ~ Xlocal + Ylocal
 

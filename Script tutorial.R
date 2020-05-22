@@ -32,23 +32,27 @@
 
 # |1|  PREPARACIÓN DE LOS DATOS
 #      |1.1| Carga de datos iniciales.
-#      |1.2| Comprobaciones  
-#                         ##NOTA: NO SÉ SI LOS DEJAREMOS EN SOURCE O SE EXPLICAN
+#      |1.2| Comprobaciones iniciales
+#              |1.2.a| Verificación de la versión de R
+#              |1.2.b| Verificación de la versión de RStudio
+#              |1.2.c| Verificación de los paquetes CRAN
+#              |1.2.d| Finalización de las comprobaciones
+#              |1.2.e| Curating data
 #      |1.3| Carga de paquetes R necesarios.
 #      |1.4| Reclasificación datos originales a datos espaciales.
 #   
 # |2|  PREPARACIÓN DEL ÁREA DE ESTUDIO
 #      |2.1| Generación del mapa base.
-#              2.1.a Generación del polígono
-#              2.1.b Generación de la malla
+#              |2.1.a| Generación del polígono
+#              |2.1.b| Generación de la malla
 #      |2.2| Adaptación de los datos a mapa base.
 #
 # |3|  NORMALIZACIÓN DE LAS VARIABLES
 #      |3.1| Metodología de normalización de variables
-#              3.1.a Histograma
-#              3.1.b Gráfico cuantil-cuantil
-#              3.1.c Test de shapiro
-#              3.1.d Modificación de los datos
+#              |3.1.a| Histograma
+#              |3.1.b| Gráfico cuantil-cuantil
+#              |3.1.c| Test de shapiro
+#              |3.1.d| Modificación de los datos
 #      |3.2| Normalización variable GLUCOSIDASA
 #      |3.3| Normalización variable FOSFATASA
 #      |3.4| Normalización variable NITRÓGENO
@@ -62,38 +66,38 @@
 #
 # |4|  GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA
 #      |4.1| Metodología de cartografía edáfica
-#              4.1.a Función "autokriging()"
-#              4.1.b Kriging manual
+#              |4.1.a| Función "autokriging()"
+#              |4.1.b| Kriging manual
 #      |4.2| Cartografía de variable GLUCOSIDASA
-#              4.2.a Autokriging de Glucosidasa
-#              4.2.b Kriging manual de Glucosidasa
+#              |4.2.a| Autokriging de Glucosidasa
+#              |4.2.b| Kriging manual de Glucosidasa
 #      |4.3| Cartografía de variable FOSFATASA
-#              4.3.a Autokriging de Fosfatasa
-#              4.3.b Kriging manual de Fosfatasa
+#              |4.3.a| Autokriging de Fosfatasa
+#              |4.3.b| Kriging manual de Fosfatasa
 #      |4.4| Cartografía de variable NITRÓGENO
-#              4.4.a Autokriging de Nitrógeno
-#              4.4.b Kriging manual de Nitrógeno
+#              |4.4.a| Autokriging de Nitrógeno
+#              |4.4.b| Kriging manual de Nitrógeno
 #      |4.5| Cartografía de variable FÓSFORO
-#              4.5.a Autokriging de Fósforo
-#              4.5.b Kriging manual de Fósforo
+#              |4.5.a| Autokriging de Fósforo
+#              |4.5.b| Kriging manual de Fósforo
 #      |4.6| Cartografía de variable POTASIO
-#              4.6.a Autokriging de Potasio
-#              4.6.b Kriging manual de Potasio
+#              |4.6.a| Autokriging de Potasio
+#              |4.6.b| Kriging manual de Potasio
 #      |4.7| Cartografía de variable CARBONO
-#              4.7.a Autokriging de Carbono
-#              4.7.b Kriging manual de Carbono
+#              |4.7.a| Autokriging de Carbono
+#              |4.7.b| Kriging manual de Carbono
 #      |4.8| Cartografía de variable pH
-#              4.8.a Autokriging de pH
-#              4.8.b Kriging manual de pH
+#              |4.8.a| Autokriging de pH
+#              |4.8.b| Kriging manual de pH
 #      |4.9| Cartografía de variable ARENA
-#              4.9.a Autokriging de Arena
-#              4.9.b Kriging manual de Arena
+#              |4.9.a| Autokriging de Arena
+#              |4.9.b| Kriging manual de Arena
 #      |4.10| Cartografía de variable LIMO
-#              4.10.a Autokriging de Limo
-#              4.10.b Kriging manual de Limo
+#              |4.10.a| Autokriging de Limo
+#              |4.10.b| Kriging manual de Limo
 #      |4.11| Cartografía de variable ARCILLA 
-#              4.11.a Autokriging de Arcilla
-#              4.11.b Kriging manual de Arcilla
+#              |4.11.a| Autokriging de Arcilla
+#              |4.11.b| Kriging manual de Arcilla
 
 
 ################################################################################
@@ -142,7 +146,7 @@ load("data/AerialRoot.community.corregido.Rdata")
 
 
 
-# 1.2.a) Verificación de que la versión de R:
+# 1.2.a) Verificación de la versión de R:
 # Comprobaremos que la versión sea igual o superior a la 3.6.0.
 
 if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee es antigua\nPor favor, instale la última versión\n##########")}
@@ -153,7 +157,7 @@ if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee es anti
 ## actualizar)
 
 
-# 1.2.b) Verificación de que la versión de RStudio:
+# 1.2.b) Verificación de la versión de RStudio:
 # Comprobaremos que la versión sea igual o superior a la 1.0.1.
 
 if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########")}
@@ -164,7 +168,7 @@ if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio 
 ## y se necesita actualizar)
 
 
-# 1.2.c) Verificación de que los paquetes CRAN:
+# 1.2.c) Verificación de los paquetes CRAN:
 # Comprobaremos si los paquetes necesarios están instalados.
 CRAN_needed <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
 installed_packages <- .packages(all.available = TRUE)
@@ -176,7 +180,7 @@ if(length(CRAN_needed2) > 0){install.packages(CRAN_needed2)}
 stopifnot(all(c(CRAN_needed) %in% .packages(all.available = TRUE)))
 
 
-# 1.2.d) Finalización de las comprobaciones de paquetes y versiones:
+# 1.2.d) Finalización de las comprobaciones:
 
 rm(CRAN_needed, CRAN_needed2, installed_packages)
 
@@ -184,7 +188,7 @@ rm(CRAN_needed, CRAN_needed2, installed_packages)
 ## los objetos que hemos utilizado para confirmar que los paquetes están instalados.
 
 
-# 1.2.e) Curating data 
+# 1.2.e) Curating data:
 
 # Renombramos el título de de la columna 11 (COD -> Codigo_muestra).
 

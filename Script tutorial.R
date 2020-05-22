@@ -122,8 +122,7 @@
 # crea un nuevo objeto con la información de este archivo como una si fuera una
 # base de datos.
 
-suelo1 <- read.delim("data/Brea_suelos.txt", sep="\t", dec=",", header=T)
-suelo2 <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
+VariablesSuelo <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 load("data/AerialRoot.community.corregido.Rdata")
 
 ## Este comando dice: "Crea un nuevo objeto con el archivo de .txt con los datos, 
@@ -192,19 +191,19 @@ rm(CRAN_needed, CRAN_needed2, installed_packages)
 
 # Renombramos el título de de la columna 11 (COD -> Codigo_muestra).
 
-colnames(suelo2)[11] <- "Codigo_muestra"
+colnames(VariablesSuelo)[11] <- "Codigo_muestra"
 
 # Eliminamos las columnas que no nos interesan para este tutorial en concreto,
 # simplificando así los datos.
 
-orusco.soil <- suelo2
-suelo2$Fecha <- NULL
-suelo2$COND <- NULL
-suelo2$Altura.elipsoidal <- NULL
-suelo2$id_suelo_raiz <- NULL
-suelo2$Nº <- NULL
-suelo2$Marco <- NULL
-
+orusco.soil <- VariablesSuelo
+VariablesSuelo$Fecha <- NULL
+VariablesSuelo$COND <- NULL
+VariablesSuelo$Altura.elipsoidal <- NULL
+VariablesSuelo$id_suelo_raiz <- NULL
+VariablesSuelo$Nº <- NULL
+VariablesSuelo$Marco <- NULL
+VariablesSuelo$ID_GPS <- NULL
 
 #___________________  1.3 CARGA DE PAQUETES DE R NECESARIOS ___________________#
 
@@ -229,19 +228,19 @@ library(automap)
 
 # Como trabajaremos de forma local, no necesitamos coordenadas globales, y por 
 # ello utilizaremos como nuevas coordenadas los valores de Xlocal e Ylocal en
-# relación a "suelo2". Al dar coordenadas a los datos de suelo2 los convierte de 
+# relación a "VariablesSuelo". Al dar coordenadas a los datos de VariablesSuelo los convierte de 
 # un objeto "data.frame" a un objeto "SpatialPointDataFrame".
 
 # Para esta operación utilizaremos el comando "coordinates()". Este comando dice:
-# "Utiliza como coordenadas x e y para los datos recogidos en el objeto suelo2, 
+# "Utiliza como coordenadas x e y para los datos recogidos en el objeto VariablesSuelo, 
 # los valores de las columnas Xlocal e Ylocal respectivamente".
 
-coordinates(suelo2) <- ~ Xlocal + Ylocal
+coordinates(VariablesSuelo) <- ~ Xlocal + Ylocal
 
-# Con este comando podemos cerciorarnos si suelo2 ha cambiado su clase a
+# Con este comando podemos cerciorarnos si VariablesSuelo ha cambiado su clase a
 # "SpatialPointsDataFrame".
 
-class(suelo2)
+class(VariablesSuelo)
 
 ## Efectivamente, ahora es un "SpatialPointsDataFrame".##
 
@@ -304,9 +303,9 @@ class(sps1)
 # la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de
 # este rectángulo.
 
-# El siguiente comando dice: "Creáme una malla regular con los datos de suelo2, 
+# El siguiente comando dice: "Creáme una malla regular con los datos de VariablesSuelo, 
 # donde el tamaño de celda sean 5 cm".
-grid = spsample(suelo2, type = "regular", cellsize = c(0.05, 0.05))
+grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05, 0.05))
 
 # Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de 
 # nuestro grid.
@@ -332,7 +331,7 @@ pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.fr
 plot(pts1)
 
 # Asignamos un sistema de coordenadas a la malla:
-grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
+grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
 
 
 
@@ -400,45 +399,45 @@ grid = spsample(suelo2, type = "regular", cellsize = c(0.05,0.05), proj4string =
 
 #__________________  3.2 NORMALIZACIÓN DE VARIABLE GLUCOSIDADA ________________#
 
-hist(suelo2$GLUC) # No muestra un patrón normalizado.
-qqnorm(suelo2$GLUC) # No muestra un patrón normalizado.
-shapiro.test((suelo2$GLUC)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$GLUC) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$GLUC) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$GLUC)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
 
-hist(log(suelo2$GLUC)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$GLUC)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$GLUC)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$GLUC)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$GLUC)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$GLUC)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC)
 
 
 #__________________  3.3 NORMALIZACIÓN DE VARIABLE FOSFATASA ________________#
 
-hist(suelo2$FOSF) # No muestra un patrón normalizado.
-qqnorm(suelo2$FOSF) # No muestra un patrón normalizado.
-shapiro.test((suelo2$FOSF)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$FOSF) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$FOSF) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$FOSF)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$FOSF)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$FOSF)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$FOSF)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$FOSF)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$FOSF)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$FOSF)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo de la fosfatasa para el mapeado --> LOG(FOSF)
 
 
 #___________________  3.4 NORMALIZACIÓN DE VARIABLE NITRÓGENO _________________#
 
-hist(suelo2$N) # Muestra un patrón normalizado.
-qqnorm(suelo2$N) # Muestra un patrón normalizado.
-shapiro.test((suelo2$N)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(VariablesSuelo$N) # Muestra un patrón normalizado.
+qqnorm(VariablesSuelo$N) # Muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$N)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos directamente el valor de Nitrógeno para el mapeado --> (N)
 
 
 #____________________  3.5 NORMALIZACIÓN DE VARIABLE FÓSFORO __________________#
 
-hist(suelo2$P) # Muestra un patrón normalizado.
-qqnorm(suelo2$P) # Muestra un patrón normalizado.
-shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(VariablesSuelo$P) # Muestra un patrón normalizado.
+qqnorm(VariablesSuelo$P) # Muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$P)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 
 # Utilizaremos directamente el valor de Fósforo para el mapeado --> (P)
@@ -446,13 +445,13 @@ shapiro.test((suelo2$P)) # El p-valor es aceptable. Muestra un patrón normalizad
 
 #____________________  3.6 NORMALIZACIÓN DE VARIABLE POTASIO __________________#
 
-hist(suelo2$K) # No muestra un patrón normalizado.
-qqnorm(suelo2$K) # No muestra un patrón normalizado.
-shapiro.test((suelo2$K)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$K) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$K) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$K)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$K)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$K)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$K)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$K)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$K)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$K)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 
 # Utilizaremos el logaritmo del potasio  para el mapeado --> LOG(K)
@@ -460,13 +459,13 @@ shapiro.test(log(suelo2$K)) # El p-valor es aceptable. Muestra un patrón normali
 
 #____________________  3.7 NORMALIZACIÓN DE VARIABLE CARBONO __________________#
 
-hist(suelo2$C) # No muestra un patrón normalizado.
-qqnorm(suelo2$C) # No muestra un patrón normalizado.
-shapiro.test((suelo2$C)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$C) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$C) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$C)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$C)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$C)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$C)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$C)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$C)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$C)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo del carbono para el mapeado --> LOG(C)
 
@@ -474,26 +473,26 @@ shapiro.test(log(suelo2$C)) # El p-valor es aceptable. Muestra un patrón normali
 #______________________  3.8 NORMALIZACIÓN DE VARIABLE pH _____________________#
 ##### ECHARLE UN OJO ####
 
-hist(suelo2$pH) # No muestra un patrón normalizado.
-qqnorm(suelo2$pH) # No muestra un patrón normalizado.
-shapiro.test((suelo2$pH)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$pH) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$pH) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$pH)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$pH)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$pH)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$pH)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$pH)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$pH)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$pH)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
-hist(log(suelo2$pH+1)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$pH+1)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$pH+1)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$pH+1)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$pH+1)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$pH+1)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo del pH para el mapeado --> (pH)
 
 
 #____________________  3.9 NORMALIZACIÓN DE VARIABLE ARENA ____________________#
 
-hist(suelo2$Arena) # Muestra un patrón normalizado.
-qqnorm(suelo2$Arena) # Muestra un patrón normalizado.
-shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(VariablesSuelo$Arena) # Muestra un patrón normalizado.
+qqnorm(VariablesSuelo$Arena) # Muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$Arena)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 
 # Utilizaremos directamente el valor de Arena para el mapeado --> (Arena)
@@ -501,13 +500,13 @@ shapiro.test((suelo2$Arena)) # El p-valor es aceptable. Muestra un patrón normal
 
 #____________________  3.10 NORMALIZACIÓN DE VARIABLE LIMO ____________________#
 
-hist(suelo2$Limo) # No muestra un patrón normalizado.
-qqnorm(suelo2$Limo) # No muestra un patrón normalizado.
-shapiro.test((suelo2$Limo)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$Limo) # No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$Limo) # No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$Limo)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$Limo)) # Muestra un patrón normalizado.
-qqnorm(log(suelo2$Limo)) # Muestra un patrón normalizado.
-shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$Limo)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$Limo)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$Limo)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
 # Utilizaremos el logaritmo del Limo para el mapeado --> LOG(Limo)
 
@@ -515,27 +514,27 @@ shapiro.test(log(suelo2$Limo)) # El p-valor es aceptable. Muestra un patrón norm
 #___________________  3.11 NORMALIZACIÓN DE VARIABLE ARCILLA __________________#
 ##NI IDEA DE CUAL USAR##
 
-hist(suelo2$Arcilla) #No muestra un patrón normalizado.
-qqnorm(suelo2$Arcilla) #No muestra un patrón normalizado.
-shapiro.test((suelo2$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(VariablesSuelo$Arcilla) #No muestra un patrón normalizado.
+qqnorm(VariablesSuelo$Arcilla) #No muestra un patrón normalizado.
+shapiro.test((VariablesSuelo$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$Arcilla)) #No muestra un patrón normalizado.
-qqnorm(log(suelo2$Arcilla)) #No muestra un patrón normalizado.
-shapiro.test(log(suelo2$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(log(VariablesSuelo$Arcilla)) #No muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$Arcilla)) #No muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$Arcilla)) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(suelo2$Arcilla)+1) # No muestra un patrón normalizado.
-qqnorm(log(suelo2$Arcilla)+1) # No muestra un patrón normalizado.
-shapiro.test(log(suelo2$Arcilla)+1) #El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(log(VariablesSuelo$Arcilla)+1) # No muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$Arcilla)+1) # No muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$Arcilla)+1) #El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(sqrt(suelo2$Arcilla)) #  No muestra un patrón normalizado.
-qqnorm(sqrt(suelo2$Arcilla)) # No muestra un patrón normalizado.
-shapiro.test(sqrt(suelo2$Arcilla)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(sqrt(VariablesSuelo$Arcilla)) #  No muestra un patrón normalizado.
+qqnorm(sqrt(VariablesSuelo$Arcilla)) # No muestra un patrón normalizado.
+shapiro.test(sqrt(VariablesSuelo$Arcilla)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+hist((VariablesSuelo$Arcilla-median(VariablesSuelo$Arcilla))/sd(VariablesSuelo$Arcilla)) 
 #No muestra un patrón normalizado.
-qqnorm((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+qqnorm((VariablesSuelo$Arcilla-median(VariablesSuelo$Arcilla))/sd(VariablesSuelo$Arcilla)) 
 #No muestra un patrón normalizado.
-shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla)) 
+shapiro.test((VariablesSuelo$Arcilla-median(VariablesSuelo$Arcilla))/sd(VariablesSuelo$Arcilla)) 
 #El p-valor es muy bajo, No muestra un patrón normalizado.
 
 ##NI IDEA DE CUAL USAR USO LOG QUE TIENE EL P-Valor más bajo##
@@ -579,7 +578,7 @@ shapiro.test((suelo2$Arcilla-median(suelo2$Arcilla))/sd(suelo2$Arcilla))
 # Lineal(Lin) y la parametrización de Stein (Ste).
 
 # Ejemplo:
-autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
+autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
 
 # Esta línea de código nos informará cómo se adapta el variograma de datos de la
 # Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará
@@ -599,12 +598,12 @@ autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
 # 4.2.a Autokriging de Glucosidasa:
 
 # Autokriging sin tendencia:
-Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, suelo2, pts1 )
+Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.GLUC.ST)
 
 # Autokriging con tendencia
-Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.GLUC.CT)
 
@@ -626,17 +625,17 @@ rownames(MatrizGLUC) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 # Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizGLUC[1,1] <- autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizGLUC[1,2] <- autofitVariogram(log(GLUC) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizGLUC[1,3] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizGLUC[1,4] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizGLUC[1,5] <- autofitVariogram(log(GLUC)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizGLUC[1,1] <- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizGLUC[1,2] <- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizGLUC[1,3] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizGLUC[1,4] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizGLUC[1,5] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 # Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizGLUC[2,1] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizGLUC[2,2] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizGLUC[2,3] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizGLUC[2,4] <- autofitVariogram(log(GLUC) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizGLUC[2,1] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizGLUC[2,2] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizGLUC[2,3] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizGLUC[2,4] <- autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -649,15 +648,15 @@ which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"ste" con tendencia:
 
-v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, suelo2, model = c("Ste"))$var_model
+v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo, model = c("Ste"))$var_model
 
 # A continuación podemos realizar el kriaje de la Glucosidasa.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Ste" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Ste" con tendencia en la 
 ## malla pts1".
 
-GLUC.mapa <- krige(log(GLUC) ~  Xlocal, suelo2, pts1, v.fitGLUCsteCT)
+GLUC.mapa <- krige(log(GLUC) ~  Xlocal, VariablesSuelo, pts1, v.fitGLUCsteCT)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de glucosidasa:
@@ -675,12 +674,12 @@ plot(GLUC.mapa, main= "GLUCOSIDASA")
 # 4.3.a Autokriging de Fosfatasa:
 
 # Autokriging sin tendencia:
-Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, suelo2, pts1 )
+Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.FOSF.ST)
 
 # Autokriging con tendencia
-Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.FOSF.CT)
 
@@ -703,17 +702,17 @@ rownames(MatrizFOSF) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizFOSF[1,1] <- autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizFOSF[1,2] <- autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizFOSF[1,3] <- autofitVariogram(log(FOSF)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizFOSF[1,4] <- autofitVariogram(log(FOSF)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizFOSF[1,5] <- autofitVariogram(log(FOSF)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizFOSF[1,1] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizFOSF[1,2] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizFOSF[1,3] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizFOSF[1,4] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizFOSF[1,5] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizFOSF[2,1] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizFOSF[2,2] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizFOSF[2,1] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizFOSF[2,2] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -726,15 +725,15 @@ which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Gau" sin tendencia:
 
-v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, suelo2, model = c("Gau"))$var_model
+v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Gau"))$var_model
 
 
 # A continuación podemos realizar el kriaje de la fosfatasa:
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Gau" sin tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Gau" sin tendencia en la 
 ## malla pts1".
-FOSF.mapa <- krige(log(FOSF) ~  1, suelo2, pts1, v.fitFOSFgauST)
+FOSF.mapa <- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de glucosidasa:
@@ -750,12 +749,12 @@ plot(FOSF.mapa, main= "FOSFATASA")
 # 4.4.a Autokriging de Nitrógeno:
 
 # Autokriging sin tendencia:
-Autok.N.ST <- autoKrige((N) ~ 1, suelo2, pts1 )
+Autok.N.ST <- autoKrige((N) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.N.ST)
 
 # Autokriging con tendencia
-Autok.N.CT <- autoKrige((N) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.N.CT <- autoKrige((N) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.N.CT)
 
@@ -778,17 +777,17 @@ rownames(MatrizN) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizN[1,1] <- autofitVariogram((N) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizN[1,2] <- autofitVariogram((N) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizN[1,3] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizN[1,4] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizN[1,5] <- autofitVariogram((N)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizN[1,1] <- autofitVariogram((N) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizN[1,2] <- autofitVariogram((N) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizN[1,3] <- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizN[1,4] <- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizN[1,5] <- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizN[2,1] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizN[2,2] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizN[2,3] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizN[2,4] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizN[2,5] <- autofitVariogram((N)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizN[2,1] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizN[2,2] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizN[2,3] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizN[2,4] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizN[2,5] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -801,16 +800,16 @@ which((MatrizN) == min(MatrizN), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Lin" con tendencia:
 
-v.fitNlinCT = autofitVariogram((N) ~ 1, suelo2, model = c("Lin"))$var_model
+v.fitNlinCT = autofitVariogram((N) ~ 1, VariablesSuelo, model = c("Lin"))$var_model
 
 
 # A continuación podemos realizar el kriaje del Nitrógeno.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Lin" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Lin" con tendencia en la 
 ## malla pts1".
 
-N.mapa <- krige((N) ~  1, suelo2, pts1, v.fitNlinCT)
+N.mapa <- krige((N) ~  1, VariablesSuelo, pts1, v.fitNlinCT)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Nitrógeno:
@@ -826,12 +825,12 @@ plot(N.mapa, main= "NITRÓGENO")
 # 4.5.a Autokriging de Fósforo:
 
 # Autokriging sin tendencia:
-Autok.P.ST <- autoKrige((P) ~ 1, suelo2, pts1 )
+Autok.P.ST <- autoKrige((P) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.P.ST)
 
 # Autokriging con tendencia
-Autok.P.CT <- autoKrige((P) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.P.CT <- autoKrige((P) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.P.CT)
 
@@ -855,17 +854,17 @@ rownames(MatrizP) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 # Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizP[1,1] <- autofitVariogram((P) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizP[1,2] <- autofitVariogram((P) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizP[1,3] <- autofitVariogram((P) ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizP[1,4] <- autofitVariogram((P) ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizP[1,5] <- autofitVariogram((P) ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizP[1,1] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizP[1,2] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizP[1,3] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizP[1,4] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizP[1,5] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizP[2,1] <- autofitVariogram((P) ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizP[2,2] <- autofitVariogram((P) ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizP[2,3] <- autofitVariogram((P) ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizP[2,4] <- autofitVariogram((P) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizP[2,5] <- autofitVariogram((P) ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizP[2,1] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizP[2,2] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizP[2,3] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizP[2,4] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizP[2,5] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -878,16 +877,16 @@ which((MatrizP) == min(MatrizP), arr.ind=TRUE)
 # En este caso nos dice que "GAU CON TENDENCIA" es el mejor, así que será el 
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Gau" con tendencia:
-v.fitPgauCT = autofitVariogram((P) ~ Xlocal, suelo2, model = c("Gau"))$var_model
+v.fitPgauCT = autofitVariogram((P) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
 
 
 # A continuación podemos realizar el kriaje del Fósforo.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Gau" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Gau" con tendencia en la 
 ## malla pts1".
 
-P.mapa <- krige((P) ~  Xlocal, suelo2, pts1, v.fitPgauCT)
+P.mapa <- krige((P) ~  Xlocal, VariablesSuelo, pts1, v.fitPgauCT)
 
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
@@ -905,12 +904,12 @@ plot(P.mapa, main= "FÓSFORO") #En el intercomillado va el título.
 # 4.6.a Autokriging de Potasio:
 
 # Autokriging sin tendencia:
-Autok.K.ST <- autoKrige(log(K) ~ 1, suelo2, pts1 )
+Autok.K.ST <- autoKrige(log(K) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.K.ST)
 
 # Autokriging con tendencia
-Autok.K.CT <- autoKrige(log(K) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.K.CT <- autoKrige(log(K) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.K.CT)
 
@@ -933,17 +932,17 @@ rownames(MatrizK) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizK[1,1] <- autofitVariogram(log(K) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizK[1,2] <- autofitVariogram(log(K) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizK[1,3] <- autofitVariogram(log(K)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizK[1,4] <- autofitVariogram(log(K)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizK[1,5] <- autofitVariogram(log(K)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizK[1,1] <- autofitVariogram(log(K) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizK[1,2] <- autofitVariogram(log(K) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizK[1,3] <- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizK[1,4] <- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizK[1,5] <- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizK[2,1] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizK[2,2] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizK[2,3] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizK[2,4] <- autofitVariogram(log(K) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizK[2,5] <- autofitVariogram(log(K)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizK[2,1] <- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizK[2,2] <- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizK[2,3] <- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizK[2,4] <- autofitVariogram(log(K) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizK[2,5] <- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
@@ -958,16 +957,16 @@ which((MatrizK) == min(MatrizK), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Lin" con tendencia:
 
-v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, suelo2, model = c("Lin"))$var_model
+v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, VariablesSuelo, model = c("Lin"))$var_model
 
 
 # A continuación podemos realizar el kriaje del Potasio.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Lin" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Lin" con tendencia en la 
 ## malla pts1".
 
-K.mapa <- krige(log(K) ~  Xlocal, suelo2, pts1, v.fitKlinCT)
+K.mapa <- krige(log(K) ~  Xlocal, VariablesSuelo, pts1, v.fitKlinCT)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Potasio:
@@ -984,12 +983,12 @@ plot(K.mapa, main= "POTASIO")
 # 4.7.a Autokriging de Carbono:
 
 # Autokriging sin tendencia:
-Autok.C.ST <- autoKrige(log(C) ~ 1, suelo2, pts1 )
+Autok.C.ST <- autoKrige(log(C) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.C.ST)
 
 # Autokriging con tendencia
-Autok.C.CT <- autoKrige(log(C) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.C.CT <- autoKrige(log(C) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.C.CT)
 
@@ -1012,17 +1011,17 @@ rownames(MatrizC) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 # Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizC[1,1] <- autofitVariogram(log(C) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizC[1,2] <- autofitVariogram(log(C) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizC[1,3] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizC[1,4] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizC[1,5] <- autofitVariogram(log(C)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizC[1,1] <- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizC[1,2] <- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizC[1,3] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizC[1,4] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizC[1,5] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 # Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizC[2,1] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizC[2,2] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizC[2,3] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizC[2,1] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizC[2,2] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizC[2,3] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1036,16 +1035,16 @@ which((MatrizC) == min(MatrizC), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 # "Gau" con tendencia:
 
-v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, suelo2, model = c("Gau"))$var_model
+v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
 
 
 # A continuación podemos realizar el kriaje del Carbono.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Gau" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Gau" con tendencia en la 
 ## malla pts1".
 
-C.mapa <- krige(log(C) ~  Xlocal, suelo2, pts1, v.fitCgauCT)
+C.mapa <- krige(log(C) ~  Xlocal, VariablesSuelo, pts1, v.fitCgauCT)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Carbono:
@@ -1061,12 +1060,12 @@ plot(C.mapa, main= "CARBONO")
 # 4.8.a Autokriging de pH:
 
 # Autokriging sin tendencia:
-Autok.pH.ST <- autoKrige((pH) ~ 1, suelo2, pts1 )
+Autok.pH.ST <- autoKrige((pH) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.pH.ST)
 
 # Autokriging con tendencia
-Autok.pH.CT <- autoKrige((pH) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.pH.CT <- autoKrige((pH) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.pH.CT)
 
@@ -1089,17 +1088,17 @@ rownames(MatrizpH) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizpH[1,1] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizpH[1,2] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizpH[1,3] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizpH[1,4] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizpH[1,5] <- autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizpH[1,1] <- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizpH[1,2] <- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizpH[1,3] <- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizpH[1,4] <- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizpH[1,5] <- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizpH[2,1] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizpH[2,2] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizpH[2,3] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizpH[2,4] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizpH[2,5] <- autofitVariogram((pH) ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizpH[2,1] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizpH[2,2] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizpH[2,3] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizpH[2,4] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizpH[2,5] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1113,15 +1112,15 @@ which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Ste" sin tendencia:
 
-v.fitpHsteST = autofitVariogram((pH) ~ 1, suelo2, model = c("Ste"))$var_model
+v.fitpHsteST = autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 
 # A continuación podemos realizar el kriaje del pH.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Ste" sin tendencia en la 
 ## malla pts1".
 
-pH.mapa <- krige((pH) ~  1, suelo2, pts1, v.fitpHsteST)
+pH.mapa <- krige((pH) ~  1, VariablesSuelo, pts1, v.fitpHsteST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de pH:
@@ -1138,12 +1137,12 @@ plot(pH.mapa, main= "pH")
 # 4.9.a Autokriging de Arena:
 
 # Autokriging sin tendencia:
-Autok.Arena.ST <- autoKrige((Arena) ~ 1, suelo2, pts1 )
+Autok.Arena.ST <- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arena.ST)
 
 # Autokriging con tendencia
-Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arena.CT)
 
@@ -1166,17 +1165,17 @@ rownames(MatrizArena) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizArena[1,1] <- autofitVariogram((Arena) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizArena[1,2] <- autofitVariogram((Arena) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizArena[1,3] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizArena[1,4] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizArena[1,5] <- autofitVariogram((Arena)  ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizArena[1,1] <- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizArena[1,2] <- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizArena[1,3] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizArena[1,4] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizArena[1,5] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizArena[2,1] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizArena[2,2] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizArena[2,3] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizArena[2,4] <- autofitVariogram((Arena) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizArena[2,5] <- autofitVariogram((Arena)  ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizArena[2,1] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizArena[2,2] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizArena[2,3] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizArena[2,4] <- autofitVariogram((Arena) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizArena[2,5] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1190,16 +1189,16 @@ which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Ste" sin tendencia:
 
-v.fitArenasteST = autofitVariogram((Arena) ~ 1, suelo2, model = c("Ste"))$var_model
+v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 
 
 # A continuación podemos realizar el kriaje de la Arena.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Ste" sin tendencia en la 
 ## malla pts1"
 
-Arena.mapa <- krige((Arena) ~  1, suelo2, pts1, v.fitArenasteST)
+Arena.mapa <- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Arena:
@@ -1217,12 +1216,12 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 # 4.10.a Autokriging de Limo:
 
 # Autokriging sin tendencia:
-Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, suelo2, pts1 )
+Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Limo.ST)
 
 # Autokriging con tendencia
-Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Limo.CT)
 
@@ -1245,17 +1244,17 @@ rownames(MatrizLimo) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1269,15 +1268,15 @@ which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Ste" sin tendencia:
 
-v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, suelo2, model = c("Ste"))$var_model
+v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 
 # A continuación podemos realizar el kriaje de la variable Limos.
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Ste" sin tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Ste" sin tendencia en la 
 ## malla pts1".
 
-Limo.mapa <- krige(log(Limo) ~  1, suelo2, pts1, v.fitLimosteST)
+Limo.mapa <- krige(log(Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Limos:
@@ -1294,12 +1293,12 @@ plot(Limo.mapa, main= "CONTENIDO EN LIMO")
 
 
 # Autokriging sin tendencia:
-Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, suelo2, pts1 )
+Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Arcilla.ST)
 
 # Autokriging con tendencia:
-Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, suelo2, new_data=pts1 )
+Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Arcilla.CT)
 
@@ -1322,17 +1321,17 @@ rownames(MatrizArcilla) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizArcilla[1,1] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Exp"))$sserr
-MatrizArcilla[1,2] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Sph"))$sserr
-MatrizArcilla[1,3] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Gau"))$sserr
-MatrizArcilla[1,4] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Lin"))$sserr
-MatrizArcilla[1,5] <- autofitVariogram(log(Arcilla+1) ~ 1, suelo2, model = c("Ste"))$sserr
+MatrizArcilla[1,1] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizArcilla[1,2] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizArcilla[1,3] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizArcilla[1,4] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizArcilla[1,5] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizArcilla[2,1] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Exp"))$sserr
-MatrizArcilla[2,2] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Sph"))$sserr
-MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Gau"))$sserr
-MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Lin"))$sserr
-MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2,model = c("Ste"))$sserr
+MatrizArcilla[2,1] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizArcilla[2,2] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1346,16 +1345,16 @@ which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Lin" con tendencia:
 
-v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, suelo2, model = c("Lin"))$var_model
+v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo, model = c("Lin"))$var_model
 
 
 # A continuación podemos realizar el kriaje de las arcillas:
 
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
-## kriaje de los datos de suelo2 adaptados al modelo "Lin" con tendencia en la 
+## kriaje de los datos de VariablesSuelo adaptados al modelo "Lin" con tendencia en la 
 ## malla pts1".
 
-Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, suelo2, pts1, v.fitArcillalinCT)
+Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, VariablesSuelo, pts1, v.fitArcillalinCT)
 
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa

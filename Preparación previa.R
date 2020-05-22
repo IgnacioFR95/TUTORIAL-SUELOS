@@ -8,9 +8,8 @@
 # innecesarios para el tutorial. (Los datos contienen información extra que otro
 # investigador podría utilizar en el futuro para sus estudios)
 
-# 1.1.a Comprobación de versiones y paquetes de datos: 
 
-# I) Verificación de que la versión de R utilizada es la 3.6.0 o superior:
+# 1.1.a) Verificación de que la versión de R utilizada es la 3.6.0 o superior:
 
 if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee es antigua\nPor favor, instale la última versión\n##########")}
 
@@ -20,7 +19,7 @@ if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee es anti
 ## actualizar)
 
 
-# II) Verificación de que la versión de RStudio utilizada es la 1.0.1 o superior:
+# 1.1.b) Verificación de que la versión de RStudio utilizada es la 1.0.1 o superior:
 
 if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########")}
 
@@ -30,18 +29,18 @@ if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio 
 ## y se necesita actualizar)
 
 
-# III) Verificación de que los paquetes CRAN necesarios están instalados:
+# 1.1.c) Verificación de que los paquetes CRAN necesarios están instalados:
 
 CRAN_needed <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
 installed_packages <- .packages(all.available = TRUE)
 CRAN_needed2 <- CRAN_needed[!CRAN_needed %in% installed_packages]
 
 
-# IV) Descargar paquetes faltantes de CRAN: 
+# Descarga de paquetes faltantes de CRAN: 
 
 if(length(CRAN_needed2) > 0){install.packages(CRAN_needed2)}stopifnot(all(c(CRAN_needed) %in% .packages(all.available = TRUE)))
 
-# V) Eliminamos los objetos de comprobación:
+# 1.1.d) Finalización de las comprobaciones:
 
 rm(CRAN_needed, CRAN_needed2, installed_packages)
 

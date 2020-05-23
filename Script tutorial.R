@@ -38,14 +38,14 @@
 #              |1.2.c| Verificación de los paquetes CRAN
 #              |1.2.d| Finalización de las comprobaciones
 #              |1.2.e| Curating data
-#      |1.3| Carga de paquetes R necesarios.
+#      |1.3| Carga de paquetes R necesarios
 #      |1.4| Reclasificación datos originales a datos espaciales.
 #   
 # |2|  PREPARACIÓN DEL ÁREA DE ESTUDIO
 #      |2.1| Generación del mapa base
 #              |2.1.a| Generación del polígono
 #              |2.1.b| Generación de la malla
-#      |2.2| Adaptación de los datos a mapa base.
+#      |2.2| Adaptación de los datos al mapa base
 #
 # |3|  NORMALIZACIÓN DE LAS VARIABLES
 #      |3.1| Metodología de normalización de variables
@@ -56,13 +56,13 @@
 #      |3.2| Normalización variable GLUCOSIDASA
 #      |3.3| Normalización variable FOSFATASA
 #      |3.4| Normalización variable NITRÓGENO
-#      |3.4| Normalización variable FÓSFORO
-#      |3.5| Normalización variable POTASIO
-#      |3.6| Normalización variable CARBONO
-#      |3.7| Normalización variable pH
-#      |3.8| Normalización variable ARENA
-#      |3.9| Normalización variable LIMO
-#      |3.10| Normalización variable ARCILLA
+#      |3.5| Normalización variable FÓSFORO
+#      |3.6| Normalización variable POTASIO
+#      |3.7| Normalización variable CARBONO
+#      |3.8| Normalización variable pH
+#      |3.9| Normalización variable ARENA
+#      |3.10| Normalización variable LIMO
+#      |3.11| Normalización variable ARCILLA
 #
 # |4|  GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA
 #      |4.1| Metodología de cartografía edáfica

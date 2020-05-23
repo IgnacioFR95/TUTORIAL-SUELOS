@@ -212,74 +212,545 @@ Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar c
 options(digits=10)
 ~~~
 
+___
+
 ## |2| PREPARACIÓN DEL ÁREA DE ESTUDIO<a name="id2"></a>
 En este proceso, vamos a generar el mapa base desde el cual vamos a realizar posteriormente el mapa de cada variable. En esta fase indicaremos el tamaño  del área de estudio, las coordenadas que poseen y el tamaño de malla que  utilizaremos para el posterior análisis por kriging.También refinaremos y adaptaremos los datos al tamaño y forma del área estudiada.
 
-## |3| NORMALIZACIÓN DE LAS VARIABLES <a name="id3"></a>
-En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el mÃ©todo de kriging y autokriging en la fase 4.
+### |2.1| Generación del mapa base<a name="id21"></a>
+
+#### |2.1.a| Creación del polígono base:<a name="id21a"></a>
+Generaremos un rectángulo con dimensiones iguales al área de estudio donde posteriormente plasmaremos los diferentes mapas que generemos.
+
+
+Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de estudio. Hemos cargado una matriz llamada ***"esquinas.parcela"***. Esta matriz tiene los datos en ***Xlocal*** e ***Ylocal*** de dónde se sitúan los vertices del rectángulo que forma nuestra parcela. Con estos datos, crearemos un polígono rectangular que cubra exactamente el área de estudio.
+
+Creamos el objeto ***"p1"***, que es básicamente el cuadrado que se forma al dibujar la matriz de ***"esquinas.parcela"***.
+
+~~~
+p1 <- Polygon(esquinas.parcela[,1:2])
+~~~
+
+Ahora dotaremos a este polígono de un atributo espacial, utilizando el comando ***"Polygons()"***:
+
+~~~
+ps1 <- Polygons(list(p1),1)
+~~~
+
+Creamos un nuevo objeto para convertir ***"ps1"*** de la clase ***"Polygons"*** a un ***"SpatialPolygons"*** llamado sps1.
+
+~~~
+sps1 <- SpatialPolygons(list(ps1))
+~~~
+
+Podemos ver qué clase es ***"sps1"*** con el comando ***"class()"*** y cerciorarnos con el comando ***class()***.
+
+~~~
+class(sps1)
+~~~
+
+Observamos que la clase es efectivamente ***"SpatialPolygons"***.
+
+
+#### |2.1.b| Generación de la malla:<a name="id21b"></a>
+
+Generaremos una malla con la ayuda del polígono creado en el paso anterior que nos servirá para los posteriores análisis estadísticos de kriaje.El tamaño de la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de este rectángulo.
+
+El siguiente comando dice: *"Creáme una malla regular con los datos de* ***VariablesSuelo*** *, donde el tamaño de celda sean 5 cm".*
+
+~~~
+grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05, 0.05))
+~~~
+
+Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de nuestro grid:
+
+~~~
+pts1 <- as.data.frame(grid[!is.na(over(grid, sps1,))])
+~~~
+
+Al ser una parcela independiente y no tener que relacionarla con otros lugares, no necesitamos que las coordenadas del gps sean las globales,simplificamos esto cambiando nuestro sistema de coordenadas a uno que solo tenga en cuenta la parcela. 
+Cambiamos el nombre de las coordenadas de ***X*** e ***Y***; los llamaremos ***Xlocal***, ***Ylocal*** ya que en el paso siguiente, lo que haremos es cambiar el sistema de coordenadas, pasando de unas cordenadas globales (***X,Y***) a las coordenadas locales (***X e Ylocal***):
+
+~~~
+names(pts1) <- c("Xlocal", "Ylocal")
+~~~
+
+Hacemos que pts1 asocie como coordenadas las columnas de ***Xlocal*** e ***Ylocal***. A su vez generamos que pts1 pase a ser un ***SpatialPoints object*** con coordenadas.
+
+~~~
+coordinates(pts1) <- c("Xlocal", "Ylocal")
+pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.frame"), tolerance=0.077)
+~~~
+
+Podemos observar cómo quedaría gráficamente el objeto ***"pts1"*** con el comando ***"plot()"***:
+
+~~~
+plot(pts1)
+~~~
+
+Asignamos un sistema de coordenadas a la malla:
+
+~~~
+grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05,0.05), proj4string = CRS("+proj=utm +ellps=WGS84 +datum=WGS84"))
+~~~
+___
+
+
+## |3| NORMALIZACIÓN DE LAS VARIABLES<a name="id3"></a>
+En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el método de kriging y autokriging en la fase 4.
+
+### |3.1| Metodología de normalización de variables<a name="id31"></a>
+
+Para la realización de los mapas, utilizaremos la técnica de kriging, que esun método de interpolación geoestadístico de estimación de puntos.Este método requiere que los datos de cada variable sigan una tendencia más o menos normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el objetivo de normalizarlos.
+
+Observaremos gráficamente si los datos están normalizados visualizando gráficamente su histograma y su gráfico cuantil-cuantil. Por último se hará un test de shapiro para comprobar si cumple con una tendencia normalizada.
+
+#### |3.1.a| Histograma:<a name="id31a"></a>
+Representación de distribuciones de frecuencias, en el que se emplean rectángulos dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida en la parte central del dibujo, tendrá una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando ***"hist()"***.
+
+#### |3.1.b| Gráfico cuantil-cuantil:<a name="id31b"></a>
+También denominada "qqnorm" nos permite observar cómo de cerca está la distribución observada a una distribución normal idealizada. Si la línea del gráfico dibuja una linea recta y ascendente indicará que los valores siguen una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando ***"qqnorm()"***.
+
+#### |3.1.c| Test de shapiro:<a name="id31c"></a>
+Es una prueba estadística para contrastar la normalidad de un conjunto de datos. El test nos dará un p-valor, si este indicador es mayor al **0.07**, indica que los datos se adaptan a un patrón normalizado. Para realizar esta comprobación, utilizaremos el comando ***"shapiro.test()"***.
+
+#### |3.1.d| Modificación de los datos:<a name="id31d"></a>
+En caso de que los datos no se ajusten a la tendecia normalidad, debemos ejecutar transformaciones de los datos para intentar que se adapten. Para ello podemos hacer algunas de las siguientes transformaciones:
+
+1º Realizar el logaritmo                           --> Log(variable)  
+2º Realizar el logaritmo +1                        --> Log (variable+1)  
+3º Realizar (Variable - media)/desviación estándar --> var-median(var)/sd(var)  
+4º Realizar raíz cuadrada                          --> sqrt(variable)  
+5º Realizar box-cox **NOTA**                       --> boxcox(variable)  
+
+
+**NOTA**: Para el uso de la función ***"boxcox()"*** debemos abrir antes ***library(MASS)***.
+
+### |3.2| Normalización variable GLUCOSIDASA<a name="id32"></a>
+
+~~~
+hist(VariablesSuelo$GLUC)
+qqnorm(VariablesSuelo$GLUC) 
+shapiro.test((VariablesSuelo$GLUC))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$GLUC)) 
+qqnorm(log(VariablesSuelo$GLUC))
+shapiro.test(log(VariablesSuelo$GLUC)) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC).**
+
+### |3.3| Normalización variable FOSFATASA<a name="id33"></a>
+
+~~~
+hist(VariablesSuelo$FOSF)
+qqnorm(VariablesSuelo$FOSF) 
+shapiro.test((VariablesSuelo$FOSF))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$FOSF)) 
+qqnorm(log(VariablesSuelo$FOSF))
+shapiro.test(log(VariablesSuelo$FOSF)) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo de la Fosfatasa para el mapeado --> LOG(FOSF).**
+
+
+### |3.4| Normalización variable NITRÓGENO<a name="id34"></a>
+
+~~~
+hist(VariablesSuelo$N)
+qqnorm(VariablesSuelo$N) 
+shapiro.test((VariablesSuelo$N))
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos directamente el valor Nitrógeno para el mapeado --> (N).**
+
+
+### |3.5| Normalización variable FÓSFORO<a name="id35"></a>
+
+~~~
+hist(VariablesSuelo$P)
+qqnorm(VariablesSuelo$P) 
+shapiro.test((VariablesSuelo$P))
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos directamente el valor Fósforo para el mapeado --> (P).**
+
+
+### |3.6| Normalización variable POTASIO<a name="id36"></a>
+
+~~~
+hist(VariablesSuelo$K)
+qqnorm(VariablesSuelo$K) 
+shapiro.test((VariablesSuelo$K))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$K)) 
+qqnorm(log(VariablesSuelo$K))
+shapiro.test(log(VariablesSuelo$K)) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo del Potasio para el mapeado --> LOG(K).**
+
+
+
+### |3.7| Normalización variable CARBONO<a name="id37"></a>
+
+~~~
+hist(VariablesSuelo$C)
+qqnorm(VariablesSuelo$C) 
+shapiro.test((VariablesSuelo$C))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$C)) 
+qqnorm(log(VariablesSuelo$C))
+shapiro.test(log(VariablesSuelo$C)) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo del Carbono para el mapeado --> LOG(C).**
+
+
+### |3.8| Normalización variable pH ECHARLE UN OJO<a name="id38"></a>
+
+~~~
+hist(VariablesSuelo$pH)
+qqnorm(VariablesSuelo$pH) 
+shapiro.test((VariablesSuelo$pH))
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos directamente el valor pH para el mapeado --> (pH).**
+
+
+### |3.9| Normalización variable ARENA<a name="id39"></a>
+
+~~~
+hist(VariablesSuelo$Arena)
+qqnorm(VariablesSuelo$Arena) 
+shapiro.test((VariablesSuelo$Arena))
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos directamente el valor Arena para el mapeado --> (Arena).**
+
+
+### |3.10| Normalización variable LIMO<a name="id310"></a>
+
+~~~
+hist(VariablesSuelo$Limo)
+qqnorm(VariablesSuelo$Limo) 
+shapiro.test((VariablesSuelo$Limo))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$Limo)) 
+qqnorm(log(VariablesSuelo$Limo))
+shapiro.test(log(VariablesSuelo$Limo)) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo del Limo para el mapeado --> LOG(Limo).**
+
+
+### |3.11| Normalización variable ARCILLA ECHARLE UN OJO<a name="id311"></a>
+
+~~~
+hist(VariablesSuelo$Arcilla)
+qqnorm(VariablesSuelo$Arcilla) 
+shapiro.test((VariablesSuelo$Arcilla))
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$Arcilla)) 
+qqnorm(log(VariablesSuelo$Arcilla))
+shapiro.test(log(VariablesSuelo$Arcilla)) 
+~~~
+
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+
+~~~
+hist(log(VariablesSuelo$Arcilla)+1) 
+qqnorm(log(VariablesSuelo$Arcilla)+1)
+shapiro.test(log(VariablesSuelo$Arcilla)+1) 
+~~~
+
+Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+
+##### **Utilizaremos el logaritmo del Arcilla para el mapeado --> LOG((Arcilla)+1).**
+
+
 
 ## |4| GENERACIÓN CARTOGRAFÍA EDÁFICA <a name="id4"></a>
-En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el mÃ©todo de estimación geoestadístico denominado kriging.Esta  tÃ©cnica de interpolación, utiliza un modelo de variograma para poder estimar  el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
+En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado kriging. Esta  técnica de interpolación, utiliza un modelo de variograma para poder estimar  el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
 
-### |1.1| Carga de datos iniciales<a name="id11"></a>
-Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué datos vamos a trabajar. En nuestro caso, hemos generado en formato ".txt" los datos a partir de un archivo de excel ".xlsx". De esta forma podremos trabajar con ellos en forma de código (Eliminando la necesidad de programas externos).
+### |4.1| Metodología de cartografía edáfica<a name="id41"></a>
+Existen dos formas para la realización de cartografía edáfica utilizando el método de kriaje:
+#### |4.1.a| Automáticamente con la función *"autokriging()"*:<a name="id41a"></a>
+El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.
 
-El comando que utilizaremos será "read.delim", este comando lee un archivo y  crea un nuevo objeto con la información de este archivo como una si fuera una base de datos.
+#### |4.1.b| Kriging manual:<a name="id41b"></a>
+Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado partiendo de ese modelo y se visualiza cómo quedaría gráficamente.  
+
+Antes de realizar el kriging manual y, para mejorar la precisión del kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud.  Esto, podemos observarlo mediante el comando "autofitVariogram" seguido de los diferentes modelos estudiados: **Exponencial (Exp)**, **Esférico (Sph)**, **Gausiano(Gau)** **Lineal(Lin)** y la **parametrización de Stein (Ste)**.  
+
+Ejemplo:
+
+~~~
+autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+~~~
+
+Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano esté este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).  
+
+Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando ***Xlocal*** como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el kriging.  
+
+### |4.2| Cartografía de la variable CLUCOSIDASA<a name="id42"></a>
+#### |4.2.a|Autokriging de Glucosidasa:<a name="id42a"></a>
+Autokriging sin tendencia:
+
+~~~
+Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+# Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.GLUC.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+
+~~~
+plot(Autok.GLUC.CT)
+~~~
+
+#### |4.2.b| Kriging manual de Glucosidasa:<a name="id42b"></a>
+
+Generamos una matriz donde exponer las semivarianzas de cada modelo:
+
+Le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente".*
+
+~~~
+MatrizGLUC <- matrix(NA,2,5)
+colnames(MatrizGLUC) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizGLUC) <- c("Sin tendencia", "Con tendencia")
+~~~
+
+Rellenamos con los datos de cada modelo:  
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+
+~~~
+MatrizGLUC[1,1] <- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizGLUC[1,2] <- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizGLUC[1,3] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizGLUC[1,4] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizGLUC[1,5] <- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
+
+Con tendencia (Utilizamos Xlocal como tendencia):
+
+~~~
+MatrizGLUC[2,1] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizGLUC[2,2] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizGLUC[2,3] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizGLUC[2,4] <- autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+Le decimos al programa "Dime qué coordenada de la matriz tiene un valor menor".
+
+~~~
+which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
+~~~
 
 
+En este caso nos dice que ***"STE CON TENDENCIA"*** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo *"ste"* con tendencia:
+
+~~~
+v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo, model = c("Ste"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje de la Glucosidasa:
+
+Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de VariablesSuelo adaptados al modelo* ***"Ste"*** *con tendencia en la malla* ***pts1"***.
+
+~~~
+GLUC.mapa <- krige(log(GLUC) ~  Xlocal, VariablesSuelo, pts1, v.fitGLUCsteCT)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de glucosidasa. La siguiente función expresa *"Genera un gráfico del objeto* ***GLUC.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"GLUCOSIDASA"*** *.*
+
+~~~
+plot(GLUC.mapa, main= "GLUCOSIDASA") 
+~~~
 
 
+### |4.3| Cartografía de la variable FOSFATASA<a name="id43"></a>
+#### |4.3.a| Autokriging de Fosfatasa:<a name="id43a"></a>
+Autokriging sin tendencia:
+
+~~~
+Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.FOSF.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+~~~
+plot(Autok.FOSF.CT)
+~~~
+
+#### |4.3.b| Kriging manual de Fosfatasa:<a name="id43b"></a>
+
+Generamos una matriz donde exponer las semivarianzas de cada modelo. Le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente".*
+
+~~~
+MatrizFOSF <- matrix(NA,2,5)
+colnames(MatrizFOSF) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizFOSF) <- c("Sin tendencia", "Con tendencia")
+~~~
+
+Rellenamos con los datos de cada modelo:
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+
+~~~
+MatrizFOSF[1,1] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizFOSF[1,2] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizFOSF[1,3] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizFOSF[1,4] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizFOSF[1,5] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
+
+Con tendencia (Utilizamos ***Xlocal*** como tendencia):
+
+~~~
+MatrizFOSF[2,1] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizFOSF[2,2] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.  
+
+El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+
+~~~
+which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
+~~~
+
+En este caso nos dice que ***"GAU SIN TENDENCIA"*** es el mejor, así que será el  utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo *"Gau" sin tendencia*:
+
+~~~
+v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Gau"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje de la fosfatasa:  
+
+Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***"VariablesSuelo"*** *adaptados al modelo* ***"Gau" sin tendencia*** *en la malla pts1".*
+
+~~~
+FOSF.mapa <- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:  
+
+La siguiente función expresa *"Genera un gráfico del objeto* ***FOSF.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"FOSFATASA"*** *.*
+
+~~~
+plot(FOSF.mapa, main= "FOSFATASA")
+~~~
 
 
+### |4.4| 9999999<a name="id44"></a>
+#### |4.4.a| 999999999:<a name="id44a"></a>
+#### |4.4.b| 999999999:<a name="id44b"></a>
+
+### |4.5| 9999999<a name="id45"></a>
+#### |4.5.a| 999999999:<a name="id45a"></a>
+#### |4.5.a| 999999999:<a name="id45b"></a>
+
+### |4.6| 9999999<a name="id46"></a>
+#### |4.6.a| 999999999:<a name="id46a"></a>
+#### |4.6.a| 999999999:<a name="id46b"></a>
+
+### |4.7| 9999999<a name="id47"></a>
+#### |4.7.a| 999999999:<a name="id47a"></a>
+#### |4.7.b| 999999999:<a name="id47b"></a>
+
+### |4.8| 9999999<a name="id48"></a>
+#### |4.8.a| 999999999:<a name="id48a"></a>
+#### |4.8.b| 999999999:<a name="id48b"></a>
+
+### |4.9| 9999999<a name="id49"></a>
+#### |4.9.a| 999999999:<a name="id49a"></a>
+#### |4.9.b| 999999999:<a name="id49b"></a>
+
+### |4.10| 9999999<a name="id410"></a>
+#### |4.10.a| 999999999:<a name="id410a"></a>
+#### |4.10.b| 999999999:<a name="id410b"></a>
+
+### |4.11| 9999999<a name="id411"></a>
+#### |4.11.a| 999999999:<a name="id411a"></a>
+#### |4.11.b| 999999999:<a name="id411b"></a>
+
+### |4.1| 9999999<a name="id41"></a>
+#### |4.1.a| 999999999:<a name="id41a"></a>
+#### |4.1.a| 999999999:<a name="id41a"></a>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

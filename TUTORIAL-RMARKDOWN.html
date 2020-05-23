@@ -649,43 +649,396 @@ library(automap)</code></pre>
 <p>Efectivamente, la contestación que nos da la consola es que ahora el objeto <strong><em>VariablesSuelo</em></strong> es un <strong><em>“SpatialPointsDataFrame”</em></strong>.</p>
 <p>Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar cifras excesivamente largas, para ello usaremos el siguiente comando:</p>
 <pre><code>options(digits=10)</code></pre>
+<hr />
 </div>
 </div>
 <div id="preparación-del-área-de-estudio-1" class="section level2">
 <h2>|2| PREPARACIÓN DEL ÁREA DE ESTUDIO<a name="id2"></a></h2>
 <p>En este proceso, vamos a generar el mapa base desde el cual vamos a realizar posteriormente el mapa de cada variable. En esta fase indicaremos el tamaño del área de estudio, las coordenadas que poseen y el tamaño de malla que utilizaremos para el posterior análisis por kriging.También refinaremos y adaptaremos los datos al tamaño y forma del área estudiada.</p>
+<div id="generación-del-mapa-base-1" class="section level3">
+<h3>|2.1| Generación del mapa base<a name="id21"></a></h3>
+<div id="a-creación-del-polígono-base" class="section level4">
+<h4>|2.1.a| Creación del polígono base:<a name="id21a"></a></h4>
+<p>Generaremos un rectángulo con dimensiones iguales al área de estudio donde posteriormente plasmaremos los diferentes mapas que generemos.</p>
+<p>Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de estudio. Hemos cargado una matriz llamada <strong><em>“esquinas.parcela”</em></strong>. Esta matriz tiene los datos en <strong><em>Xlocal</em></strong> e <strong><em>Ylocal</em></strong> de dónde se sitúan los vertices del rectángulo que forma nuestra parcela. Con estos datos, crearemos un polígono rectangular que cubra exactamente el área de estudio.</p>
+<p>Creamos el objeto <strong><em>“p1”</em></strong>, que es básicamente el cuadrado que se forma al dibujar la matriz de <strong><em>“esquinas.parcela”</em></strong>.</p>
+<pre><code>p1 &lt;- Polygon(esquinas.parcela[,1:2])</code></pre>
+<p>Ahora dotaremos a este polígono de un atributo espacial, utilizando el comando <strong><em>“Polygons()”</em></strong>:</p>
+<pre><code>ps1 &lt;- Polygons(list(p1),1)</code></pre>
+<p>Creamos un nuevo objeto para convertir <strong><em>“ps1”</em></strong> de la clase <strong><em>“Polygons”</em></strong> a un <strong><em>“SpatialPolygons”</em></strong> llamado sps1.</p>
+<pre><code>sps1 &lt;- SpatialPolygons(list(ps1))</code></pre>
+<p>Podemos ver qué clase es <strong><em>“sps1”</em></strong> con el comando <strong><em>“class()”</em></strong> y cerciorarnos con el comando <strong><em>class()</em></strong>.</p>
+<pre><code>class(sps1)</code></pre>
+<p>Observamos que la clase es efectivamente <strong><em>“SpatialPolygons”</em></strong>.</p>
+</div>
+<div id="b-generación-de-la-malla-1" class="section level4">
+<h4>|2.1.b| Generación de la malla:<a name="id21b"></a></h4>
+<p>Generaremos una malla con la ayuda del polígono creado en el paso anterior que nos servirá para los posteriores análisis estadísticos de kriaje.El tamaño de la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de este rectángulo.</p>
+<p>El siguiente comando dice: <em>&quot;Creáme una malla regular con los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>, donde el tamaño de celda sean 5 cm&quot;.</em></p>
+<pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05, 0.05))</code></pre>
+<p>Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de nuestro grid:</p>
+<pre><code>pts1 &lt;- as.data.frame(grid[!is.na(over(grid, sps1,))])</code></pre>
+<p>Al ser una parcela independiente y no tener que relacionarla con otros lugares, no necesitamos que las coordenadas del gps sean las globales,simplificamos esto cambiando nuestro sistema de coordenadas a uno que solo tenga en cuenta la parcela. Cambiamos el nombre de las coordenadas de <strong><em>X</em></strong> e <strong><em>Y</em></strong>; los llamaremos <strong><em>Xlocal</em></strong>, <strong><em>Ylocal</em></strong> ya que en el paso siguiente, lo que haremos es cambiar el sistema de coordenadas, pasando de unas cordenadas globales (<strong><em>X,Y</em></strong>) a las coordenadas locales (<strong><em>X e Ylocal</em></strong>):</p>
+<pre><code>names(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)</code></pre>
+<p>Hacemos que pts1 asocie como coordenadas las columnas de <strong><em>Xlocal</em></strong> e <strong><em>Ylocal</em></strong>. A su vez generamos que pts1 pase a ser un <strong><em>SpatialPoints object</em></strong> con coordenadas.</p>
+<pre><code>coordinates(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)
+pts1 &lt;- SpatialPixelsDataFrame(as(pts1, &quot;SpatialPoints&quot;), data=as(pts1, &quot;data.frame&quot;), tolerance=0.077)</code></pre>
+<p>Podemos observar cómo quedaría gráficamente el objeto <strong><em>“pts1”</em></strong> con el comando <strong><em>“plot()”</em></strong>:</p>
+<pre><code>plot(pts1)</code></pre>
+<p>Asignamos un sistema de coordenadas a la malla:</p>
+<pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05,0.05), proj4string = CRS(&quot;+proj=utm +ellps=WGS84 +datum=WGS84&quot;))</code></pre>
+<hr />
+</div>
+</div>
 </div>
 <div id="normalización-de-las-variables-1" class="section level2">
-<h2>|3| NORMALIZACIÓN DE LAS VARIABLES <a name="id3"></a></h2>
-<p>En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el mÃ©todo de kriging y autokriging en la fase 4.</p>
+<h2>|3| NORMALIZACIÓN DE LAS VARIABLES<a name="id3"></a></h2>
+<p>En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el método de kriging y autokriging en la fase 4.</p>
+<div id="metodología-de-normalización-de-variables-1" class="section level3">
+<h3>|3.1| Metodología de normalización de variables<a name="id31"></a></h3>
+<p>Para la realización de los mapas, utilizaremos la técnica de kriging, que esun método de interpolación geoestadístico de estimación de puntos.Este método requiere que los datos de cada variable sigan una tendencia más o menos normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el objetivo de normalizarlos.</p>
+<p>Observaremos gráficamente si los datos están normalizados visualizando gráficamente su histograma y su gráfico cuantil-cuantil. Por último se hará un test de shapiro para comprobar si cumple con una tendencia normalizada.</p>
+<div id="a-histograma-1" class="section level4">
+<h4>|3.1.a| Histograma:<a name="id31a"></a></h4>
+<p>Representación de distribuciones de frecuencias, en el que se emplean rectángulos dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida en la parte central del dibujo, tendrá una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando <strong><em>“hist()”</em></strong>.</p>
+</div>
+<div id="b-gráfico-cuantil-cuantil-1" class="section level4">
+<h4>|3.1.b| Gráfico cuantil-cuantil:<a name="id31b"></a></h4>
+<p>También denominada “qqnorm” nos permite observar cómo de cerca está la distribución observada a una distribución normal idealizada. Si la línea del gráfico dibuja una linea recta y ascendente indicará que los valores siguen una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando <strong><em>“qqnorm()”</em></strong>.</p>
+</div>
+<div id="c-test-de-shapiro-1" class="section level4">
+<h4>|3.1.c| Test de shapiro:<a name="id31c"></a></h4>
+<p>Es una prueba estadística para contrastar la normalidad de un conjunto de datos. El test nos dará un p-valor, si este indicador es mayor al <strong>0.07</strong>, indica que los datos se adaptan a un patrón normalizado. Para realizar esta comprobación, utilizaremos el comando <strong><em>“shapiro.test()”</em></strong>.</p>
+</div>
+<div id="d-modificación-de-los-datos-1" class="section level4">
+<h4>|3.1.d| Modificación de los datos:<a name="id31d"></a></h4>
+<p>En caso de que los datos no se ajusten a la tendecia normalidad, debemos ejecutar transformaciones de los datos para intentar que se adapten. Para ello podemos hacer algunas de las siguientes transformaciones:</p>
+<p>1º Realizar el logaritmo –&gt; Log(variable)<br />
+2º Realizar el logaritmo +1 –&gt; Log (variable+1)<br />
+3º Realizar (Variable - media)/desviación estándar –&gt; var-median(var)/sd(var)<br />
+4º Realizar raíz cuadrada –&gt; sqrt(variable)<br />
+5º Realizar box-cox <strong>NOTA</strong> –&gt; boxcox(variable)</p>
+<p><strong>NOTA</strong>: Para el uso de la función <strong><em>“boxcox()”</em></strong> debemos abrir antes <strong><em>library(MASS)</em></strong>.</p>
+</div>
+</div>
+<div id="normalización-variable-glucosidasa-1" class="section level3">
+<h3>|3.2| Normalización variable GLUCOSIDASA<a name="id32"></a></h3>
+<pre><code>hist(VariablesSuelo$GLUC)
+qqnorm(VariablesSuelo$GLUC) 
+shapiro.test((VariablesSuelo$GLUC))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$GLUC)) 
+qqnorm(log(VariablesSuelo$GLUC))
+shapiro.test(log(VariablesSuelo$GLUC)) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-de-la-glucosidasa-para-el-mapeado-loggluc." class="section level5">
+<h5><strong>Utilizaremos el logaritmo de la glucosidasa para el mapeado –&gt; LOG(GLUC).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-fosfatasa-1" class="section level3">
+<h3>|3.3| Normalización variable FOSFATASA<a name="id33"></a></h3>
+<pre><code>hist(VariablesSuelo$FOSF)
+qqnorm(VariablesSuelo$FOSF) 
+shapiro.test((VariablesSuelo$FOSF))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$FOSF)) 
+qqnorm(log(VariablesSuelo$FOSF))
+shapiro.test(log(VariablesSuelo$FOSF)) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-de-la-fosfatasa-para-el-mapeado-logfosf." class="section level5">
+<h5><strong>Utilizaremos el logaritmo de la Fosfatasa para el mapeado –&gt; LOG(FOSF).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-nitrógeno-1" class="section level3">
+<h3>|3.4| Normalización variable NITRÓGENO<a name="id34"></a></h3>
+<pre><code>hist(VariablesSuelo$N)
+qqnorm(VariablesSuelo$N) 
+shapiro.test((VariablesSuelo$N))</code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-directamente-el-valor-nitrógeno-para-el-mapeado-n." class="section level5">
+<h5><strong>Utilizaremos directamente el valor Nitrógeno para el mapeado –&gt; (N).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-fósforo-1" class="section level3">
+<h3>|3.5| Normalización variable FÓSFORO<a name="id35"></a></h3>
+<pre><code>hist(VariablesSuelo$P)
+qqnorm(VariablesSuelo$P) 
+shapiro.test((VariablesSuelo$P))</code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-directamente-el-valor-fósforo-para-el-mapeado-p." class="section level5">
+<h5><strong>Utilizaremos directamente el valor Fósforo para el mapeado –&gt; (P).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-potasio-1" class="section level3">
+<h3>|3.6| Normalización variable POTASIO<a name="id36"></a></h3>
+<pre><code>hist(VariablesSuelo$K)
+qqnorm(VariablesSuelo$K) 
+shapiro.test((VariablesSuelo$K))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$K)) 
+qqnorm(log(VariablesSuelo$K))
+shapiro.test(log(VariablesSuelo$K)) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-del-potasio-para-el-mapeado-logk." class="section level5">
+<h5><strong>Utilizaremos el logaritmo del Potasio para el mapeado –&gt; LOG(K).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-carbono-1" class="section level3">
+<h3>|3.7| Normalización variable CARBONO<a name="id37"></a></h3>
+<pre><code>hist(VariablesSuelo$C)
+qqnorm(VariablesSuelo$C) 
+shapiro.test((VariablesSuelo$C))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$C)) 
+qqnorm(log(VariablesSuelo$C))
+shapiro.test(log(VariablesSuelo$C)) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-del-carbono-para-el-mapeado-logc." class="section level5">
+<h5><strong>Utilizaremos el logaritmo del Carbono para el mapeado –&gt; LOG(C).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-ph-echarle-un-ojo" class="section level3">
+<h3>|3.8| Normalización variable pH ECHARLE UN OJO<a name="id38"></a></h3>
+<pre><code>hist(VariablesSuelo$pH)
+qqnorm(VariablesSuelo$pH) 
+shapiro.test((VariablesSuelo$pH))</code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-directamente-el-valor-ph-para-el-mapeado-ph." class="section level5">
+<h5><strong>Utilizaremos directamente el valor pH para el mapeado –&gt; (pH).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-arena-1" class="section level3">
+<h3>|3.9| Normalización variable ARENA<a name="id39"></a></h3>
+<pre><code>hist(VariablesSuelo$Arena)
+qqnorm(VariablesSuelo$Arena) 
+shapiro.test((VariablesSuelo$Arena))</code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-directamente-el-valor-arena-para-el-mapeado-arena." class="section level5">
+<h5><strong>Utilizaremos directamente el valor Arena para el mapeado –&gt; (Arena).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-limo-1" class="section level3">
+<h3>|3.10| Normalización variable LIMO<a name="id310"></a></h3>
+<pre><code>hist(VariablesSuelo$Limo)
+qqnorm(VariablesSuelo$Limo) 
+shapiro.test((VariablesSuelo$Limo))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$Limo)) 
+qqnorm(log(VariablesSuelo$Limo))
+shapiro.test(log(VariablesSuelo$Limo)) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-del-limo-para-el-mapeado-loglimo." class="section level5">
+<h5><strong>Utilizaremos el logaritmo del Limo para el mapeado –&gt; LOG(Limo).</strong></h5>
+</div>
+</div>
+<div id="normalización-variable-arcilla-echarle-un-ojo" class="section level3">
+<h3>|3.11| Normalización variable ARCILLA ECHARLE UN OJO<a name="id311"></a></h3>
+<pre><code>hist(VariablesSuelo$Arcilla)
+qqnorm(VariablesSuelo$Arcilla) 
+shapiro.test((VariablesSuelo$Arcilla))</code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$Arcilla)) 
+qqnorm(log(VariablesSuelo$Arcilla))
+shapiro.test(log(VariablesSuelo$Arcilla)) </code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$Arcilla)+1) 
+qqnorm(log(VariablesSuelo$Arcilla)+1)
+shapiro.test(log(VariablesSuelo$Arcilla)+1) </code></pre>
+<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<div id="utilizaremos-el-logaritmo-del-arcilla-para-el-mapeado-logarcilla1." class="section level5">
+<h5><strong>Utilizaremos el logaritmo del Arcilla para el mapeado –&gt; LOG((Arcilla)+1).</strong></h5>
+</div>
+</div>
 </div>
 <div id="generación-cartografía-edáfica" class="section level2">
 <h2>|4| GENERACIÓN CARTOGRAFÍA EDÁFICA <a name="id4"></a></h2>
-<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el mÃ©todo de estimación geoestadístico denominado kriging.Esta tÃ©cnica de interpolación, utiliza un modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
-<div id="carga-de-datos-iniciales-2" class="section level3">
-<h3>|1.1| Carga de datos iniciales<a name="id11"></a></h3>
-<p>Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué datos vamos a trabajar. En nuestro caso, hemos generado en formato “.txt” los datos a partir de un archivo de excel “.xlsx”. De esta forma podremos trabajar con ellos en forma de código (Eliminando la necesidad de programas externos).</p>
-<p>El comando que utilizaremos será “read.delim”, este comando lee un archivo y crea un nuevo objeto con la información de este archivo como una si fuera una base de datos.</p>
+<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado kriging. Esta técnica de interpolación, utiliza un modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
+<div id="metodología-de-cartografía-edáfica-1" class="section level3">
+<h3>|4.1| Metodología de cartografía edáfica<a name="id41"></a></h3>
+<p>Existen dos formas para la realización de cartografía edáfica utilizando el método de kriaje: #### |4.1.a| Automáticamente con la función <em>“autokriging()”</em>:<a name="id41a"></a> El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.</p>
+<div id="b-kriging-manual-1" class="section level4">
+<h4>|4.1.b| Kriging manual:<a name="id41b"></a></h4>
+<p>Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado partiendo de ese modelo y se visualiza cómo quedaría gráficamente.</p>
+<p>Antes de realizar el kriging manual y, para mejorar la precisión del kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud. Esto, podemos observarlo mediante el comando “autofitVariogram” seguido de los diferentes modelos estudiados: <strong>Exponencial (Exp)</strong>, <strong>Esférico (Sph)</strong>, <strong>Gausiano(Gau)</strong> <strong>Lineal(Lin)</strong> y la <strong>parametrización de Stein (Ste)</strong>.</p>
+<p>Ejemplo:</p>
+<pre><code>autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr</code></pre>
+<p>Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano esté este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).</p>
+<p>Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando <strong><em>Xlocal</em></strong> como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el kriging.</p>
 </div>
 </div>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="cartografía-de-la-variable-clucosidasa" class="section level3">
+<h3>|4.2| Cartografía de la variable CLUCOSIDASA<a name="id42"></a></h3>
+<div id="aautokriging-de-glucosidasa" class="section level4">
+<h4>|4.2.a|Autokriging de Glucosidasa:<a name="id42a"></a></h4>
+<p>Autokriging sin tendencia:</p>
+<pre><code>Autok.GLUC.ST &lt;- autoKrige(log(GLUC) ~ 1, VariablesSuelo, pts1 )</code></pre>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAAXVBMVEUAAAAAADoAAGYAOjoAOpAAZpAAZrY6AAA6OgA6kLY6kNtmAABmtrZmtv+QOgCQZgCQkNuQ29uQ2/+2ZgC2/7a2///bkDrbtmbb/9vb////tmb/25D//7b//9v///+8jXATAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3da2PTSICmUdPDwC4s7A7eziwG8v9/5lq+ypcE601FVWWf86UhYLlaiR8kq1RePAMQWdQeAECvBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAobYDugAopnyiim+xoNp7G7gvxRtVeoNnloeRf5r+4Hf4BwN4WJ0F9Oms/lMbKqBAOV0F9Nfni+Pnf/6dtAUBBcrpKaB/vp8W8/fX9e8//pyyCQEFyukpoKuLXA5J/TZlEwIKlNNTQJeXJ+zrg9BJb4MKKFBORwFdH25+ufji07RzeAEFyukooOujzcvT9dW0y0gCCpQjoAChjgLqFB5oS0cBdREJaEtPAb0+jenyqPQVAgqU01NAr06kn3YrkoAC5fQU0G0xT334MWkLAgqU01VAx0sxWUwEeA9TFqrrLKDPlrMD3tOkpT77C+ibCCjwmkM4byqogALsjbJ5nwF1Cg+8l3EibshFZwG1Ij3wju45oFakB97VHQfUivTA+7rjgFqRHnhfdxxQi4kA7+t+A2o5O+Cd3e80pukLKl9ccrrx9izgUd3tRHoBBd7dvd7K6RQeeH/3upiIi0hAU3oKqBXpgab0FFAr0gNN6SmgVqQHmtJVQK1ID7Sks4A+W84OaEZ/AX0TAQXKEVCAULcBXUUn8QIKlNNZQJ92E5c2M5oGkxazE1CgpK4Cusvmhx+jK0nTCiqgQDldBXSfzY//vbsn6clEeqCengK6u5Vz88lIXw5fsiI9UElPAV3uboVfF/Rw3Lm0mAhQS0cBPSxnt/7FoZqWswOq6SighwWVxwuDvrqg8iUBBcoRUIBQRwF1Cg+0paOAHi4irY6Tl8YtvYWAAuX0FNDdNKbNTZymMQHV9RTQw/2bh4n0KxPpgXp6Cuh+RfoPPw4pdSsnUE9XAT0uJnL4cA+LiQDVdBbQoyfL2QGVdRvQjIAC5QgoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQg1F9Al4u9T9MfLKBAOZ0F9GlxampDBRQop6uA/vq8OPfPv5O2IKBAOT0F9M/302L+/rr+/cefUzYhoEA5PQV0dZHLIanfpmxCQIFyegro8vKEfX0QOultUAEFyukooOvDzS8XX3yadg4voEA5HQV0fbR5ebq+mnYZSUCBcgQUINRRQJ3CA23pKKAuIgFt6Smg16cxXR6VvkJAgXJ6CujVifTTbkUSUKCcngK6LeapDz8mbUFAgXK6Cuh4KSaLiQC1dRbQZ8vZAc3oL6BvIqBAOQIKEOovoE7hgUZ0FlAr0gPt6CqgVqQHWtJTQK1IDzSlp4BakR5oSk8BtZgI0JSOAmo5O6AtHQV0+oLKF5ecFgIKlCOgAKGOAuoUHmhLRwF1EQloS08BtSI90JSeAmpFeqApPQXUivRAU7oKqBXpgZZ0FtBny9kBzegvoG8ioEA5AgoQ6iygv7/urro/BVeQngUUKKmvgC5305ZW4XrKAgoU1FVAl7ujztXxMrxpTEA1PQV0+ESP4cr7MB10c+g5zKw3kR6opaeALnfLzz8dZzCt3MoJVNNRQNfHm592/z0edi6txgTU0lFA9+uBrv97jObTtHN4AQXK6TOgx3uQXl1Q+ZKAAuV0FND9gsr7U/kNAQWq6Sigz8tdOJcnp/DeAwUq6Smgq92sz1+fDx+OdPVjPl4hoEA5PQV0mPa5OQY9XjlaTpxJL6BAOT0FdDOTfnPKvuvmcEfSpANQAYVHMcsH8XYV0G1B37KisoDCY5jno8z7CujFkvSXHxT/OgGFh3AI5/sWtLeAjj8YadL19y0BhUcwyqaAliOg8AjGr/T3fNULKHB3BPRdCCg8AgF9FwIKj0BA34WAwiMQ0HchoPAIBPRdCCg8AtOY3oWAwkMwkf49CCg8BrdyvgMBhQdhMZHyBBQoR0ABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoACh2QL6++ti8eHH89PHn6WfcAoBBcqZKaBDPrcBXSy+lX7GCQQUKGeegG77OQR0uahaUAEFypkloH++LxYff/76vA7oUNB//i39nDcTUKCcWQK6Wiy+PD9vAzqcxH8p/Zw3E1CgnFkCulwMl452AV0fjta7kCSgQDlzBHSdzOGYcxfQ9SFovXN4AQXKmSOgv79urhvtA7oSUOAuCChAqMIp/NJ7oMBdmOki0nDMuQvo+nj0U+nnvJmAAuXMNY3p0z6gw5zQejPpBRQoZ547kTaz5zcBfVosKp7BCyhQ0Ky3cm5VvBFJQIGCZlpMZDhxb6CfAgoUNNtydruEVs2ngAIlWVAZIDTPNKbKx51HAgqUM9NE+rrr0B8JKFDOTLdy1ps6f0pAgXIcgQKE5roTqeYHIY0IKFDOPFfhf31u5BhUQIFyZnoP9JTl7IB7IKAAIQEFCLkTCSAkoAAhAQUICShAyEUkgJCAAoQEFCA093uglRcWEVCgnPkvIj35VE7gPswf0PUxqM+FB+5BhWlMNQ9BBRQop0pAXUQC7kF/AV0eLuYHnxMioEA58wf099c3nMI/nU2ImtpQAQXKmT2gw6TQ9CPmfn1enJt4MCugQDk1JtJ/+JFt+c/302JutjvtaFZAgXJqBPRLuOXVRS6HpE6aEyWgQDnzBzS/grS8fOzUj5wXUKCcjpazWx9uXh67TpxUKqBAOR0FdH20eXm6vpp2RCugQDkCChCaN6DDPKR4EqhTeKAtMwX099ehc9t5nOksJheRgLbME9DV5uL7Zh7nG67DX5/GNGlSlIAC5cwS0OHIc33cuf7Pup1P8UTQqxPpp9VYQIFyZgno0/buzV06l/GtnBefDTL5/QABBcqZI6C7j/FY/2eTu4kXzk8sz/ppMRGgnpnuRPq2/c+mnG8J6LPl7IBmzBjQ1S55bwzomwgoUM6MAV3uFv7wkR7AfZjpPdAvx7dAp07dPOcUHmjELFfhl0M6n7azOIcpTfmnclqRHmjHbPNAB9+2x4/xGbwV6YGWzHMn0vbAcQjn0xsWBLUiPdCUme6FXy0Ol+Dz83cr0gNN6Wg5O4uJAG3pKKCWswPa0tF6oNMXVL645LQQUKCcjtYDFVCgLR2tB+oUHmhLT+uBuogENKWn9UCtSA80paf1QK1IDzSlq/VArUgPtKSz9UCtSA+0o7/1QC1nBzSiv/VA30RAgXI6Ww/0rQQUKKer9UBPrI9kp88nFVDoS9v3EPa0HugpAYX71/hd2D2tB3pKQOHuHcLZaEE7Ws7uyizQyXfWt/lNAK4aZbPN166AAq0av2CbfPHOFtAhf8O1+DdcQVoJKDwUAd3aHj1uJzPlb4IOWzkE2HugcO8EdGN39r0O6HLxpmmgy+Pd7wIK905AB8MySh9//vo8tG/5tnlMw5TSbTcFFO6dgA5Wm+htA/qGBZU3tjF+FlC4fwI6WO5u4twEdLc6aO5p+y6AgMK9M43p+fBhRruArgP4xnuRhtP4TwIK989E+sNydvuAvmU90K3hNP6f/yugcPfcylk+oPub6wUU7l3T/axxCr8ssRzTZoEnAQVqmuki0nDMuQtoqQWVlwIK1DXXNKZP+4AO719aUBm4B/PcibSZPb8J6FOxBZUjAgqUM+utnMHqH4UJKFDOTIuJDCfuDfRTQIGCZlvObpfQqvkUUKCkjhZULkFAgXLmmcZU+bjzSECBcmaaSF/xwvsJAQXKmelWziJT5wsQUKAcR6AAobnuRKp389EJAQXKmecq/K/PjRyDCihQzkzvgb7hk4iLElCgHAEFCAkoQMidSAAhAQUICShASEABQrMFdPMpcFVXox8IKFDOTAFdtXAJ/llAgZLmCejTeBLT9sON6xBQoJxZAjqcvu8OPEe/rEFAgXJm+lz40WIiT8nnuZcioEA5M92JNE7msuKVJAEFypknoCdve67cygncBQEFCM30HuinF383LwEFypnrKvzxTdCqy9MLKFDObCvS787ih6Xt6l2EF1CgoCrrgda7JUlAgXIEFCAkoAAhy9kBhAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUeH+LndrjKExAgXe3WNxnQQUUeG+HcN5bQQUUeGejbN7ZS1BAgXc2ft3d12tQQIF3JqATtlh6gyXd1zcP+iCgE7ZYeoMl3dc3D/ogoBO2WHqDJd3XNw/6IKATtlh6gyXd1zcP+iCgE7ZYeoMl3dc3D/pgGtOELZbeYEl39t2DPphIf/sWS2+wpDv77kEn3Mp58xZLb7Cke/v2QSfus58dBnR5+Kfs0/QH3933D6ios4A+LU5NbaiAAuV0FdBfnxfn/vl30hYEFCinp4D++X5azN9f17//+HPKJgQUKKengK4ucjkk9duUTQgoUE5PAV1enrCvD0InvQ0qoEA5HQV0fbj55eKLT9PO4QUUKKejgK6PNi9P11fTLiMJKFCOgAKEOgqoU3igLR0F1EUkoC09BfT6NKbLo9JXCChQTk8BvTqRftqtSAIKlNNTQLfFPPXhx6QtCChQTlcBHS/FZDERoLbOAvpsOTugGf0F9E0EFChHQAFC/QXUKTzQiM4CakV6oB1dBdSK9EBLegqoFemBpvQUUCvSA03pKaAWEwGa0lFALWcHtKWjgE5fUPniktNCQIFyBBQg1FFAncIDbekooC4iAW3pKaBWpAea0lNArUgPNKWngFqRHmhKVwG1Ij3Qks4C+mw5O6AZ/QX0TQQUKEdAAUICChDqLKCbJZVHk0H/fJ82j0lAgXL6Cujy/PKRgAL1dBXQ4wX4/UGogAL19BTQ4fx9WI/p6VhQAQXq6Smgy/19R8M9nduCCihQT0cBXcfy8N7ncldQAQXq6SigJwsq7woqoEA9vQZ0KOgnAQVq6jag26VABRSop6OAjt8Dfd59JryAAvV0FNBh+tL4U+V+fV58+C8BBarpKaDDPNDxB3isNnPqBRSopKeAbmbQj0/jVwIKs/Lx4Ke6CuimoONj0OGYVEBhLscPg6g9kkb0FdDLz4Z/ElCYyyGcCrrTWUDfyrcdYqNseiVtCShwm/HLx0tpQ0CB2wjoBQEFbiOgFwQUuI2AXhBQ4DYCekFAgdsI6AUBBW5jGtMFAQVuZCL9OQEFbuVWzjMCCtxMP08JKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIDC41ns1B5H9wQUHs5ioaBlCCg8mkM4FfStBBQezCibXhBvJKDwYMavAq+ItxFQeDACWo6AwoMR0HIEFB6MgJYjoPBgBLQcAYUHI6DlCCg8GNOYyhFQeDQm0hcjoPBw3MpZioDC49HPQgQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgr9sqpSZQIK3bKuZ20CCr2ysnx1Agqd8tlG9QkodMqna9YnoNApAa1PQKFTAlqfgEKnBLQ+AYVOCWh9AgqdEtD6BBQ6ZRpTfQIKvTKRvjoBhW65lbM2AYV+6WdlAgoQElCAkIAChAQUICSgUJ1rQb0SUKjNbKRuCShUZj58vwQU6nJHZscEFOqyJkjHBBTqEtCOCSjUJaAdE1CoS0A7JqBQl4B2TEChLgHtmIBCKdl0eNOYOiagUEh6Q5GJ9P0SUCgj76BbObsloFDEW87E9bNXAgpFuBb0iAQUihDQRySgcCa9FHT919wzAYVT4SUdAX1EAgon0ovpAvqIBJR7NfO0dgF9RALKnZr7TNwNRY+ov4AuD6+LT9Mf7Ce7P+EcyfnPxN1Q9IA6C+jT4tTUht72vxtPa+7ngf2NdPKB5Pxn4m4oejxdBfTX58W5f/6dtIWb/nfj10E/D+xqpGe/uPVx13/9fg98dkPRA+opoH++nxbz99f17z/+nLKJW/5305dsRw/scKSzHUi6FsQEPQV0dZHLIanfpmzihv/dN7xke3lgPyOt0EEBZYKeArq8PGFfH4ROehv0poBO+us9PrCfkVZ5oIvp3KyjgK4PN79cfPFp2jm8gFZ5wp4e6GI6E3QU0PXR5uXp+uq1y0gXl5xueUl09FoX0Hd44BsulPF4BPTyQdd/fUcP7Gekdc7E9ZNbdRRQp/ClHtjPSJ2J07aOAuoiUqkH9jPStxxIOhPn/fUU0OvTmC6PSl9xU0DDl2w/D+xnpG86kNRP3l1PAb06kX7arUi3/O/2M8s8fmA/I3UgSdN6Cui2mKc+/Ji0hZv+d+OXbD8P7GekDiRpWVcBHS/FtGUxkbmrNP8DoV2dBfTZcnZAM/oL6JsIKFCOgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQOjhAgpQTvFGld5gSbV3NnBfijeq9AaraOtc32he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRoc1UVt712he0dZwjOZlRnOLRocF0D4BBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEBIQAFCAgoQElCAkIAChAQUICSgACEBBQgJKEDoDgL6++ti7UvNIfz5vjj4VndYv7/+8+/4d+eDmHlY4+HU3Uu/Pg/P9OHHeGz1ds75aFrYN6/viXqjaejVdan/gC53u3b80pjb9tt58i2uNKz1D9sooJeDmHlYJ8OpuZeOz30YT8WdczmamvvmGKh9nmrum8vRtPPquqL7gD4d9u34yGtmq8X5t7jWsJbjJ7wcxNzDOhlOxb00fg3unqrizrkymor75soBXsV9c2U07by6rug9oMPh/sef2538qdoonkb/eG9UGtbmp+/wM3U5iJmHdTqcmntpeMVtzveW+6equXMuR9PCvhmyPjxjG/vmOJpmXl1X9R7Q5ehbXO94fnn+L2GdYW3fPBqfo54NYt5hnQ2n4l4aXo3Hg6vNKCrunCujqbhv1v/K7ba/HtdLe6LmaFp5dV3XeUDXe3l0klHrPeX1d333j+VOlWFtTgz/8/v4bbWzQcw6rPPh1NxLq+ORynBU/K3uzrkcTc19s47QfjS7Q72a++ZyNI28ul7SeUBH+3v9y9P9PJ/1d/T0TKLKsIaTn2+jqzaXg5h1WOfDqbmXxq+z5eZ1WXPnXI6mkZ+g3WAq/+CcjaaRffOSzgM6+lk8vf48q/UhxbfNAdf+fKLKsJ6GH6vR010OYtZhnQ+nkb20fl0Oz19555yNpo19sz+ya2PfHI4zm9g3L+o/oPv3l4/vnlQYxYf/sbsquP33sN6wTgN6Noj5hzX+AW9jL61fisOzt7BzjqNpYt887S9yN7FvDqNpYt+8rPOALkcX6JbV9uV+Vtrhe1xvWKNiXQ5i/mGNA9rGXtodvrSwc46jqb9vlqNJQvX3zXg09ffNq7oP6Hiqb6V9OVwJ2D71arF/edYa1klAzwcx/7BGw2ljL+3fNGth5xxHU3/fnAa09r4Zj6b+vnnVXQX0bLrYXI4TLoZXxBCMesN6MaDDIOYf1p+TSQH199LumdvYOcfRVN83++nrV/5xqbBvTkZTfd+87q4CWntO2PP1HzhHoOdq7aXVYVpqCztndfVGmno/QcOVmk/Pbeyb42jGar+6rhDQsrZvagno5XDGKu2lUbEa2DnX+1nzJ2h3sNfAvhmNZqz2q+uKzgPa1AW5wWrzLXYV/nI4Y3X20nJxnDRYf+eMRzNW8yfo6YXnrjmasdqvris6D+iqpSlhg+2A6g1r9HSXg5h/WK8GdN7hDG+sHU8Ja++c09GM1fwJeum5a47mlvFV1HlAm7opYfD0wn0uc2nnTqTz4YxV2EvDjflfTn5bc+ecjWas5k/QNk0t/OAcRzNW+9V1RecBbeK22NM7I4ZTinrDOr3sXfNe+PPh1N1L58tO1N0556OpuW8ubyytuW8uR9PSq+uKzgP63MLCLIfZKMd1IqoN62zmetXVmJ7PD4jr7aXLCxI1d87FaGrum9Fz739Zcd9cjqalV9cVvQe0haUBh/eztt/jp/2c32rDGge0+nqgFxPpa+2l/aJHIxV3zuVoau+bw3Nvj+cq75vT0bT06rqi94A2sTj1duHLrS91h3XypmP9FenPe15pL43XNN/f4lJv51wZTc2foPFzf3rpuSuOpqFX1xXdB/Rwq2zNY/nj9/iVT5WZRcufiVRtL40/JuL49LV2ztXR1PwJOn7CyOFwronPixpdKWrk1XVF/wFt4wP6Vqc/gM+1hnV22bv2p3KeDafSXhp/BtHodVhp57wwmpo/QdtEja9n1/9UzvFoWnl1XXEHAQWoQ0ABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoMzv9/95hKfkAQgos1suvjzAU/IIBJS5rRaz16zCU/IQBJS5CSh3Q0CZm4ByNwSUuQkod0NAmde6ZRvfRr/b/vr599fFx5/PT+svfPgx/P7p+Ge/Pi8+DX++WP/nbFO7Bz8v1w9eHR673PzZ9tfHp/zzffelzRbXT3b+sNNNwl8IKPMaB3Qdsa1//h3+aAjo//u+/cqXbS73xRwCuvvbowKOHzyU8L/3f/602Bsi+beAHh52vkn4CwFlXqOAHnq1K9YQ0P+9+8KH//q+OP7N4a/+5/4L2wSeP3hdwv/4vAvusZ+bU/e/BPTwsItNwl8IKHPbvyG5rtk2Z6vdcebmmHNI1/bgc/jV0LThjzZtG76w/7sXD96ctG+SuHn4l/0vNl8aPeVlQPcPu9wk/IWAMrd9zVb7cg2hG8p16N0mYYdfDb8YArr9wvpXw9+9ePBQwt1XVof+rf/y5ljy9YAeH3a2SfgLAWVu+5otj5XafmkI6Pb6zbFg61/tjkT3f3m5+bsXD959/dTu0X8J6Jf9hs83CX8hoMxtV6ftNfetzUX2Q+6u/Gqfu+fd8eXlg4cSnl09H87JbwnoIdrnm4S/EFDmdgzo2Dperwd0X7TjjKaTB48PII/XjW4J6PFY93yT8BcCytx2NRtd854a0I8/Lx88Duj4T28O6JVNwl8IKHM7BvQsUhOOQC8fPAro/k3G/bwAAAH4SURBVFjyn39veg/0GFDRZCIBZW7HU/iz2ZbT3gM9n6p5DOjT4nw7N57Cm/3JRALK3HY1Gy7xnF71eT2g+7otdzPizy8ZHUo4quTq7BT+tLKnAb2ySfgLAWVu+5odDxSP05heCejuHH6X0osHXwvocC5/HtDdZg5zTq8duJrGxI0ElLntJ6xv3qrcHPMtF/uJ9K8F9HBf+6drDx6VcLkr4eaOzv29Rdt3AJ62N3dur9KfBfRyk/AXAsrctpe7v43nGp2/K3otoP9xutLH+YNHJRz/0faLh6c8zlX6X1/PA3q5SfgLAWVum/ntZzOZ9reuv3YVfjXu58WDxyVc7v/kf+7e1zw+5T6SX35fBvRik/AXAsrsNjnbvhW5XTdpN0Ppb9OYNn0bXec5efCVEn453hY/esrl9rD0WkDPNwl/IaD0wL2VNElA6YGA0iQBpQcCSpMElB4IKE0SUHogoDRJQOmBgNIkAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQv8f+Gpv7LP/aYsAAAAASUVORK5CYII=" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>
+</div>
+<div id="visualizamos-como-sería-la-representación-gráfica-sin-tendencia" class="section level1">
+<h1>Visualizamos como sería la representación gráfica sin tendencia:</h1>
+<pre><code>plot(Autok.GLUC.ST)</code></pre>
+<p>Autokriging con tendencia:</p>
+<pre><code>Autok.GLUC.CT &lt;- autoKrige(log(GLUC) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica con tendencia:</p>
+<pre><code>plot(Autok.GLUC.CT)</code></pre>
+<div id="b-kriging-manual-de-glucosidasa-1" class="section level4">
+<h4>|4.2.b| Kriging manual de Glucosidasa:<a name="id42b"></a></h4>
+<p>Generamos una matriz donde exponer las semivarianzas de cada modelo:</p>
+<p>Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”.</em></p>
+<pre><code>MatrizGLUC &lt;- matrix(NA,2,5)
+colnames(MatrizGLUC) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
+rownames(MatrizGLUC) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
+<p>Rellenamos con los datos de cada modelo:<br />
+Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
+<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<pre><code>MatrizGLUC[1,1] &lt;- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
+MatrizGLUC[1,2] &lt;- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
+MatrizGLUC[1,3] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
+MatrizGLUC[1,4] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
+MatrizGLUC[1,5] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
+<pre><code>MatrizGLUC[2,1] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
+MatrizGLUC[2,2] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
+MatrizGLUC[2,3] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
+MatrizGLUC[2,4] &lt;- autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
+MatrizGLUC[2,5] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
+<p>Le decimos al programa “Dime qué coordenada de la matriz tiene un valor menor”.</p>
+<pre><code>which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)</code></pre>
+<p>En este caso nos dice que <strong><em>“STE CON TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“ste”</em> con tendencia:</p>
+<pre><code>v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
+<p>A continuación podemos realizar el kriaje de la Glucosidasa:</p>
+<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de VariablesSuelo adaptados al modelo</em> <strong><em>“Ste”</em></strong> <em>con tendencia en la malla</em> <strong><em>pts1&quot;</em></strong>.</p>
+<pre><code>GLUC.mapa &lt;- krige(log(GLUC) ~  Xlocal, VariablesSuelo, pts1, v.fitGLUCsteCT)</code></pre>
+<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de glucosidasa. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>GLUC.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“GLUCOSIDASA”</em></strong> <em>.</em></p>
+<pre><code>plot(GLUC.mapa, main= &quot;GLUCOSIDASA&quot;) </code></pre>
+</div>
+<div id="cartografía-de-la-variable-fosfatasa" class="section level3">
+<h3>|4.3| Cartografía de la variable FOSFATASA<a name="id43"></a></h3>
+<div id="a-autokriging-de-fosfatasa-1" class="section level4">
+<h4>|4.3.a| Autokriging de Fosfatasa:<a name="id43a"></a></h4>
+<p>Autokriging sin tendencia:</p>
+<pre><code>Autok.FOSF.ST &lt;- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
+<pre><code>plot(Autok.FOSF.ST)</code></pre>
+<p>Autokriging con tendencia:</p>
+<pre><code>Autok.FOSF.CT &lt;- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica con tendencia: ~~<sub> plot(Autok.FOSF.CT) </sub>~~</p>
+</div>
+<div id="b-kriging-manual-de-fosfatasa-1" class="section level4">
+<h4>|4.3.b| Kriging manual de Fosfatasa:<a name="id43b"></a></h4>
+<p>Generamos una matriz donde exponer las semivarianzas de cada modelo. Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”.</em></p>
+<pre><code>MatrizFOSF &lt;- matrix(NA,2,5)
+colnames(MatrizFOSF) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
+rownames(MatrizFOSF) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
+<p>Rellenamos con los datos de cada modelo: Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
+<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<pre><code>MatrizFOSF[1,1] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
+MatrizFOSF[1,2] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
+MatrizFOSF[1,3] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
+MatrizFOSF[1,4] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
+MatrizFOSF[1,5] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>Con tendencia (Utilizamos <strong><em>Xlocal</em></strong> como tendencia):</p>
+<pre><code>MatrizFOSF[2,1] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
+MatrizFOSF[2,2] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
+MatrizFOSF[2,3] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
+MatrizFOSF[2,4] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
+MatrizFOSF[2,5] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
+<p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
+<pre><code>which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)</code></pre>
+<p>En este caso nos dice que <strong><em>“GAU SIN TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“Gau” sin tendencia</em>:</p>
+<pre><code>v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
+<p>A continuación podemos realizar el kriaje de la fosfatasa:</p>
+<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>“VariablesSuelo”</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” sin tendencia</em></strong> <em>en la malla pts1&quot;.</em></p>
+<pre><code>FOSF.mapa &lt;- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)</code></pre>
+<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:</p>
+<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>FOSF.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“FOSFATASA”</em></strong> <em>.</em></p>
+<pre><code>plot(FOSF.mapa, main= &quot;FOSFATASA&quot;)</code></pre>
+</div>
+</div>
+<div id="section" class="section level3">
+<h3>|4.4| 9999999<a name="id44"></a></h3>
+<div id="a-999999999" class="section level4">
+<h4>|4.4.a| 999999999:<a name="id44a"></a></h4>
+</div>
+<div id="b-999999999" class="section level4">
+<h4>|4.4.b| 999999999:<a name="id44b"></a></h4>
+</div>
+</div>
+<div id="section-1" class="section level3">
+<h3>|4.5| 9999999<a name="id45"></a></h3>
+<div id="a-999999999-1" class="section level4">
+<h4>|4.5.a| 999999999:<a name="id45a"></a></h4>
+</div>
+<div id="a-999999999-2" class="section level4">
+<h4>|4.5.a| 999999999:<a name="id45b"></a></h4>
+</div>
+</div>
+<div id="section-2" class="section level3">
+<h3>|4.6| 9999999<a name="id46"></a></h3>
+<div id="a-999999999-3" class="section level4">
+<h4>|4.6.a| 999999999:<a name="id46a"></a></h4>
+</div>
+<div id="a-999999999-4" class="section level4">
+<h4>|4.6.a| 999999999:<a name="id46b"></a></h4>
+</div>
+</div>
+<div id="section-3" class="section level3">
+<h3>|4.7| 9999999<a name="id47"></a></h3>
+<div id="a-999999999-5" class="section level4">
+<h4>|4.7.a| 999999999:<a name="id47a"></a></h4>
+</div>
+<div id="b-999999999-1" class="section level4">
+<h4>|4.7.b| 999999999:<a name="id47b"></a></h4>
+</div>
+</div>
+<div id="section-4" class="section level3">
+<h3>|4.8| 9999999<a name="id48"></a></h3>
+<div id="a-999999999-6" class="section level4">
+<h4>|4.8.a| 999999999:<a name="id48a"></a></h4>
+</div>
+<div id="b-999999999-2" class="section level4">
+<h4>|4.8.b| 999999999:<a name="id48b"></a></h4>
+</div>
+</div>
+<div id="section-5" class="section level3">
+<h3>|4.9| 9999999<a name="id49"></a></h3>
+<div id="a-999999999-7" class="section level4">
+<h4>|4.9.a| 999999999:<a name="id49a"></a></h4>
+</div>
+<div id="b-999999999-3" class="section level4">
+<h4>|4.9.b| 999999999:<a name="id49b"></a></h4>
+</div>
+</div>
+<div id="section-6" class="section level3">
+<h3>|4.10| 9999999<a name="id410"></a></h3>
+<div id="a-999999999-8" class="section level4">
+<h4>|4.10.a| 999999999:<a name="id410a"></a></h4>
+</div>
+<div id="b-999999999-4" class="section level4">
+<h4>|4.10.b| 999999999:<a name="id410b"></a></h4>
+</div>
+</div>
+<div id="section-7" class="section level3">
+<h3>|4.11| 9999999<a name="id411"></a></h3>
+<div id="a-999999999-9" class="section level4">
+<h4>|4.11.a| 999999999:<a name="id411a"></a></h4>
+</div>
+<div id="b-999999999-5" class="section level4">
+<h4>|4.11.b| 999999999:<a name="id411b"></a></h4>
+</div>
+</div>
+<div id="section-8" class="section level3">
+<h3>|4.1| 9999999<a name="id41"></a></h3>
+<div id="a-999999999-10" class="section level4">
+<h4>|4.1.a| 999999999:<a name="id41a"></a></h4>
+</div>
+<div id="a-999999999-11" class="section level4">
+<h4>|4.1.a| 999999999:<a name="id41a"></a></h4>
+</div>
+</div>
 </div>
 
 

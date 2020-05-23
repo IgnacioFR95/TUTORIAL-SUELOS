@@ -31,7 +31,7 @@
 ################################### ÍNDICE #####################################
 
 # |1|  PREPARACIÓN DE LOS DATOS
-#      |1.1| Carga de datos iniciales.
+#      |1.1| Carga de datos iniciales
 #      |1.2| Comprobaciones iniciales
 #              |1.2.a| Verificación de la versión de R
 #              |1.2.b| Verificación de la versión de RStudio
@@ -42,7 +42,7 @@
 #      |1.4| Reclasificación datos originales a datos espaciales.
 #   
 # |2|  PREPARACIÓN DEL ÁREA DE ESTUDIO
-#      |2.1| Generación del mapa base.
+#      |2.1| Generación del mapa base
 #              |2.1.a| Generación del polígono
 #              |2.1.b| Generación de la malla
 #      |2.2| Adaptación de los datos a mapa base.
@@ -550,7 +550,7 @@ shapiro.test((VariablesSuelo$Arcilla-median(VariablesSuelo$Arcilla))/sd(Variable
 # utilizando el método de estimación geoestadístico denominado kriging.Esta 
 # técnica de interpolación, utiliza un modelo de variograma para poder estimar 
 # el resto de puntos intermedios donde no se tiene un dato real recogido 
-# directamente del campo
+# directamente del campo.
 
 
 #__________________  4.1 METODOLOGÍA DE CARTOGRAFÍA EDÁFICA ___________________#

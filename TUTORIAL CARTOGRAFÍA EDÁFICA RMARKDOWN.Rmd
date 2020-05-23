@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Para cualquier informaci√≥n adicional sobre el funcionamiento de alg√∫n comando, puede utilizar **_"?NombreDelComando"_**. Lo que abrir√° una nueva pesta√±a con m√°s informaci√≥n sobre su uso y la gram√°tica que utiliza. Si el comando pertenece a un paquete de R concreto, puede utilizar el comando **_"??NombreDelComando"_** para recibir la misma informaci√≥n.
 
 ___________________________________________________________________________________________
-¡ … Õ ” ⁄ · È Ì Û ˙
+¡ … Õ ” ⁄ · È Ì Û ˙    — Ò
 
 ## **√çNDICE**
 

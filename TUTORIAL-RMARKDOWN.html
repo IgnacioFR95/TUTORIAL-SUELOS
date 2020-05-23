@@ -585,20 +585,20 @@ load(&quot;data/AerialRoot.community.corregido.Rdata&quot;)</code></pre>
 <div id="comprobaciones-iniciales-1" class="section level3">
 <h3>|1.2| Comprobaciones iniciales<a name="id12"></a></h3>
 <p>Las siguientes operaciones, cargan algunos parámetros imprescindibles para la realización de este tutorial. A su vez, comprueba que la versión de R es apta para trabajar y confirma la correcta instalación de todos los paquetes que vamos a necesitar. Por último, se realiza un “curating data” de los datos, que es un proceso en el que se homogeniza la base de datos brutos y se eliman los parámetros innecesarios para el tutorial. (Los datos contienen información extra que otro investigador podría utilizar en el futuro para sus estudios)</p>
-<div id="averificación-de-la-versión-de-r" class="section level4">
-<h4>|1.2.a|Verificación de la versión de R:<a name="id12a"></a></h4>
+<div id="a-verificación-de-la-versión-de-r-1" class="section level4">
+<h4>|1.2.a| Verificación de la versión de R:<a name="id12a"></a></h4>
 <p>Comprobaremos que la versión sea igual o superior a la 3.6.0.</p>
 <pre><code>if(getRversion() &lt; &quot;3.6.0&quot;) {stop(&quot;##########\nLa versión de R que posee es antigua\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
 <p>El comando aplica lo siguiente: <em>&quot;Si la versión de R es menor que la</em> <strong><em>3.6.0</em></strong> <em>, genera un mensaje de alerta donde especifique el mensaje&quot;</em> (En este caso, el mensaje elegido es un aviso de que la versión de R es antigua y se necesita actualizar).</p>
 </div>
-<div id="bverificación-de-la-versión-de-rstudio" class="section level4">
-<h4>|1.2.b|Verificación de la versión de RStudio::<a name="id12b"></a></h4>
+<div id="b-verificación-de-la-versión-de-rstudio-1" class="section level4">
+<h4>|1.2.b| Verificación de la versión de RStudio::<a name="id12b"></a></h4>
 <p>Comprobaremos que la versión sea igual o superior a la 1.0.1.</p>
 <pre><code>if(RStudio.Version()$version &lt; &quot;1.0.1&quot;){stop(&quot;##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
 <p>El comando aplica lo siguiente: <em>&quot;Si la versión de RStudio es menor que la</em> <strong><em>3.6.0</em></strong> <em>, genera un mensaje de alerta donde especifique el mensaje&quot;</em> (En este caso, el mensaje elegido es un aviso de que la versión de RStudio es antigua y se necesita actualizar).</p>
 </div>
-<div id="cverificación-de-los-paquetes-cran" class="section level4">
-<h4>|1.2.c|Verificación de los paquetes CRAN:<a name="id12c"></a></h4>
+<div id="c-verificación-de-los-paquetes-cran-1" class="section level4">
+<h4>|1.2.c| Verificación de los paquetes CRAN:<a name="id12c"></a></h4>
 <p>Comprobaremos si los paquetes necesarios están instalados.</p>
 <pre><code>PaquetesNecesarios &lt;- c(&quot;lattice&quot;,&quot;sp&quot;,&quot;gstat&quot;,&quot;maptools&quot;,&quot;spatstat&quot;,&quot;raster&quot;,&quot;automap&quot;)
 installed_packages &lt;- .packages(all.available = TRUE)
@@ -607,13 +607,13 @@ PaquetesNecesarios2 &lt;- PaquetesNecesarios[!PaquetesNecesarios %in% installed_
 <pre><code>if(length(PaquetesNecesarios2) &gt; 0){install.packages(PaquetesNecesarios2)}
 stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))</code></pre>
 </div>
-<div id="dfinalización-de-las-comprobaciones" class="section level4">
-<h4>|1.2.d|Finalización de las comprobaciones:<a name="id12d"></a></h4>
+<div id="d-finalización-de-las-comprobaciones-1" class="section level4">
+<h4>|1.2.d| Finalización de las comprobaciones:<a name="id12d"></a></h4>
 <pre><code>rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)</code></pre>
 <p>El comando <strong><em>“rm()”</em></strong> elimina los objetos puestos entre paréntesis, en este caso los objetos que hemos utilizado para confirmar que los paquetes están instalados.</p>
 </div>
-<div id="ecurating-data" class="section level4">
-<h4>|1.2.e|Curating data:<a name="id12e"></a></h4>
+<div id="e-curating-data-1" class="section level4">
+<h4>|1.2.e| Curating data:<a name="id12e"></a></h4>
 <p>Renombramos el título de de la columna 11 (COD -&gt; Codigo_muestra):</p>
 <pre><code>colnames(VariablesSuelo)[11] &lt;- &quot;Codigo_muestra&quot;</code></pre>
 <p>Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así los datos:</p>
@@ -626,6 +626,29 @@ VariablesSuelo$Nº &lt;- NULL
 VariablesSuelo$Marco &lt;- NULL
 VariablesSuelo$ID_GPS &lt;- NULL</code></pre>
 </div>
+</div>
+<div id="carga-de-paquetes-de-r-necesarios" class="section level3">
+<h3>|1.3| Carga de paquetes de R necesarios<a name="id13"></a></h3>
+<p>En el <strong>paso 1.2</strong> hemos descargado los paquetes de R que necesitamos para hacer el tutorial. Vamos a cargarlos usando el comando <strong><em>“library(NombreDelPaquete)”.</em></strong></p>
+<pre><code>library(lattice)
+library(sp)
+library(gstat)
+library(maptools)
+library(spatstat)
+library(raster)
+library(automap)</code></pre>
+</div>
+<div id="reclasificación-de-los-datos-originales-a-datos-espaciales" class="section level3">
+<h3>|1.4| Reclasificación de los datos originales a datos espaciales<a name="id14"></a></h3>
+<p>Con las siguientes operaciones vamos a modificar el tipo de objeto que son los datos, para así poder trabajar con ellos espacialmente. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.</p>
+<p>Como trabajaremos de forma local, no necesitamos coordenadas globales, y por ello utilizaremos como nuevas coordenadas los valores de <strong><em>Xlocal</em></strong>* e <strong><em>Ylocal</em></strong> en relación a <strong><em>“VariablesSuelo”</em></strong>. Al dar coordenadas a los datos de <strong><em>VariablesSuelo</em></strong> los convierte de un objeto <strong><em>“data.frame”</em></strong> a un objeto <strong><em>“SpatialPointDataFrame”</em></strong>. Para esta operación utilizaremos el comando <strong><em>“coordinates()”</em></strong>:</p>
+<pre><code>coordinates(VariablesSuelo) &lt;- ~ Xlocal + Ylocal</code></pre>
+<p>Este comando dice:<em>&quot;Utiliza como coordenadas x e y para los datos recogidos en el objeto</em> <strong><em>VariablesSuelo</em></strong> <em>, los valores de las columnas</em> <strong><em>Xlocal</em></strong> <em>e</em> <strong><em>Ylocal</em></strong> <em>respectivamente&quot;.</em></p>
+<p>Con el siguiente comando podemos cerciorarnos si <strong><em>VariablesSuelo</em></strong> ha cambiado su clase a <strong><em>“SpatialPointsDataFrame”</em></strong>.</p>
+<pre><code>class(VariablesSuelo)</code></pre>
+<p>Efectivamente, la contestación que nos da la consola es que ahora el objeto <strong><em>VariablesSuelo</em></strong> es un <strong><em>“SpatialPointsDataFrame”</em></strong>.</p>
+<p>Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar cifras excesivamente largas, para ello usaremos el siguiente comando:</p>
+<pre><code>options(digits=10)</code></pre>
 </div>
 </div>
 <div id="preparación-del-área-de-estudio-1" class="section level2">

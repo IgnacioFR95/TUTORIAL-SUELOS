@@ -1,6 +1,6 @@
 ---
 title: "**TUTORIAL CARTOGRAFÍA EDÁFICA**"
-author: "Ignacio Fernández  Ruiz"
+author: "Ignacio Fernández Ruiz"
 date: "23/5/2020"
 output: html_document
 ---

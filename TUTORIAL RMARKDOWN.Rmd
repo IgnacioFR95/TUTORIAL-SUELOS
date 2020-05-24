@@ -807,13 +807,121 @@ plot(N.mapa, main= "NITRÓGENO")
 
 
 
-### |4.5| 9999999<a name="id45"></a>
-#### |4.5.a| 999999999:<a name="id45a"></a>
-#### |4.5.a| 999999999:<a name="id45b"></a>
+### |4.5| Cartografía de la variable fósforo<a name="id45"></a>
+#### |4.5.a| Autokriging de Fósforo:<a name="id45a"></a>
+
+Autokriging sin tendencia:
+
+~~~
+Autok.P.ST <- autoKrige((P) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.P.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.P.CT <- autoKrige((P) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+
+~~~
+plot(Autok.P.CT)
+~~~
+
+#### |4.5.a| Kriging manual de Fósforo:<a name="id45b"></a>
+
+Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
+
+~~~
+MatrizP <- matrix(NA,2,5)
+colnames(MatrizP) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizP) <- c("Sin tendencia", "Con tendencia")
+~~~
+
+Rellenamos con los datos de cada modelo:
+
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+
+~~~
+MatrizP[1,1] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizP[1,2] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizP[1,3] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizP[1,4] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizP[1,5] <- autofitVariogram((P) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
+
+Con tendencia (Utilizamos Xlocal como tendencia):
+
+~~~
+MatrizP[2,1] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizP[2,2] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizP[2,3] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizP[2,4] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizP[2,5] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima:
+
+El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+
+~~~
+which((MatrizP) == min(MatrizP), arr.ind=TRUE)
+~~~
+
+En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Gau" con tendencia**:
+
+~~~
+v.fitPgauCT = autofitVariogram((P) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje del Fósforo.
+
+Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1"*** *.*
+
+~~~
+P.mapa <- krige((P) ~  Xlocal, VariablesSuelo, pts1, v.fitPgauCT)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Fósforo, la siguiente función expresa *"Genera un gráfico del objeto* ***P.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"FÓSFORO"*** *.*
+
+~~~
+plot(P.mapa, main= "FÓSFORO")
+~~~
 
 ### |4.6| 9999999<a name="id46"></a>
 #### |4.6.a| 999999999:<a name="id46a"></a>
 #### |4.6.a| 999999999:<a name="id46b"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### |4.7| 9999999<a name="id47"></a>
 #### |4.7.a| 999999999:<a name="id47a"></a>

@@ -1160,24 +1160,89 @@ plot(pH.mapa, main= "pH")
 ~~~
 
 
+### |4.9| Generación de la variable ARENA<a name="id49"></a>
+#### |4.9.a| Autokriging de Arena:<a name="id49a"></a>
 
+Autokriging sin tendencia:
 
+~~~
+Autok.Arena.ST <- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )
+~~~
 
+Visualizamos como sería la representación gráfica sin tendencia:
 
+~~~
+plot(Autok.Arena.ST)
+~~~
 
+Autokriging con tendencia:
 
+~~~
+Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
 
+Visualizamos como sería la representación gráfica con tendencia:
 
+~~~
+plot(Autok.Arena.CT)
+~~~
 
+#### |4.9.b| Kriging manual de Arena:<a name="id49b"></a>
 
+Generamos una matriz donde exponer las semivarianzas de cada modelo, Le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
 
+~~~
+MatrizArena <- matrix(NA,2,5)
+colnames(MatrizArena) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizArena) <- c("Sin tendencia", "Con tendencia")
+~~~
 
+Rellenamos con los datos de cada modelo, con el siguiente código le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
+~~~
+MatrizArena[1,1] <- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizArena[1,2] <- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizArena[1,3] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizArena[1,4] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizArena[1,5] <- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
 
-### |4.9| 9999999<a name="id49"></a>
-#### |4.9.a| 999999999:<a name="id49a"></a>
-#### |4.9.b| 999999999:<a name="id49b"></a>
+Con tendencia (Utilizamos Xlocal como tendencia):
+
+~~~
+MatrizArena[2,1] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizArena[2,2] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizArena[2,3] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizArena[2,4] <- autofitVariogram((Arena) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizArena[2,5] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, para ello, le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+
+~~~
+which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
+~~~
+
+En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
+
+~~~
+v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje de la Arena. Con la siguiente función, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
+
+~~~
+Arena.mapa <- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa *"Genera un gráfico del objeto* ***Arena.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN ARENAS"*** *.*
+
+~~~
+plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
+~~~
+
 
 ### |4.10| 9999999<a name="id410"></a>
 #### |4.10.a| 999999999:<a name="id410a"></a>

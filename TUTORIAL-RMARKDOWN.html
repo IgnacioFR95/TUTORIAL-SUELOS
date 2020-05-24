@@ -1179,39 +1179,72 @@ MatrizpH[2,5] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&qu
 <pre><code>plot(pH.mapa, main= &quot;pH&quot;) </code></pre>
 </div>
 </div>
+<div id="generación-de-la-variable-arena" class="section level3">
+<h3>|4.9| Generación de la variable ARENA<a name="id49"></a></h3>
+<div id="a-autokriging-de-arena-1" class="section level4">
+<h4>|4.9.a| Autokriging de Arena:<a name="id49a"></a></h4>
+<p>Autokriging sin tendencia:</p>
+<pre><code>Autok.Arena.ST &lt;- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
+<pre><code>plot(Autok.Arena.ST)</code></pre>
+<p>Autokriging con tendencia:</p>
+<pre><code>Autok.Arena.CT &lt;- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica con tendencia:</p>
+<pre><code>plot(Autok.Arena.CT)</code></pre>
+</div>
+<div id="b-kriging-manual-de-arena-1" class="section level4">
+<h4>|4.9.b| Kriging manual de Arena:<a name="id49b"></a></h4>
+<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
+<pre><code>MatrizArena &lt;- matrix(NA,2,5)
+colnames(MatrizArena) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
+rownames(MatrizArena) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
+<p>Rellenamos con los datos de cada modelo, con el siguiente código le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
+<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<pre><code>MatrizArena[1,1] &lt;- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
+MatrizArena[1,2] &lt;- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
+MatrizArena[1,3] &lt;- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
+MatrizArena[1,4] &lt;- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
+MatrizArena[1,5] &lt;- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
+<pre><code>MatrizArena[2,1] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
+MatrizArena[2,2] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
+MatrizArena[2,3] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
+MatrizArena[2,4] &lt;- autofitVariogram((Arena) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
+MatrizArena[2,5] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, para ello, le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
+<pre><code>which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)</code></pre>
+<p>En este caso nos dice que <strong>“STE SIN TENDENCIA”</strong> es el mejor, así que será el utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Ste” sin tendencia</strong>:</p>
+<pre><code>v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
+<p>A continuación podemos realizar el kriaje de la Arena. Con la siguiente función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
+<pre><code>Arena.mapa &lt;- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)</code></pre>
+<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arena.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARENAS”</em></strong> <em>.</em></p>
+<pre><code>plot(Arena.mapa, main= &quot;CONTENIDO EN ARENAS&quot;)</code></pre>
+</div>
+</div>
 <div id="section" class="section level3">
-<h3>|4.9| 9999999<a name="id49"></a></h3>
-<div id="a-999999999" class="section level4">
-<h4>|4.9.a| 999999999:<a name="id49a"></a></h4>
-</div>
-<div id="b-999999999" class="section level4">
-<h4>|4.9.b| 999999999:<a name="id49b"></a></h4>
-</div>
-</div>
-<div id="section-1" class="section level3">
 <h3>|4.10| 9999999<a name="id410"></a></h3>
-<div id="a-999999999-1" class="section level4">
+<div id="a-999999999" class="section level4">
 <h4>|4.10.a| 999999999:<a name="id410a"></a></h4>
 </div>
-<div id="b-999999999-1" class="section level4">
+<div id="b-999999999" class="section level4">
 <h4>|4.10.b| 999999999:<a name="id410b"></a></h4>
 </div>
 </div>
-<div id="section-2" class="section level3">
+<div id="section-1" class="section level3">
 <h3>|4.11| 9999999<a name="id411"></a></h3>
-<div id="a-999999999-2" class="section level4">
+<div id="a-999999999-1" class="section level4">
 <h4>|4.11.a| 999999999:<a name="id411a"></a></h4>
 </div>
-<div id="b-999999999-2" class="section level4">
+<div id="b-999999999-1" class="section level4">
 <h4>|4.11.b| 999999999:<a name="id411b"></a></h4>
 </div>
 </div>
-<div id="section-3" class="section level3">
+<div id="section-2" class="section level3">
 <h3>|4.1| 9999999<a name="id41"></a></h3>
-<div id="a-999999999-3" class="section level4">
+<div id="a-999999999-2" class="section level4">
 <h4>|4.1.a| 999999999:<a name="id41a"></a></h4>
 </div>
-<div id="a-999999999-4" class="section level4">
+<div id="a-999999999-3" class="section level4">
 <h4>|4.1.a| 999999999:<a name="id41a"></a></h4>
 </div>
 </div>

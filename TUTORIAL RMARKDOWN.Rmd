@@ -1331,25 +1331,86 @@ plot(Limo.mapa, main= "CONTENIDO EN LIMO")
 ~~~
 
 
+### |4.11| Cartografía de la variable ARCILLA<a name="id411"></a>
+#### |4.11.a| Autokriging de Arcilla:<a name="id411a"></a>
+
+Autokriging sin tendencia:
+
+~~~
+Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.Arcilla.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+
+~~~
+plot(Autok.Arcilla.CT)
+~~~
 
 
+#### |4.11.b| Kriging manual de Arcillas:<a name="id411b"></a>
 
+Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
 
+~~~
+MatrizArcilla <- matrix(NA,2,5)
+colnames(MatrizArcilla) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizArcilla) <- c("Sin tendencia", "Con tendencia")
+~~~
 
+Rellenamos con los datos de cada modelo, para ello le decimos  al programa con la siguiente línea de código *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
+~~~
+MatrizArcilla[1,1] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizArcilla[1,2] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizArcilla[1,3] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizArcilla[1,4] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizArcilla[1,5] <- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
 
+Con tendencia (Utilizamos Xlocal como tendencia):
 
+~~~
+MatrizArcilla[2,1] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizArcilla[2,2] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizArcilla[2,3] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
 
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
 
+~~~
+which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
+~~~
 
+En este caso nos dice que **"LIN CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Lin" con tendencia**:
 
+~~~
+v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo, model = c("Lin"))$var_model
+~~~
 
+A continuación podemos realizar el kriaje de las arcillas, con esta función, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1*** *".*
 
+~~~
+Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, VariablesSuelo, pts1, v.fitArcillalinCT)
+~~~
 
+Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arcilla. La siguiente función expresa *"Genera un gráfico del objeto* ***Arcilla.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN ARCILLA"*** *.*
 
-### |4.11| 9999999<a name="id411"></a>
-#### |4.11.a| 999999999:<a name="id411a"></a>
-#### |4.11.b| 999999999:<a name="id411b"></a>
-
-
+~~~
+plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS")
+~~~

@@ -1264,13 +1264,46 @@ MatrizLimo[2,5] &lt;- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model 
 <pre><code>plot(Limo.mapa, main= &quot;CONTENIDO EN LIMO&quot;) </code></pre>
 </div>
 </div>
-<div id="section" class="section level3">
-<h3>|4.11| 9999999<a name="id411"></a></h3>
-<div id="a-999999999" class="section level4">
-<h4>|4.11.a| 999999999:<a name="id411a"></a></h4>
+<div id="cartografía-de-la-variable-arcilla" class="section level3">
+<h3>|4.11| Cartografía de la variable ARCILLA<a name="id411"></a></h3>
+<div id="a-autokriging-de-arcilla-1" class="section level4">
+<h4>|4.11.a| Autokriging de Arcilla:<a name="id411a"></a></h4>
+<p>Autokriging sin tendencia:</p>
+<pre><code>Autok.Arcilla.ST &lt;- autoKrige(log(Arcilla+1) ~ 1, VariablesSuelo, pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
+<pre><code>plot(Autok.Arcilla.ST)</code></pre>
+<p>Autokriging con tendencia:</p>
+<pre><code>Autok.Arcilla.CT &lt;- autoKrige(log(Arcilla+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
+<p>Visualizamos como sería la representación gráfica con tendencia:</p>
+<pre><code>plot(Autok.Arcilla.CT)</code></pre>
 </div>
-<div id="b-999999999" class="section level4">
-<h4>|4.11.b| 999999999:<a name="id411b"></a></h4>
+<div id="b-kriging-manual-de-arcillas" class="section level4">
+<h4>|4.11.b| Kriging manual de Arcillas:<a name="id411b"></a></h4>
+<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
+<pre><code>MatrizArcilla &lt;- matrix(NA,2,5)
+colnames(MatrizArcilla) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
+rownames(MatrizArcilla) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
+<p>Rellenamos con los datos de cada modelo, para ello le decimos al programa con la siguiente línea de código <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
+<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<pre><code>MatrizArcilla[1,1] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
+MatrizArcilla[1,2] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
+MatrizArcilla[1,3] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
+MatrizArcilla[1,4] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
+MatrizArcilla[1,5] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
+<pre><code>MatrizArcilla[2,1] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
+MatrizArcilla[2,2] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
+MatrizArcilla[2,3] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
+MatrizArcilla[2,4] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
+MatrizArcilla[2,5] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
+<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
+<pre><code>which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)</code></pre>
+<p>En este caso nos dice que <strong>“LIN CON TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Lin” con tendencia</strong>:</p>
+<pre><code>v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo, model = c(&quot;Lin&quot;))$var_model</code></pre>
+<p>A continuación podemos realizar el kriaje de las arcillas, con esta función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Lin” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
+<pre><code>Arcilla.mapa &lt;- krige(log(Arcilla+1) ~  Xlocal, VariablesSuelo, pts1, v.fitArcillalinCT)</code></pre>
+<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arcilla. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arcilla.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARCILLA”</em></strong> <em>.</em></p>
+<pre><code>plot(Arcilla.mapa, main= &quot;CONTENIDO EN ARCILLAS&quot;)</code></pre>
 </div>
 </div>
 </div>

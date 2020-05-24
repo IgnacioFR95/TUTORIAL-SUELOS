@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Para cualquier información adicional sobre el funcionamiento de algún comando, puede utilizar ***"?NombreDelComando"***. Lo que abrirá una nueva pestaña con más información sobre su uso y la gramática que utiliza. Si el comando pertenece a un paquete de R concreto, puede utilizar el comando ***"??NombreDelComando"*** para recibir la misma información.
 
 ___________________________________________________________________________________________
-Á É Í Ó Ú á é í ó ú    Ñ ñ
+
 
 ## **ÍNDICE**
     
@@ -1414,3 +1414,9 @@ Por último, observaremos el resultado gráficamente, dando como fruto un mapa d
 ~~~
 plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS")
 ~~~
+
+___
+
+
+
+Á É Í Ó Ú    á é í ó ú    Ñ ñ

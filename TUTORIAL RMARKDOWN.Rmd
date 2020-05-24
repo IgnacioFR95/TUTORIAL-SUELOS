@@ -982,6 +982,94 @@ plot(K.mapa, main= "POTASIO")
 ~~~
 
 
+### |4.7| Cartografía de la variable CARBONO<a name="id47"></a>
+#### |4.7.a| Autokriging de Carbono:<a name="id47a"></a>
+
+Autokriging sin tendencia:
+
+~~~
+Autok.C.ST <- autoKrige(log(C) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.C.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.C.CT <- autoKrige(log(C) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+
+~~~
+plot(Autok.C.CT)
+~~~
+
+#### |4.7.b| Kriging manual de Carbono:<a name="id47b"></a>
+
+Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
+
+~~~
+MatrizC <- matrix(NA,2,5)
+colnames(MatrizC) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizC) <- c("Sin tendencia", "Con tendencia")
+~~~
+
+Rellenamos con los datos de cada modelo, le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia*". Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+
+~~~
+MatrizC[1,1] <- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizC[1,2] <- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizC[1,3] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizC[1,4] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizC[1,5] <- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
+
+Con tendencia (Utilizamos Xlocal como tendencia):
+
+~~~
+MatrizC[2,1] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizC[2,2] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizC[2,3] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+
+El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+
+~~~
+which((MatrizC) == min(MatrizC), arr.ind=TRUE)
+~~~
+
+En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Gau" con tendencia**:
+
+~~~
+v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje del Carbono.
+
+Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1*** *".*
+
+~~~
+C.mapa <- krige(log(C) ~  Xlocal, VariablesSuelo, pts1, v.fitCgauCT)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Carbono:
+
+La siguiente función expresa *"Genera un gráfico del objeto* ***C.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CARBONO"*** *.*
+
+~~~
+plot(C.mapa, main= "CARBONO")
+~~~
 
 
 
@@ -999,15 +1087,6 @@ plot(K.mapa, main= "POTASIO")
 
 
 
-
-
-
-
-
-
-### |4.7| 9999999<a name="id47"></a>
-#### |4.7.a| 999999999:<a name="id47a"></a>
-#### |4.7.b| 999999999:<a name="id47b"></a>
 
 ### |4.8| 9999999<a name="id48"></a>
 #### |4.8.a| 999999999:<a name="id48a"></a>

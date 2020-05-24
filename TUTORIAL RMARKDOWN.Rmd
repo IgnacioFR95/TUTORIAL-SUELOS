@@ -1244,16 +1244,112 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 ~~~
 
 
-### |4.10| 9999999<a name="id410"></a>
-#### |4.10.a| 999999999:<a name="id410a"></a>
-#### |4.10.b| 999999999:<a name="id410b"></a>
+### |4.10| Generación de la variable LIMO<a name="id410"></a>
+#### |4.10.a|  Autokriging de Limo:<a name="id410a"></a>
+Autokriging sin tendencia:
+
+~~~
+Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, VariablesSuelo, pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica sin tendencia:
+
+~~~
+plot(Autok.Limo.ST)
+~~~
+
+Autokriging con tendencia:
+
+~~~
+Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+~~~
+
+Visualizamos como sería la representación gráfica con tendencia:
+
+~~~
+plot(Autok.Limo.CT)
+~~~
+
+
+
+#### |4.10.b| Kriging manual de Limo:<a name="id410b"></a>
+
+Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
+
+~~~
+MatrizLimo <- matrix(NA,2,5)
+colnames(MatrizLimo) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
+rownames(MatrizLimo) <- c("Sin tendencia", "Con tendencia")
+~~~
+
+Rellenamos con los datos de cada modelo:
+
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+
+Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
+
+~~~
+MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+~~~
+
+Con tendencia (Utilizamos Xlocal como tendencia):
+
+~~~
+MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+~~~
+
+El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor, con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con él le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+
+~~~
+which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
+~~~
+
+En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
+
+~~~
+v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
+~~~
+
+A continuación podemos realizar el kriaje de la variable Limos. Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
+
+~~~
+Limo.mapa <- krige(log(Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
+~~~
+
+Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Limos. La siguiente función expresa *"Genera un gráfico del objeto* ***Limo.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN LIMO"*** *.*
+
+~~~
+plot(Limo.mapa, main= "CONTENIDO EN LIMO") 
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### |4.11| 9999999<a name="id411"></a>
 #### |4.11.a| 999999999:<a name="id411a"></a>
 #### |4.11.b| 999999999:<a name="id411b"></a>
-
-### |4.1| 9999999<a name="id41"></a>
-#### |4.1.a| 999999999:<a name="id41a"></a>
-#### |4.1.a| 999999999:<a name="id41a"></a>
 
 

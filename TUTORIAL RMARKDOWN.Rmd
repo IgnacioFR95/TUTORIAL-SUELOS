@@ -477,17 +477,9 @@ qqnorm(VariablesSuelo$Limo)
 shapiro.test((VariablesSuelo$Limo))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
-
-~~~
-hist(log(VariablesSuelo$Limo)) 
-qqnorm(log(VariablesSuelo$Limo))
-shapiro.test(log(VariablesSuelo$Limo)) 
-~~~
-
 Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
 
-##### **Utilizaremos el logaritmo del Limo para el mapeado --> LOG(Limo).**
+##### **Utilizaremos directamente el valor Limo para el mapeado  --> (Limo).**
 
 
 ### |3.11| Normalización variable ARCILLA ECHARLE UN OJO<a name="id311"></a>
@@ -1256,7 +1248,7 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 Autokriging sin tendencia:
 
 ~~~
-Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, VariablesSuelo, pts1 )
+Autok.Limo.ST <- autoKrige((Limo) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
 Visualizamos como sería la representación gráfica sin tendencia:
@@ -1268,7 +1260,7 @@ plot(Autok.Limo.ST)
 Autokriging con tendencia:
 
 ~~~
-Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+Autok.Limo.CT <- autoKrige((Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
 Visualizamos como sería la representación gráfica con tendencia:
@@ -1296,21 +1288,21 @@ Le decimos al programa *"rellena la matriz generada con la semivarianza de cada 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
 ~~~
-MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
-MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
-MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
-MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
-MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+MatrizLimo[1,1] <- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizLimo[1,2] <- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizLimo[1,3] <- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizLimo[1,4] <- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizLimo[1,5] <- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 ~~~
 
 Con tendencia (Utilizamos Xlocal como tendencia):
 
 ~~~
-MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
-MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
-MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
-MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
-MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+MatrizLimo[2,1] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizLimo[2,2] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizLimo[2,3] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizLimo[2,4] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizLimo[2,5] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
 El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor, con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con él le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
@@ -1322,13 +1314,13 @@ which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
 
 ~~~
-v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
+v.fitLimosteST = autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 ~~~
 
 A continuación podemos realizar el kriaje de la variable Limos. Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
-Limo.mapa <- krige(log(Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
+Limo.mapa <- krige((Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
 ~~~
 
 Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Limos. La siguiente función expresa *"Genera un gráfico del objeto* ***Limo.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN LIMO"*** *.*

@@ -743,6 +743,10 @@ shapiro.test((VariablesSuelo$FOSF))</code></pre>
 <pre><code>hist(log(VariablesSuelo$FOSF)) 
 qqnorm(log(VariablesSuelo$FOSF))
 shapiro.test(log(VariablesSuelo$FOSF)) </code></pre>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<pre><code>hist(log(VariablesSuelo$FOSF+1)) 
+qqnorm(log(VariablesSuelo$FOSF+1))
+shapiro.test(log(VariablesSuelo$FOSF+1)) </code></pre>
 <p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
 <div id="utilizaremos-el-logaritmo-de-la-fosfatasa-para-el-mapeado-logfosf." class="section level5">
 <h5><strong>Utilizaremos el logaritmo de la Fosfatasa para el mapeado –&gt; LOG(FOSF).</strong></h5>
@@ -918,11 +922,11 @@ MatrizGLUC[2,5] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model
 <div id="a-autokriging-de-fosfatasa-1" class="section level4">
 <h4>|4.3.a| Autokriging de Fosfatasa:<a name="id43a"></a></h4>
 <p>Autokriging sin tendencia:</p>
-<pre><code>Autok.FOSF.ST &lt;- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )</code></pre>
+<pre><code>Autok.FOSF.ST &lt;- autoKrige(log(FOSF+1) ~ 1, VariablesSuelo, pts1 )</code></pre>
 <p>Visualizamos como sería la representación gráfica sin tendencia:</p>
 <pre><code>plot(Autok.FOSF.ST)</code></pre>
 <p>Autokriging con tendencia:</p>
-<pre><code>Autok.FOSF.CT &lt;- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
+<pre><code>Autok.FOSF.CT &lt;- autoKrige(log(FOSF+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
 <p>Visualizamos como sería la representación gráfica con tendencia: ~~<sub> plot(Autok.FOSF.CT) </sub>~~</p>
 </div>
 <div id="b-kriging-manual-de-fosfatasa-1" class="section level4">
@@ -933,25 +937,25 @@ colnames(MatrizFOSF) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;
 rownames(MatrizFOSF) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
 <p>Rellenamos con los datos de cada modelo: Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
 <p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizFOSF[1,1] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizFOSF[1,2] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizFOSF[1,3] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizFOSF[1,4] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizFOSF[1,5] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
+<pre><code>MatrizFOSF[1,1] &lt;- autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
+MatrizFOSF[1,2] &lt;- autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
+MatrizFOSF[1,3] &lt;- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
+MatrizFOSF[1,4] &lt;- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
+MatrizFOSF[1,5] &lt;- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
 <p>Con tendencia (Utilizamos <strong><em>Xlocal</em></strong> como tendencia):</p>
-<pre><code>MatrizFOSF[2,1] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizFOSF[2,2] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizFOSF[2,3] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizFOSF[2,4] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizFOSF[2,5] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
+<pre><code>MatrizFOSF[2,1] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
+MatrizFOSF[2,2] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
+MatrizFOSF[2,3] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
+MatrizFOSF[2,4] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
+MatrizFOSF[2,5] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
 <p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
 <p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
 <pre><code>which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)</code></pre>
 <p>En este caso nos dice que <strong><em>“GAU SIN TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“Gau” sin tendencia</em>:</p>
-<pre><code>v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
+<pre><code>v.fitFOSFgauST = autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
 <p>A continuación podemos realizar el kriaje de la fosfatasa:</p>
 <p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>“VariablesSuelo”</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” sin tendencia</em></strong> <em>en la malla pts1&quot;.</em></p>
-<pre><code>FOSF.mapa &lt;- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)</code></pre>
+<pre><code>FOSF.mapa &lt;- krige(log(FOSF+1) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)</code></pre>
 <p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:</p>
 <p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>FOSF.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“FOSFATASA”</em></strong> <em>.</em></p>
 <pre><code>plot(FOSF.mapa, main= &quot;FOSFATASA&quot;)</code></pre>

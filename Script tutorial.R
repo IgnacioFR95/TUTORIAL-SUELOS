@@ -417,11 +417,14 @@ hist(VariablesSuelo$FOSF) # No muestra un patrón normalizado.
 qqnorm(VariablesSuelo$FOSF) # No muestra un patrón normalizado.
 shapiro.test((VariablesSuelo$FOSF)) # El p-valor es muy bajo, No muestra un patrón normalizado.
 
-hist(log(VariablesSuelo$FOSF)) # Muestra un patrón normalizado.
-qqnorm(log(VariablesSuelo$FOSF)) # Muestra un patrón normalizado.
-shapiro.test(log(VariablesSuelo$FOSF)) # El p-valor es aceptable. Muestra un patrón normalizado.
+hist(log(VariablesSuelo$FOSF)) # No muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$FOSF)) # No muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$FOSF)) # El p-valor es muy bajo, No muestra un patrón normalizado.
+hist(log(VariablesSuelo$FOSF+1)) # Muestra un patrón normalizado.
+qqnorm(log(VariablesSuelo$FOSF+1)) # Muestra un patrón normalizado.
+shapiro.test(log(VariablesSuelo$FOSF+1)) # El p-valor es aceptable. Muestra un patrón normalizado.
 
-# Utilizaremos el logaritmo de la fosfatasa para el mapeado --> LOG(FOSF)
+# Utilizaremos el logaritmo de la fosfatasa para el mapeado --> LOG(FOSF+1)
 
 
 #___________________  3.4 NORMALIZACIÓN DE VARIABLE NITRÓGENO _________________#
@@ -674,12 +677,12 @@ plot(GLUC.mapa, main= "GLUCOSIDASA")
 # 4.3.a Autokriging de Fosfatasa:
 
 # Autokriging sin tendencia:
-Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )
+Autok.FOSF.ST <- autoKrige(log(FOSF+1) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.FOSF.ST)
 
 # Autokriging con tendencia
-Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+Autok.FOSF.CT <- autoKrige(log(FOSF+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.FOSF.CT)
 
@@ -702,17 +705,17 @@ rownames(MatrizFOSF) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizFOSF[1,1] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
-MatrizFOSF[1,2] <- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
-MatrizFOSF[1,3] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
-MatrizFOSF[1,4] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
-MatrizFOSF[1,5] <- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+MatrizFOSF[1,1] <- autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizFOSF[1,2] <- autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizFOSF[1,3] <- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizFOSF[1,4] <- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizFOSF[1,5] <- autofitVariogram(log(FOSF+1)  ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizFOSF[2,1] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
-MatrizFOSF[2,2] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
-MatrizFOSF[2,3] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
-MatrizFOSF[2,4] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
-MatrizFOSF[2,5] <- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+MatrizFOSF[2,1] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizFOSF[2,2] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizFOSF[2,3] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizFOSF[2,4] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizFOSF[2,5] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -725,7 +728,7 @@ which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Gau" sin tendencia:
 
-v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Gau"))$var_model
+v.fitFOSFgauST = autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c("Gau"))$var_model
 
 
 # A continuación podemos realizar el kriaje de la fosfatasa:
@@ -733,7 +736,7 @@ v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c("Gau"
 ## Con esta función pedimos al programa "Genera un objeto que sea el fruto del
 ## kriaje de los datos de VariablesSuelo adaptados al modelo "Gau" sin tendencia en la 
 ## malla pts1".
-FOSF.mapa <- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
+FOSF.mapa <- krige(log(FOSF+1) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de glucosidasa:
@@ -1216,12 +1219,12 @@ plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 # 4.10.a Autokriging de Limo:
 
 # Autokriging sin tendencia:
-Autok.Limo.ST <- autoKrige(log(Limo) ~ 1, VariablesSuelo, pts1 )
+Autok.Limo.ST <- autoKrige(Log(Limo) ~ 1, VariablesSuelo, pts1 )
 # Visualizamos como sería la representación gráfica sin tendencia:
 plot(Autok.Limo.ST)
 
 # Autokriging con tendencia
-Autok.Limo.CT <- autoKrige(log(Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
+Autok.Limo.CT <- autoKrige(Log(Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 # Visualizamos como sería la representación gráfica con tendencia:
 plot(Autok.Limo.CT)
 
@@ -1244,17 +1247,17 @@ rownames(MatrizLimo) <- c("Sin tendencia", "Con tendencia")
 ## datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 #Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
-MatrizLimo[1,1] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
-MatrizLimo[1,2] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
-MatrizLimo[1,3] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
-MatrizLimo[1,4] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
-MatrizLimo[1,5] <- autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
+MatrizLimo[1,1] <- autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
+MatrizLimo[1,2] <- autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Sph"))$sserr
+MatrizLimo[1,3] <- autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Gau"))$sserr
+MatrizLimo[1,4] <- autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Lin"))$sserr
+MatrizLimo[1,5] <- autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$sserr
 #Con tendencia (Utilizamos Xlocal como tendencia):
-MatrizLimo[2,1] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
-MatrizLimo[2,2] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
-MatrizLimo[2,3] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
-MatrizLimo[2,4] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
-MatrizLimo[2,5] <- autofitVariogram(log(Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
+MatrizLimo[2,1] <- autofitVariogram(Log(Limo) ~ Xlocal, VariablesSuelo,model = c("Exp"))$sserr
+MatrizLimo[2,2] <- autofitVariogram(Log(Limo) ~ Xlocal, VariablesSuelo,model = c("Sph"))$sserr
+MatrizLimo[2,3] <- autofitVariogram(Log(Limo) ~ Xlocal, VariablesSuelo,model = c("Gau"))$sserr
+MatrizLimo[2,4] <- autofitVariogram(Log(Limo) ~ Xlocal, VariablesSuelo,model = c("Lin"))$sserr
+MatrizLimo[2,5] <- autofitVariogram(Log(Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 
 # El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor.
 # Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
@@ -1268,7 +1271,7 @@ which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 # utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo 
 #"Ste" sin tendencia:
 
-v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
+v.fitLimosteST = autofitVariogram(Log(Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 
 # A continuación podemos realizar el kriaje de la variable Limos.
 
@@ -1276,7 +1279,7 @@ v.fitLimosteST = autofitVariogram(log(Limo) ~ 1, VariablesSuelo, model = c("Ste"
 ## kriaje de los datos de VariablesSuelo adaptados al modelo "Ste" sin tendencia en la 
 ## malla pts1".
 
-Limo.mapa <- krige(log(Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
+Limo.mapa <- krige(Log(Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
 
 # Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa
 # de la zona en el que se observan las concentraciones de Limos:

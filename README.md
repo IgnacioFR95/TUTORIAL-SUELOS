@@ -12,7 +12,7 @@ Tutorial sobre cartografia edáfica realizado por **Ignacio Fernández Ruiz** pa
 
 Este tutorial será una explicación paso a paso para la realización de mapas de diferentes variables edáficas con los datos recogidos en la tesis doctoral de la investigadora y coautora de este TFG Julia Chacón Labella. 
 
-El tutorial sigue una metodologÍa totalmente reproducible, lo que permite replicar todo el trabajo recogido en el tutorial de principio a fin (incluídas todas las figuras, gráficas y tablas). A su vez, las líneas de código expuestas permiten la extrapolación para su uso en otras áreas o variables, reutilizando la mayor parte de los comandos y funciones del tutorial.
+El tutorial sigue una metodologÍa totalmente reproducible, lo que permite replicar todo el trabajo recogido en el manual de principio a fin (incluídas todas las figuras, gráficas y tablas). A su vez, las líneas de código expuestas permiten la extrapolación para su uso en otras áreas o variables, reutilizando la mayor parte de los comandos y funciones del tutorial.
 
 A su vez, se dará una extensa explicación de cada uno de los pasos realizados, así como una breve explicación de qué función hace cada comando utilizado. Facilitando en gran medida el aprendizaje y la comprensión.
 
@@ -36,6 +36,6 @@ Puede consultar los tutoriales de instalación en la carpeta **"Tutoriales de de
 #### **CONTACTO:**
 Puede contactar con el autor para comentar cualquier duda o aclaración en el siguiente correo electrónico: <ignaciofr95@gmail.com>
 
-Los datos de las variables edáficas estudiados en este trabajo pertenecen íntegramente a la tésis doctoral de la investigadora Julia Chacón, y es por tanto, dueña y responsable de la autoría de los mismos. Puede consultar el uso de los mismos en el su correo de contacto: <juliachacon@gmail.com>
+Los datos de las variables edáficas estudiados en este trabajo pertenecen íntegramente a la tésis doctoral de la investigadora Julia Chacón, y es por tanto, dueña y responsable de la autoría de los mismos. Puede consultar el uso de los datos en su correo de contacto: <juliachacon@gmail.com>
 
 Á É Í Ó Ú  ---- á é í ó ú  ---- Ñ ñ 

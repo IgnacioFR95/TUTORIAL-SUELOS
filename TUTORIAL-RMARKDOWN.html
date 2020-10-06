@@ -12,7 +12,7 @@
 <meta name="author" content="Ignacio Fernández Ruiz" />
 
 
-<title>TUTORIAL CARTOGRAFÍA EDÁFICA</title>
+<title>TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -362,273 +362,154 @@ summary {
 
 
 
-<h1 class="title toc-ignore"><strong>TUTORIAL CARTOGRAFÍA EDÁFICA</strong></h1>
+<h1 class="title toc-ignore"><strong>TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS</strong></h1>
 <h4 class="author">Ignacio Fernández Ruiz</h4>
 <h4 class="date">23/5/2020</h4>
 
 </div>
 
 
-<div id="antención" class="section level5">
-<h5><strong>¡ANTENCIÓN!</strong></h5>
-</div>
-<div id="lea-antentamente-el-archivo-readme-antes-de-iniciar-este-tutorial." class="section level5">
-<h5><strong>LEA ANTENTAMENTE EL ARCHIVO “README” ANTES DE INICIAR ESTE TUTORIAL.</strong></h5>
-<p>Para cualquier información adicional sobre el funcionamiento de algún comando, puede utilizar <strong><em>“?NombreDelComando”</em></strong>. Lo que abrirá una nueva pestaña con más información sobre su uso y la gramática que utiliza. Si el comando pertenece a un paquete de R concreto, puede utilizar el comando <strong><em>“??NombreDelComando”</em></strong> para recibir la misma información.</p>
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<div id="te-sugiero-leer-el-documento-readme-antes-de-comenzar-con-el-tutorial" class="section level5">
+<h5><strong>Te sugiero leer el documento “README” antes de comenzar con el tutorial</strong></h5>
 <hr />
 </div>
 <div id="índice" class="section level2">
 <h2><strong>ÍNDICE</strong></h2>
-<div id="preparación-de-los-datos" class="section level3">
-<h3><a href="#id1">1.PREPARACIÓN DE LOS DATOS</a></h3>
-<div id="carga-de-datos-iniciales" class="section level4">
-<h4><a href="#id11">1.1 Carga de datos iniciales</a></h4>
-</div>
-<div id="comprobaciones-iniciales" class="section level4">
-<h4><a href="#id11">1.2 Comprobaciones iniciales</a></h4>
+<div id="preparación-del-entorno-de-trabajo" class="section level4">
+<h4><a href="#id1">1.PREPARACIÓN DEL ENTORNO DE TRABAJO</a></h4>
+<div id="comprobación-de-versiones-y-paquetes" class="section level5">
+<h5><a href="#id11">1.1 Comprobación de versiones y paquetes</a></h5>
 <div id="a-verificación-de-la-versión-de-r" class="section level6">
-<h6><a href="#id12a">1.2.a Verificación de la versión de R</a></h6>
+<h6><a href="#id11a">1.1.a Verificación de la versión de R</a></h6>
 </div>
 <div id="b-verificación-de-la-versión-de-rstudio" class="section level6">
-<h6><a href="#id12b">1.2.b Verificación de la versión de RStudio</a></h6>
+<h6><a href="#id11b">1.1.b Verificación de la versión de RStudio</a></h6>
 </div>
-<div id="c-verificación-de-los-paquetes-cran" class="section level6">
-<h6><a href="#id12c">1.2.c Verificación de los paquetes CRAN</a></h6>
+<div id="c-verificación-de-los-paquetes" class="section level6">
+<h6><a href="#id11c">1.1.c Verificación de los paquetes</a></h6>
 </div>
-<div id="d-finalización-de-las-comprobaciones" class="section level6">
-<h6><a href="#id12d">1.2.d Finalización de las comprobaciones</a></h6>
-</div>
-<div id="e-curating-data" class="section level6">
-<h6><a href="#id12e">1.2.e Curating data</a></h6>
+<div id="d-fin-de-las-comprobaciones" class="section level6">
+<h6><a href="#id11d">1.1.d Fin de las comprobaciones</a></h6>
 </div>
 </div>
+<div id="cargando-las-librerías" class="section level5">
+<h5><a href="#id12">1.2 Cargando las librerías</a></h5>
 </div>
-<div id="preparación-del-área-de-estudio" class="section level3">
-<h3><a href="#id2">2. PREPARACIÓN DEL ÁREA DE ESTUDIO</a></h3>
-<div id="generación-del-mapa-base" class="section level4">
-<h4><a href="#id21">2.1 Generación del mapa base</a></h4>
+</div>
+<div id="carga-de-los-datos-crudos" class="section level4">
+<h4><a href="#id2">2. CARGA DE LOS DATOS CRUDOS</a></h4>
+<div id="carga-de-datos-crudos" class="section level5">
+<h5><a href="#id21">2.1 Carga de datos crudos</a></h5>
+</div>
+<div id="homogeneizar-y-limpiar-los-datos" class="section level5">
+<h5><a href="#id22">2.2. Homogeneizar y limpiar los datos</a></h5>
+</div>
+<div id="transformación-de-los-datos-originales-a-datos-espaciales" class="section level5">
+<h5><a href="#id23">2.3 Transformación de los datos originales a datos espaciales</a></h5>
+</div>
+</div>
+<div id="preparación-del-entorno-de-trabajo-1" class="section level4">
+<h4><a href="#id3">3. PREPARACIÓN DEL ENTORNO DE TRABAJO</a></h4>
+<div id="generación-del-mapa-base" class="section level5">
+<h5><a href="#id31">3.1 Generación del mapa base</a></h5>
 <div id="a-generación-del-polígono" class="section level6">
-<h6><a href="#id21a">2.1.a Generación del polígono</a></h6>
+<h6><a href="#id31a">3.1.a Generación del polígono</a></h6>
 </div>
 <div id="b-generación-de-la-malla" class="section level6">
-<h6><a href="#id21b">2.1.b Generación de la malla</a></h6>
+<h6><a href="#id31b">3.1.b Generación de la malla</a></h6>
 </div>
 </div>
-<div id="adaptación-de-los-datos-al-mapa-base" class="section level4">
-<h4><a href="#id22">2.2 Adaptación de los datos al mapa base</a></h4>
+<div id="adaptación-de-los-datos-al-mapa-base" class="section level5">
+<h5><a href="#id32">3.2 Adaptación de los datos al mapa base</a></h5>
 </div>
 </div>
-<div id="normalización-de-las-variables" class="section level3">
-<h3><a href="#id3">3. NORMALIZACIÓN DE LAS VARIABLES</a></h3>
-<div id="metodología-de-normalización-de-variables" class="section level4">
-<h4><a href="#id31">3.1 Metodología de normalización de variables</a></h4>
-<div id="a-histograma" class="section level6">
-<h6><a href="#id31a">3.1.a Histograma</a></h6>
+<div id="normalización-de-las-variables" class="section level4">
+<h4><a href="#id4">4. NORMALIZACIÓN DE LAS VARIABLES</a></h4>
+<div id="histograma" class="section level5">
+<h5><a href="#id41a">4.1 Histograma</a></h5>
 </div>
-<div id="b-gráfico-cuantil-cuantil" class="section level6">
-<h6><a href="#id31b">3.1.b Gráfico cuantil-cuantil</a></h6>
+<div id="gráfico-cuantil-cuantil" class="section level5">
+<h5><a href="#id42">4.2 Gráfico cuantil-cuantil</a></h5>
 </div>
-<div id="c-test-de-shapiro" class="section level6">
-<h6><a href="#id31c">3.1.c Test de shapiro</a></h6>
+<div id="test-de-shapiro" class="section level5">
+<h5><a href="#id43">4.3 Test de shapiro</a></h5>
 </div>
-<div id="d-modificación-de-los-datos" class="section level6">
-<h6><a href="#id31d">3.1.d Modificación de los datos</a></h6>
+<div id="transformación-de-los-datos" class="section level5">
+<h5><a href="#id44">4.4 Transformación de los datos</a></h5>
 </div>
+<div id="ejemplo-de-normalización-de-dos-variables" class="section level5">
+<h5><a href="#id45">4.5 Ejemplo de normalización de dos variables</a></h5>
+<div id="a-normalización-de-la-variable-fosfatasa" class="section level6">
+<h6><a href="#id45a">4.5.a Normalización de la variable FOSFATASA</a></h6>
 </div>
-<div id="normalización-variable-glucosidasa" class="section level4">
-<h4><a href="#id32">3.2 Normalización variable GLUCOSIDASA</a></h4>
-</div>
-<div id="normalización-variable-fosfatasa" class="section level4">
-<h4><a href="#id33">3.3 Normalización variable FOSFATASA</a></h4>
-</div>
-<div id="normalización-variable-nitrógeno" class="section level4">
-<h4><a href="#id34">3.4 Normalización variable NITRÓGENO</a></h4>
-</div>
-<div id="normalización-variable-fósforo" class="section level4">
-<h4><a href="#id35">3.5 Normalización variable FÓSFORO</a></h4>
-</div>
-<div id="normalización-variable-potasio" class="section level4">
-<h4><a href="#id36">3.6 Normalización variable POTASIO</a></h4>
-</div>
-<div id="normalización-variable-carbono" class="section level4">
-<h4><a href="#id37">3.7 Normalización variable CARBONO</a></h4>
-</div>
-<div id="normalización-variable-ph" class="section level4">
-<h4><a href="#id38">3.8 Normalización variable pH</a></h4>
-</div>
-<div id="normalización-variable-arena" class="section level4">
-<h4><a href="#id39">3.9 Normalización variable ARENA</a></h4>
-</div>
-<div id="normalización-variable-limo" class="section level4">
-<h4><a href="#id310">3.10 Normalización variable LIMO</a></h4>
-</div>
-<div id="normalización-variable-arcilla" class="section level4">
-<h4><a href="#id311">3.11 Normalización variable ARCILLA</a></h4>
+<div id="b-normalización-de-la-variable-contenido-en-arena" class="section level6">
+<h6><a href="#id46b">4.5.b Normalización de la variable CONTENIDO EN ARENA</a></h6>
 </div>
 </div>
-<div id="generación-de-la-cartografía-edáfica" class="section level3">
-<h3><a href="#id4">4. GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA</a></h3>
-<div id="metodología-de-cartografía-edáfica" class="section level4">
-<h4><a href="#id41">4.1 Metodología de cartografía edáfica</a></h4>
+</div>
+<div id="generación-de-la-cartografía-edáfica" class="section level4">
+<h4><a href="#id5">5. GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA</a></h4>
+<div id="metodología-de-cartografía-edáfica" class="section level5">
+<h5><a href="#id51">5.1 Metodología de cartografía edáfica</a></h5>
 <div id="a-función-autokriging" class="section level6">
-<h6><a href="#id41a">4.1.a Función “autokriging()”</a></h6>
+<h6><a href="#id41a">5.1.a Función “autokriging()”</a></h6>
 </div>
 <div id="b-kriging-manual" class="section level6">
-<h6><a href="#id41b">4.1.b Kriging manual</a></h6>
+<h6><a href="#id51b">5.1.b Kriging manual</a></h6>
 </div>
 </div>
-<div id="cartografía-de-variable-glucosidasa" class="section level4">
-<h4><a href="#id42">4.2 Cartografía de variable GLUCOSIDASA</a></h4>
-<div id="a-autokriging-de-glucosidasa" class="section level6">
-<h6><a href="#id42a">4.2.a Autokriging de Glucosidasa</a></h6>
+<div id="ejemplo-de-generación-mapas-de-dos-variables" class="section level5">
+<h5><a href="#id52">5.2 Ejemplo de generación mapas de dos variables</a></h5>
+<div id="a-cartografía-de-la-variable-fosfatasa" class="section level6">
+<h6><a href="#id52a">5.2.a Cartografía de la variable FOSFATASA</a></h6>
 </div>
-<div id="b-kriging-manual-de-glucosidasa" class="section level6">
-<h6><a href="#id42b">4.2.b Kriging manual de Glucosidasa</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-fosfatasa" class="section level4">
-<h4><a href="#id43">4.3 Cartografía de variable FOSFATASA</a></h4>
-<div id="a-autokriging-de-fosfatasa" class="section level6">
-<h6><a href="#id43a">4.3.a Autokriging de Fosfatasa</a></h6>
-</div>
-<div id="b-kriging-manual-de-fosfatasa" class="section level6">
-<h6><a href="#id43b">4.3.b Kriging manual de Fosfatasa</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-nitrógeno" class="section level4">
-<h4><a href="#id44">4.4 Cartografía de variable NITRÓGENO</a></h4>
-<div id="a-autokriging-de-nitrógeno" class="section level6">
-<h6><a href="#id44a">4.4.a Autokriging de Nitrógeno</a></h6>
-</div>
-<div id="b-kriging-manual-de-nitrógeno" class="section level6">
-<h6><a href="#id44b">4.4.b Kriging manual de Nitrógeno</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-fósforo" class="section level4">
-<h4><a href="#id45">4.5 Cartografía de variable FÓSFORO</a></h4>
-<div id="a-autokriging-de-fósforo" class="section level6">
-<h6><a href="#id45a">4.5.a Autokriging de Fósforo</a></h6>
-</div>
-<div id="b-kriging-manual-de-fósforo" class="section level6">
-<h6><a href="#id45b">4.5.b Kriging manual de Fósforo</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-potasio" class="section level4">
-<h4><a href="#id46">4.6 Cartografía de variable POTASIO</a></h4>
-<div id="aautokriging-de-potasio" class="section level6">
-<h6><a href="#id46a">4.6.aAutokriging de Potasio</a></h6>
-</div>
-<div id="b-kriging-manual-de-potasio" class="section level6">
-<h6><a href="#id46b">4.6.b Kriging manual de Potasio</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-carbono" class="section level4">
-<h4><a href="#id47">4.7 Cartografía de variable CARBONO</a></h4>
-<div id="a-autokriging-de-carbono" class="section level6">
-<h6><a href="#id47a">4.7.a Autokriging de Carbono</a></h6>
-</div>
-<div id="b-kriging-manual-de-carbono" class="section level6">
-<h6><a href="#id47b">4.7.b Kriging manual de Carbono</a></h6>
-</div>
-</div>
-<div id="c4.8-artografía-de-variable-ph" class="section level4">
-<h4><a href="#id48">C4.8 artografía de variable pH</a></h4>
-<div id="a-autokriging-de-ph" class="section level6">
-<h6><a href="#id48a">4.8.a Autokriging de pH</a></h6>
-</div>
-<div id="b-kriging-manual-de-ph" class="section level6">
-<h6><a href="#id48b">4.8.b Kriging manual de pH</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-arena" class="section level4">
-<h4><a href="#id49">4.9 Cartografía de variable ARENA</a></h4>
-<div id="a-autokriging-de-arena" class="section level6">
-<h6><a href="#id49a">4.9.a Autokriging de Arena</a></h6>
-</div>
-<div id="b-kriging-manual-de-arena" class="section level6">
-<h6><a href="#id49b">4.9.b Kriging manual de Arena</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-limo" class="section level4">
-<h4><a href="#id410">4.10 Cartografía de variable LIMO</a></h4>
-<div id="a-autokriging-de-limo" class="section level6">
-<h6><a href="#id410a">4.10.a Autokriging de Limo</a></h6>
-</div>
-<div id="b-kriging-manual-de-limo" class="section level6">
-<h6><a href="#id410b">4.10.b Kriging manual de Limo</a></h6>
-</div>
-</div>
-<div id="cartografía-de-variable-arcilla" class="section level4">
-<h4><a href="#id411">4.11 Cartografía de variable ARCILLA</a></h4>
-<div id="a-autokriging-de-arcilla" class="section level6">
-<h6><a href="#id411a">4.11.a Autokriging de Arcilla</a></h6>
-</div>
-<div id="b-kriging-manual-de-arcilla" class="section level6">
-<h6><a href="#id411b">4.11.b Kriging manual de Arcilla</a></h6>
+<div id="b-cartografía-de-la-variable-contenido-en-arena" class="section level6">
+<h6><a href="#id52b">5.2.b Cartografía de la variable CONTENIDO EN ARENA</a></h6>
 <hr />
 </div>
 </div>
 </div>
+<div id="preparación-del-entorno-de-trabajo-2" class="section level3">
+<h3>|1| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id1"></a></h3>
+<p>En primer lugar, comprobamos la versión de <code>R</code> utilizada y cargamos los paquetes necesarios para realizar los análisis</p>
+<div id="comprobación-de-versiones-y-paquetes-1" class="section level4">
+<h4>|1.1| Comprobación de versiones y paquetes <a name="id11"></a></h4>
+<div id="a-verificación-de-la-versión-de-r-1" class="section level5">
+<h5>|1.1.a| Verificación de la versión de R:<a name="id11a"></a></h5>
+<p>Con el siguiente código comprobamos que la versión de <code>R</code> sea igual o superior a la <code>3.6.0</code>.</p>
+<p>El comando aplica la siguiente orden: “Si la versión de R es menor que la <code>3.6.0</code>, genera un mensaje de alerta donde especifique el mensaje” (En este caso, el mensaje elegido es un aviso de que la versión de <code>R</code> es antigua y se necesita actualizar).</p>
+<pre><code>if(getRversion() &lt; &quot;3.6.0&quot;) {stop(&quot;##########\nLa versión de R que posee está desactualizada\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
 </div>
-<div id="preparación-de-los-datos-1" class="section level2">
-<h2>|1| PREPARACIÓN DE LOS DATOS<a name="id1"></a></h2>
-<p>En esta fase, realizaremos todas las operaciones previas a la generación de la cartografía. Comprobaremos las versiones utilizadas, descargaremos los datos y paquetes necesarios para las fases posteriores y transformaremos los datos a los formatos espaciales necesarios.</p>
-<div id="carga-de-datos-iniciales-1" class="section level3">
-<h3>|1.1| Carga de datos iniciales<a name="id11"></a></h3>
-<p>Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué datos vamos a trabajar. En nuestro caso, hemos generado en formato <strong><em>“.txt”</em></strong> los datos a partir de un archivo de excel <strong><em>“.xlsx”</em></strong>. De esta forma podremos trabajar con ellos en forma de código (Eliminando la necesidad de programas externos).</p>
-<p>El comando que utilizaremos será <strong><em>“read.delim”</em></strong>, este comando lee un archivo y crea un nuevo objeto con la información de este archivo como una si fuera una base de datos.</p>
-<pre><code>VariablesSuelo &lt;- read.delim(&quot;data/Orusco_suelos.txt&quot;, sep=&quot;\t&quot;, dec=&quot;,&quot;, header=T)
-load(&quot;data/AerialRoot.community.corregido.Rdata&quot;)</code></pre>
-<p>Este comando dice: <em>&quot;Crea un nuevo objeto con el archivo de .txt con los datos, su separación será con barras, el símbolo que marca el decimal es coma</em> <strong>“,”</strong> <em>y la primera fila de los datos corresponde al enunciado de las variables (por eso le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)&quot;</em>.</p>
-</div>
-<div id="comprobaciones-iniciales-1" class="section level3">
-<h3>|1.2| Comprobaciones iniciales<a name="id12"></a></h3>
-<p>Las siguientes operaciones, cargan algunos parámetros imprescindibles para la realización de este tutorial. A su vez, comprueba que la versión de R es apta para trabajar y confirma la correcta instalación de todos los paquetes que vamos a necesitar. Por último, se realiza un “curating data” de los datos, que es un proceso en el que se homogeniza la base de datos brutos y se eliman los parámetros innecesarios para el tutorial. (Los datos contienen información extra que otro investigador podría utilizar en el futuro para sus estudios)</p>
-<div id="a-verificación-de-la-versión-de-r-1" class="section level4">
-<h4>|1.2.a| Verificación de la versión de R:<a name="id12a"></a></h4>
-<p>Comprobaremos que la versión sea igual o superior a la 3.6.0.</p>
-<pre><code>if(getRversion() &lt; &quot;3.6.0&quot;) {stop(&quot;##########\nLa versión de R que posee es antigua\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
-<p>El comando aplica lo siguiente: <em>&quot;Si la versión de R es menor que la</em> <strong><em>3.6.0</em></strong> <em>, genera un mensaje de alerta donde especifique el mensaje&quot;</em> (En este caso, el mensaje elegido es un aviso de que la versión de R es antigua y se necesita actualizar).</p>
-</div>
-<div id="b-verificación-de-la-versión-de-rstudio-1" class="section level4">
-<h4>|1.2.b| Verificación de la versión de RStudio::<a name="id12b"></a></h4>
-<p>Comprobaremos que la versión sea igual o superior a la 1.0.1.</p>
+<div id="b-verificación-de-la-versión-de-rstudio-1" class="section level5">
+<h5>|1.1.b| Verificación de la versión de RStudio::<a name="id11b"></a></h5>
+<p>Comprobamos que la versión de <code>RStudio</code> sea igual o superior a la <code>1.0.1</code>.</p>
+<p>El comando aplica la siguiente orden: “Si la versión de RStudio es menor que la <code>3.6.0</code>, genera un mensaje de alerta donde especifique el mensaje”. En este caso, el mensaje elegido es un aviso de que la versión de <code>RStudio</code> está desactualizada y se necesita actualizarse.</p>
 <pre><code>if(RStudio.Version()$version &lt; &quot;1.0.1&quot;){stop(&quot;##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
-<p>El comando aplica lo siguiente: <em>&quot;Si la versión de RStudio es menor que la</em> <strong><em>3.6.0</em></strong> <em>, genera un mensaje de alerta donde especifique el mensaje&quot;</em> (En este caso, el mensaje elegido es un aviso de que la versión de RStudio es antigua y se necesita actualizar).</p>
 </div>
-<div id="c-verificación-de-los-paquetes-cran-1" class="section level4">
-<h4>|1.2.c| Verificación de los paquetes CRAN:<a name="id12c"></a></h4>
-<p>Comprobaremos si los paquetes necesarios están instalados.</p>
+<div id="c-verificación-de-los-paquetes-1" class="section level5">
+<h5>|1.1.c| Verificación de los paquetes:<a name="id11c"></a></h5>
+<p>Comprobamos si los paquetes que necesiaremos más adelante están instalados.</p>
 <pre><code>PaquetesNecesarios &lt;- c(&quot;lattice&quot;,&quot;sp&quot;,&quot;gstat&quot;,&quot;maptools&quot;,&quot;spatstat&quot;,&quot;raster&quot;,&quot;automap&quot;)
 installed_packages &lt;- .packages(all.available = TRUE)
 PaquetesNecesarios2 &lt;- PaquetesNecesarios[!PaquetesNecesarios %in% installed_packages]</code></pre>
-<p>Descarga de paquetes faltantes de CRAN:</p>
+<p>Y a continuación descargamos los paquetes faltantes desde <code>CRAN</code>:</p>
 <pre><code>if(length(PaquetesNecesarios2) &gt; 0){install.packages(PaquetesNecesarios2)}
 stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))</code></pre>
 </div>
-<div id="d-finalización-de-las-comprobaciones-1" class="section level4">
-<h4>|1.2.d| Finalización de las comprobaciones:<a name="id12d"></a></h4>
+<div id="d-fin-de-las-comprobaciones-1" class="section level5">
+<h5>|1.1.d| Fin de las comprobaciones:<a name="id11d"></a></h5>
+<p>La función <code>rm()</code> elimina los objetos que no ncesitamos, en este caso se eliminarán los objetos que hemos utilizado para confirmar que los paquetes están instalados.</p>
 <pre><code>rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)</code></pre>
-<p>El comando <strong><em>“rm()”</em></strong> elimina los objetos puestos entre paréntesis, en este caso los objetos que hemos utilizado para confirmar que los paquetes están instalados.</p>
-</div>
-<div id="e-curating-data-1" class="section level4">
-<h4>|1.2.e| Curating data:<a name="id12e"></a></h4>
-<p>Renombramos el título de de la columna 11 (COD -&gt; Codigo_muestra):</p>
-<pre><code>colnames(VariablesSuelo)[11] &lt;- &quot;Codigo_muestra&quot;</code></pre>
-<p>Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así los datos:</p>
-<pre><code>orusco.soil &lt;- VariablesSuelo
-VariablesSuelo$Fecha &lt;- NULL
-VariablesSuelo$COND &lt;- NULL
-VariablesSuelo$Altura.elipsoidal &lt;- NULL
-VariablesSuelo$id_suelo_raiz &lt;- NULL
-VariablesSuelo$Nº &lt;- NULL
-VariablesSuelo$Marco &lt;- NULL
-VariablesSuelo$ID_GPS &lt;- NULL</code></pre>
 </div>
 </div>
-<div id="carga-de-paquetes-de-r-necesarios" class="section level3">
-<h3>|1.3| Carga de paquetes de R necesarios<a name="id13"></a></h3>
-<p>En el <strong>paso 1.2</strong> hemos descargado los paquetes de R que necesitamos para hacer el tutorial. Vamos a cargarlos usando el comando <strong><em>“library(NombreDelPaquete)”.</em></strong></p>
+<div id="cargando-las-librerías-1" class="section level4">
+<h4>|1.2| Cargando las librerías<a name="id12"></a></h4>
+<p>En el paso <code>1.1</code> ya hemos descargado los paquetes de <code>R</code> que necesitamos para hacer el tutorial. Ahora vamos a cargar las librerías.</p>
 <pre><code>library(lattice)
 library(sp)
 library(gstat)
@@ -637,105 +518,103 @@ library(spatstat)
 library(raster)
 library(automap)</code></pre>
 </div>
-<div id="reclasificación-de-los-datos-originales-a-datos-espaciales" class="section level3">
-<h3>|1.4| Reclasificación de los datos originales a datos espaciales<a name="id14"></a></h3>
-<p>Con las siguientes operaciones vamos a modificar el tipo de objeto que son los datos, para así poder trabajar con ellos espacialmente. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.</p>
-<p>Como trabajaremos de forma local, no necesitamos coordenadas globales, y por ello utilizaremos como nuevas coordenadas los valores de <strong><em>Xlocal</em></strong>* e <strong><em>Ylocal</em></strong> en relación a <strong><em>“VariablesSuelo”</em></strong>. Al dar coordenadas a los datos de <strong><em>VariablesSuelo</em></strong> los convierte de un objeto <strong><em>“data.frame”</em></strong> a un objeto <strong><em>“SpatialPointDataFrame”</em></strong>. Para esta operación utilizaremos el comando <strong><em>“coordinates()”</em></strong>:</p>
+</div>
+<div id="carga-de-los-datos-crudos-1" class="section level3">
+<h3>|2| CARGA DE LOS DATOS CRUDOS <a name="id2"></a></h3>
+<div id="cargar-los-datos-crudos-o-de-origen" class="section level4">
+<h4>|2.1| Cargar los datos “crudos” o de origen <a name="id21"></a></h4>
+<p>A continuación cargaremos los datos con los que vamos a trabajar. En nuestro caso, hemos generado un archivo en formato <code>.txt</code> con los datos.</p>
+<p>Para leer los datos usaremos la función <code>read.delim()</code>, indicaremos que los datos están separados por tabulaciones, que el símbolo decimal es la <code>,</code> y que nuestro archivo tiene encabezados.</p>
+<pre><code>VariablesSuelo &lt;- read.delim(&quot;data/Orusco_suelos.txt&quot;, sep=&quot;\t&quot;, dec=&quot;,&quot;, header=T)
+load(&quot;data/AerialRoot.community.corregido.Rdata&quot;)</code></pre>
+</div>
+<div id="homogeneizar-y-limpiar-los-datos-1" class="section level4">
+<h4>|2.2| Homogeneizar y limpiar los datos:<a name="id22"></a></h4>
+<p>Para continuar trabajando debemos homogeneizar y limpiar los datos originales o crudos. En este caso, los datos ya están muy limpios, pero eliminaremos aquellas variables con las que no vamos a trabajar. No modificaremos nunca los datos originales.</p>
+<p>En el objeto VariablesSuelo, renombramos el nombre de de la columna 11 y cambiamos <code>COD</code> por <code>codigo_muestra</code></p>
+<pre><code>colnames(VariablesSuelo)[11] &lt;- &quot;codigo_muestra&quot;</code></pre>
+<p>Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así el data frame:</p>
+<pre><code>VariablesSuelo$Fecha &lt;- NULL
+VariablesSuelo$COND &lt;- NULL
+VariablesSuelo$Altura.elipsoidal &lt;- NULL
+VariablesSuelo$id_suelo_raiz &lt;- NULL
+VariablesSuelo$Nº &lt;- NULL
+VariablesSuelo$Marco &lt;- NULL
+VariablesSuelo$ID_GPS &lt;- NULL</code></pre>
+</div>
+<div id="transformación-de-los-datos-originales-a-datos-espaciales-1" class="section level4">
+<h4>|2.3| Transformación de los datos originales a datos espaciales <a name="id23"></a></h4>
+<p>Vamos a transformar los datos al tipo de datos <code>SpatialPointDataFrame</code>. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.</p>
+<p>Como estamos trabajando localmente, no necesitamos utilizar coordenadas globales. Dentro del objeto <code>VariablesSuelo</code> vamos a utilizar unas coordenadas que son relativas al sitio de estudio. Las columnas con los valores de las coordenadas locales se llaman <code>Xlocal</code> y <code>Ylocal</code>. Es posible que otros data sets contengan coordenadas globales, no es ningún problema, simplemente depende del trabajo que estés realizando</p>
+<p>La función <code>coordinates()</code> del paquete <code>sp</code> nos permite asignar coordenadas a un <code>data.frame</code> transformandolo en <code>SpatialPointDataFrame</code>. Para ello tenemos que indicale qué columnas son las que queremos que utilice como coordenadas, en este caso se llaman <code>Xlocal</code> y <code>Ylocal</code>.</p>
 <pre><code>coordinates(VariablesSuelo) &lt;- ~ Xlocal + Ylocal</code></pre>
-<p>Este comando dice:<em>&quot;Utiliza como coordenadas x e y para los datos recogidos en el objeto</em> <strong><em>VariablesSuelo</em></strong> <em>, los valores de las columnas</em> <strong><em>Xlocal</em></strong> <em>e</em> <strong><em>Ylocal</em></strong> <em>respectivamente&quot;.</em></p>
-<p>Con el siguiente comando podemos cerciorarnos si <strong><em>VariablesSuelo</em></strong> ha cambiado su clase a <strong><em>“SpatialPointsDataFrame”</em></strong>.</p>
+<p>Comprobamos que efectivamente el objeto <code>VariablesSuelo</code> es ahora un objeto de clase <code>SpatialPointsDataFrame</code></p>
 <pre><code>class(VariablesSuelo)</code></pre>
-<p>Efectivamente, la contestación que nos da la consola es que ahora el objeto <strong><em>VariablesSuelo</em></strong> es un <strong><em>“SpatialPointsDataFrame”</em></strong>.</p>
-<p>Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar cifras excesivamente largas, para ello usaremos el siguiente comando:</p>
+<p>Por ultimo, limitamos el número de decimales de los datos a 10, para evitar cifras excesivamente largas utilizando la función <code>options()</code></p>
 <pre><code>options(digits=10)</code></pre>
-<hr />
 </div>
 </div>
-<div id="preparación-del-área-de-estudio-1" class="section level2">
-<h2>|2| PREPARACIÓN DEL ÁREA DE ESTUDIO<a name="id2"></a></h2>
-<p>En este proceso, vamos a generar el mapa base desde el cual vamos a realizar posteriormente el mapa de cada variable. En esta fase indicaremos el tamaño del área de estudio, las coordenadas que poseen y el tamaño de malla que utilizaremos para el posterior análisis por kriging.También refinaremos y adaptaremos los datos al tamaño y forma del área estudiada.</p>
-<div id="generación-del-mapa-base-1" class="section level3">
-<h3>|2.1| Generación del mapa base<a name="id21"></a></h3>
-<div id="a-creación-del-polígono-base" class="section level4">
-<h4>|2.1.a| Creación del polígono base:<a name="id21a"></a></h4>
-<p>Generaremos un rectángulo con dimensiones iguales al área de estudio donde posteriormente plasmaremos los diferentes mapas que generemos.</p>
-<p>Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de estudio. Hemos cargado una matriz llamada <strong><em>“esquinas.parcela”</em></strong>. Esta matriz tiene los datos en <strong><em>Xlocal</em></strong> e <strong><em>Ylocal</em></strong> de dónde se sitúan los vertices del rectángulo que forma nuestra parcela. Con estos datos, crearemos un polígono rectangular que cubra exactamente el área de estudio.</p>
-<p>Creamos el objeto <strong><em>“p1”</em></strong>, que es básicamente el cuadrado que se forma al dibujar la matriz de <strong><em>“esquinas.parcela”</em></strong>.</p>
-<pre><code>p1 &lt;- Polygon(esquinas.parcela[,1:2])</code></pre>
-<p>Ahora dotaremos a este polígono de un atributo espacial, utilizando el comando <strong><em>“Polygons()”</em></strong>:</p>
-<pre><code>ps1 &lt;- Polygons(list(p1),1)</code></pre>
-<p>Creamos un nuevo objeto para convertir <strong><em>“ps1”</em></strong> de la clase <strong><em>“Polygons”</em></strong> a un <strong><em>“SpatialPolygons”</em></strong> llamado sps1.</p>
-<pre><code>sps1 &lt;- SpatialPolygons(list(ps1))</code></pre>
-<p>Podemos ver qué clase es <strong><em>“sps1”</em></strong> con el comando <strong><em>“class()”</em></strong> y cerciorarnos con el comando <strong><em>class()</em></strong>.</p>
+<div id="preparación-del-entorno-de-trabajo-3" class="section level3">
+<h3>|3| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id3"></a></h3>
+<div id="generación-del-mapa-base-1" class="section level4">
+<h4>|3.1| Generación del mapa base<a name="id31"></a></h4>
+<p>A continuación, vamos a generar un mapa al que denominamos “base” y sobre el cual vamos a dibujar el mapa de cada variable. Para ello necesitamos indicar el tamaño del área de estudio o plot, las coordenadas que poseen y el tamaño de malla que utilizaremos para el posterior análisis mediante Kriging.</p>
+<div id="a-generación-del-polígono-1" class="section level5">
+<h5>|3.1.a| Generación del polígono<a name="id31a"></a></h5>
+<p>En primer lugar vamos a crear un rectángulo con las dimensiones del área de estudio. En nuestro caso, hacemos un rectángulo porque la parcela tiene esa forma. Para definir el rectángulo usamos las cuatro esquinas de la parcela.</p>
+<p>Ya tenemos cargada una matriz denomin <code>esquinas.parcela</code> que contiene esos cuatro puntos. Los nombres de las columnas que contienen las coordnadas X y Y son <code>Xlocal</code> y <code>Ylocal</code>.</p>
+<p>Utilizamos la función <code>Polygon()</code> para crear el polígono. ~~~ p1 &lt;- Polygon(esquinas.parcela[,1:2]) ~~~</p>
+<p>Hacemos dos transformaciones: con la función <code>Polygons()</code> convertimos el poligono en un objeto de tipo espacial, y con la funcion <code>SpatialPolygons()</code> lo convertimos en un objeto de tipo <code>SpatialPolygons</code></p>
+<pre><code>ps1 &lt;- Polygons(list(p1),1)
+sps1 &lt;- SpatialPolygons(list(ps1))</code></pre>
+<p>Podemos consultar la clase del objeto <code>sps1</code> con la función <code>class()</code></p>
 <pre><code>class(sps1)</code></pre>
-<p>Observamos que la clase es efectivamente <strong><em>“SpatialPolygons”</em></strong>.</p>
 </div>
-<div id="b-generación-de-la-malla-1" class="section level4">
-<h4>|2.1.b| Generación de la malla:<a name="id21b"></a></h4>
-<p>Generaremos una malla con la ayuda del polígono creado en el paso anterior que nos servirá para los posteriores análisis estadísticos de kriaje.El tamaño de la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de este rectángulo.</p>
-<p>El siguiente comando dice: <em>&quot;Creáme una malla regular con los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>, donde el tamaño de celda sean 5 cm&quot;.</em></p>
-<pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05, 0.05))</code></pre>
-<p>Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de nuestro grid:</p>
-<pre><code>pts1 &lt;- as.data.frame(grid[!is.na(over(grid, sps1,))])</code></pre>
-<p>Al ser una parcela independiente y no tener que relacionarla con otros lugares, no necesitamos que las coordenadas del gps sean las globales,simplificamos esto cambiando nuestro sistema de coordenadas a uno que solo tenga en cuenta la parcela. Cambiamos el nombre de las coordenadas de <strong><em>X</em></strong> e <strong><em>Y</em></strong>; los llamaremos <strong><em>Xlocal</em></strong>, <strong><em>Ylocal</em></strong> ya que en el paso siguiente, lo que haremos es cambiar el sistema de coordenadas, pasando de unas cordenadas globales (<strong><em>X,Y</em></strong>) a las coordenadas locales (<strong><em>X e Ylocal</em></strong>):</p>
-<pre><code>names(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)</code></pre>
-<p>Hacemos que pts1 asocie como coordenadas las columnas de <strong><em>Xlocal</em></strong> e <strong><em>Ylocal</em></strong>. A su vez generamos que pts1 pase a ser un <strong><em>SpatialPoints object</em></strong> con coordenadas.</p>
+<div id="b-generación-de-la-malla-1" class="section level5">
+<h5>|3.1.b| Generación de la malla<a name="id31b"></a></h5>
+<p>A continuación dotamos al polígono que hemos creado de de una rejilla de 0.05 x 0.05 m. Utilizamos para ello la función <code>spsample()</code> y definimos el tamaños de la celda o rejilla con el argumento <code>cellsize</code>. Además eliminamos todos los puntos que quedan fuera de los límites del rectángulo.</p>
+<pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05, 0.05))
+pts1 &lt;- as.data.frame(grid[!is.na(over(grid, sps1,))])</code></pre>
+<p>Ya tenemos la malla o rejilla lista.</p>
+</div>
+</div>
+<div id="adaptación-de-los-datos-al-mapa-base-1" class="section level4">
+<h4>|3.2| Adaptación de los datos al mapa base<a name="id32"></a></h4>
+<p>A continuación, vamos a modificar el nombre de las coordenadas <code>X</code> e <code>Y</code> para indicar que son coordenadas locales. ~~~ names(pts1) &lt;- c(“Xlocal”, “Ylocal”) ~~~</p>
+<p>A continuación indicamos con la función <code>coordinates()</code> que esas dos columnas son columnas de coordenadas y transformamos el objeto pts1 a un objeto de clase <code>SpatialPoints</code></p>
 <pre><code>coordinates(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)
 pts1 &lt;- SpatialPixelsDataFrame(as(pts1, &quot;SpatialPoints&quot;), data=as(pts1, &quot;data.frame&quot;), tolerance=0.077)</code></pre>
-<p>Podemos observar cómo quedaría gráficamente el objeto <strong><em>“pts1”</em></strong> con el comando <strong><em>“plot()”</em></strong>:</p>
+<p>Podemos observar cómo quedaría gráficamente el objeto <code>pts1</code> con la función <code>plot()</code></p>
 <pre><code>plot(pts1)</code></pre>
-<p>Asignamos un sistema de coordenadas a la malla:</p>
+<p>Por último, asignamos un sistema de coordenadas a la malla:</p>
 <pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05,0.05), proj4string = CRS(&quot;+proj=utm +ellps=WGS84 +datum=WGS84&quot;))</code></pre>
-<hr />
 </div>
 </div>
+<div id="normalización-de-las-variables-1" class="section level3">
+<h3>|4| NORMALIZACIÓN DE LAS VARIABLES<a name="id4"></a></h3>
+<p>Una vez tenemos preparado el polígono y la rejilla donde “dibujaremos” los mapas, tenemos que hacer una exploración de los datos para ver si cumple con los requisitos de normalidad de los datos necesarios para realizar un Kriging.</p>
+<p>El método de Kriging asume que los datos siguen una distribución normal. Lo que vamos a hacer es visualizar la distribución de los datos para ver si siguen una tendencia normal y realizar un Test de Shapiro para comprobar si la distribución de los datos se ajusta a una distribución normal.</p>
+<div id="histograma-1" class="section level4">
+<h4>|4.1| Histograma:<a name="id41"></a></h4>
+<p>Se trata de una representación de una distribución de frecuencias. Para realizar este gráfico, utilizamos la función <code>hist()</code></p>
 </div>
-<div id="normalización-de-las-variables-1" class="section level2">
-<h2>|3| NORMALIZACIÓN DE LAS VARIABLES<a name="id3"></a></h2>
-<p>En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el método de kriging y autokriging en la fase 4.</p>
-<div id="metodología-de-normalización-de-variables-1" class="section level3">
-<h3>|3.1| Metodología de normalización de variables<a name="id31"></a></h3>
-<p>Para la realización de los mapas, utilizaremos la técnica de kriging, que esun método de interpolación geoestadístico de estimación de puntos.Este método requiere que los datos de cada variable sigan una tendencia más o menos normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el objetivo de normalizarlos.</p>
-<p>Observaremos gráficamente si los datos están normalizados visualizando gráficamente su histograma y su gráfico cuantil-cuantil. Por último se hará un test de shapiro para comprobar si cumple con una tendencia normalizada.</p>
-<div id="a-histograma-1" class="section level4">
-<h4>|3.1.a| Histograma:<a name="id31a"></a></h4>
-<p>Representación de distribuciones de frecuencias, en el que se emplean rectángulos dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida en la parte central del dibujo, tendrá una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando <strong><em>“hist()”</em></strong>.</p>
+<div id="gráfico-cuantil-cuantil-1" class="section level4">
+<h4>|4.2| Gráfico cuantil-cuantil:<a name="id42"></a></h4>
+<p>También denominado QQplot permite comparar la distribución de nuestros datos con una distribución normal teórica. Si la distribución de nuestra variable es la misma que la distribución de comparación se obtendrá, aproximadamente, una línea recta. Si la distribución de nuestros datos se desvía sustancialmente de la linealidad, significa que la distribución de nuestros datos no es similar a la distribución normal. Para realizar este gráfico, utilizamos la función <code>qqnorm()</code></p>
 </div>
-<div id="b-gráfico-cuantil-cuantil-1" class="section level4">
-<h4>|3.1.b| Gráfico cuantil-cuantil:<a name="id31b"></a></h4>
-<p>También denominada “qqnorm” nos permite observar cómo de cerca está la distribución observada a una distribución normal idealizada. Si la línea del gráfico dibuja una linea recta y ascendente indicará que los valores siguen una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando <strong><em>“qqnorm()”</em></strong>.</p>
+<div id="test-de-shapiro-1" class="section level4">
+<h4>|4.3| Test de Shapiro:<a name="id43"></a></h4>
+<p>Es un test estadístico para contrastar la normalidad de un conjunto de datos. La hipótesis nula es que la muestra de interés sigue una distribución normal. El test nos da un p-valor. Si el p-valor es superior a 0.05 (o al nivel de significancia alpha que determinemos), es decir, no significativo, no podemos rechazar la hipótesis nula. Si el p-valor es menor o igual a 0.05, podemos rechazar la hipótesis nula (la distribución de nuestros datos no es normal). En este tutorial hemos utilizado la función <code>shapiro.test()</code></p>
 </div>
-<div id="c-test-de-shapiro-1" class="section level4">
-<h4>|3.1.c| Test de shapiro:<a name="id31c"></a></h4>
-<p>Es una prueba estadística para contrastar la normalidad de un conjunto de datos. El test nos dará un p-valor, si este indicador es mayor al <strong>0.07</strong>, indica que los datos se adaptan a un patrón normalizado. Para realizar esta comprobación, utilizaremos el comando <strong><em>“shapiro.test()”</em></strong>.</p>
+<div id="transformación-de-los-datos-1" class="section level4">
+<h4>|4.4| Transformación de los datos:<a name="id44"></a></h4>
+<p>En aquellos casos en que los datos no sigan una distribución normal, realizaremos transformaciones para ajustar la distribución de nuestros datos a una distribución normal.</p>
 </div>
-<div id="d-modificación-de-los-datos-1" class="section level4">
-<h4>|3.1.d| Modificación de los datos:<a name="id31d"></a></h4>
-<p>En caso de que los datos no se ajusten a la tendecia normalidad, debemos ejecutar transformaciones de los datos para intentar que se adapten. Para ello podemos hacer algunas de las siguientes transformaciones:</p>
-<p>1º Realizar el logaritmo –&gt; Log(variable)<br />
-2º Realizar el logaritmo +1 –&gt; Log (variable+1)<br />
-3º Realizar (Variable - media)/desviación estándar –&gt; var-median(var)/sd(var)<br />
-4º Realizar raíz cuadrada –&gt; sqrt(variable)<br />
-5º Realizar box-cox <strong>NOTA</strong> –&gt; boxcox(variable)</p>
-<p><strong>NOTA</strong>: Para el uso de la función <strong><em>“boxcox()”</em></strong> debemos abrir antes <strong><em>library(MASS)</em></strong>.</p>
-</div>
-</div>
-<div id="normalización-variable-glucosidasa-1" class="section level3">
-<h3>|3.2| Normalización variable GLUCOSIDASA<a name="id32"></a></h3>
-<pre><code>hist(VariablesSuelo$GLUC)
-qqnorm(VariablesSuelo$GLUC) 
-shapiro.test((VariablesSuelo$GLUC))</code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
-<pre><code>hist(log(VariablesSuelo$GLUC)) 
-qqnorm(log(VariablesSuelo$GLUC))
-shapiro.test(log(VariablesSuelo$GLUC)) </code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-el-logaritmo-de-la-glucosidasa-para-el-mapeado-loggluc." class="section level5">
-<h5><strong>Utilizaremos el logaritmo de la glucosidasa para el mapeado –&gt; LOG(GLUC).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-fosfatasa-1" class="section level3">
-<h3>|3.3| Normalización variable FOSFATASA<a name="id33"></a></h3>
+<div id="ejemplo-de-normalización-de-dos-variables-edáficas" class="section level4">
+<h4>|4.5| Ejemplo de normalización de dos variables edáficas:<a name="id45"></a></h4>
+<p>Para mostrar cómo sería el proceso de normalización de las diferentes variables, se pondrán como ejemplo la variable Fosfatasa y pH.En estos ejemplos, estudiaremos cómo son su histografa, su gráfico cuantil-cuantil y qué p-valor ofrece el test de Shapiro. Si los valores no poseen una tendencia normal, procederemos a realizar transformaciones para adaptarlos.</p>
+<div id="a-normalización-variable-fosfatasa" class="section level5">
+<h5>|4.5.a| Normalización variable FOSFATASA<a name="id45a"></a></h5>
 <pre><code>hist(VariablesSuelo$FOSF)
 qqnorm(VariablesSuelo$FOSF) 
 shapiro.test((VariablesSuelo$FOSF))</code></pre>
@@ -748,185 +627,59 @@ shapiro.test(log(VariablesSuelo$FOSF)) </code></pre>
 qqnorm(log(VariablesSuelo$FOSF+1))
 shapiro.test(log(VariablesSuelo$FOSF+1)) </code></pre>
 <p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+</div>
 <div id="utilizaremos-el-logaritmo-de-la-fosfatasa-para-el-mapeado-logfosf." class="section level5">
 <h5><strong>Utilizaremos el logaritmo de la Fosfatasa para el mapeado –&gt; LOG(FOSF).</strong></h5>
 </div>
-</div>
-<div id="normalización-variable-nitrógeno-1" class="section level3">
-<h3>|3.4| Normalización variable NITRÓGENO<a name="id34"></a></h3>
-<pre><code>hist(VariablesSuelo$N)
-qqnorm(VariablesSuelo$N) 
-shapiro.test((VariablesSuelo$N))</code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-directamente-el-valor-nitrógeno-para-el-mapeado-n." class="section level5">
-<h5><strong>Utilizaremos directamente el valor Nitrógeno para el mapeado –&gt; (N).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-fósforo-1" class="section level3">
-<h3>|3.5| Normalización variable FÓSFORO<a name="id35"></a></h3>
-<pre><code>hist(VariablesSuelo$P)
-qqnorm(VariablesSuelo$P) 
-shapiro.test((VariablesSuelo$P))</code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-directamente-el-valor-fósforo-para-el-mapeado-p." class="section level5">
-<h5><strong>Utilizaremos directamente el valor Fósforo para el mapeado –&gt; (P).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-potasio-1" class="section level3">
-<h3>|3.6| Normalización variable POTASIO<a name="id36"></a></h3>
-<pre><code>hist(VariablesSuelo$K)
-qqnorm(VariablesSuelo$K) 
-shapiro.test((VariablesSuelo$K))</code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
-<pre><code>hist(log(VariablesSuelo$K)) 
-qqnorm(log(VariablesSuelo$K))
-shapiro.test(log(VariablesSuelo$K)) </code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-el-logaritmo-del-potasio-para-el-mapeado-logk." class="section level5">
-<h5><strong>Utilizaremos el logaritmo del Potasio para el mapeado –&gt; LOG(K).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-carbono-1" class="section level3">
-<h3>|3.7| Normalización variable CARBONO<a name="id37"></a></h3>
-<pre><code>hist(VariablesSuelo$C)
-qqnorm(VariablesSuelo$C) 
-shapiro.test((VariablesSuelo$C))</code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
-<pre><code>hist(log(VariablesSuelo$C)) 
-qqnorm(log(VariablesSuelo$C))
-shapiro.test(log(VariablesSuelo$C)) </code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-el-logaritmo-del-carbono-para-el-mapeado-logc." class="section level5">
-<h5><strong>Utilizaremos el logaritmo del Carbono para el mapeado –&gt; LOG(C).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-ph-echarle-un-ojo" class="section level3">
-<h3>|3.8| Normalización variable pH ECHARLE UN OJO<a name="id38"></a></h3>
-<pre><code>hist(VariablesSuelo$pH)
-qqnorm(VariablesSuelo$pH) 
-shapiro.test((VariablesSuelo$pH))</code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-directamente-el-valor-ph-para-el-mapeado-ph." class="section level5">
-<h5><strong>Utilizaremos directamente el valor pH para el mapeado –&gt; (pH).</strong></h5>
-</div>
-</div>
-<div id="normalización-variable-arena-1" class="section level3">
-<h3>|3.9| Normalización variable ARENA<a name="id39"></a></h3>
+<div id="b-normalización-variable-contenido-en-arenas" class="section level5">
+<h5>|4.5.b| Normalización variable CONTENIDO EN ARENAS<a name="id45b"></a></h5>
 <pre><code>hist(VariablesSuelo$Arena)
 qqnorm(VariablesSuelo$Arena) 
 shapiro.test((VariablesSuelo$Arena))</code></pre>
 <p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+</div>
 <div id="utilizaremos-directamente-el-valor-arena-para-el-mapeado-arena." class="section level5">
 <h5><strong>Utilizaremos directamente el valor Arena para el mapeado –&gt; (Arena).</strong></h5>
 </div>
 </div>
-<div id="normalización-variable-limo-1" class="section level3">
-<h3>|3.10| Normalización variable LIMO<a name="id310"></a></h3>
-<pre><code>hist(VariablesSuelo$Limo)
-qqnorm(VariablesSuelo$Limo) 
-shapiro.test((VariablesSuelo$Limo))</code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-directamente-el-valor-limo-para-el-mapeado-limo." class="section level5">
-<h5><strong>Utilizaremos directamente el valor Limo para el mapeado –&gt; (Limo).</strong></h5>
 </div>
+<div id="generación-de-cartografía-edáfica" class="section level3">
+<h3>|5| GENERACIÓN DE CARTOGRAFÍA EDÁFICA <a name="id5"></a></h3>
+<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestaistico denominado Kriging. Esta técnica de interpolación, utiliza un modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
+<div id="metodología-de-cartografía-edáfica-1" class="section level4">
+<h4>|5.1| Metodología de Cartografía edáfica<a name="id51"></a></h4>
+<p>Existen dos formas para la realización de Cartografía edáfica utilizando el método de kriging:</p>
+<div id="a-automáticamente-con-la-función-autokriging" class="section level5">
+<h5>|5.1.a| Automáticamente con la función <em>“autokriging()”</em>:<a name="id51a"></a></h5>
+<p>El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.</p>
 </div>
-<div id="normalización-variable-arcilla-echarle-un-ojo" class="section level3">
-<h3>|3.11| Normalización variable ARCILLA ECHARLE UN OJO<a name="id311"></a></h3>
-<pre><code>hist(VariablesSuelo$Arcilla)
-qqnorm(VariablesSuelo$Arcilla) 
-shapiro.test((VariablesSuelo$Arcilla))</code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
-<pre><code>hist(log(VariablesSuelo$Arcilla)) 
-qqnorm(log(VariablesSuelo$Arcilla))
-shapiro.test(log(VariablesSuelo$Arcilla)) </code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
-<pre><code>hist(log(VariablesSuelo$Arcilla)+1) 
-qqnorm(log(VariablesSuelo$Arcilla)+1)
-shapiro.test(log(VariablesSuelo$Arcilla)+1) </code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-<div id="utilizaremos-el-logaritmo-del-arcilla-para-el-mapeado-logarcilla1." class="section level5">
-<h5><strong>Utilizaremos el logaritmo del Arcilla para el mapeado –&gt; LOG((Arcilla)+1).</strong></h5>
-</div>
-</div>
-</div>
-<div id="generación-cartografía-edáfica" class="section level2">
-<h2>|4| GENERACIÓN CARTOGRAFÍA EDÁFICA <a name="id4"></a></h2>
-<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado kriging. Esta técnica de interpolación, utiliza un modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
-<div id="metodología-de-cartografía-edáfica-1" class="section level3">
-<h3>|4.1| Metodología de cartografía edáfica<a name="id41"></a></h3>
-<p>Existen dos formas para la realización de cartografía edáfica utilizando el método de kriaje: #### |4.1.a| Automáticamente con la función <em>“autokriging()”</em>:<a name="id41a"></a> El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.</p>
-<div id="b-kriging-manual-1" class="section level4">
-<h4>|4.1.b| Kriging manual:<a name="id41b"></a></h4>
-<p>Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado partiendo de ese modelo y se visualiza cómo quedaría gráficamente.</p>
-<p>Antes de realizar el kriging manual y, para mejorar la precisión del kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud. Esto, podemos observarlo mediante el comando “autofitVariogram” seguido de los diferentes modelos estudiados: <strong>Exponencial (Exp)</strong>, <strong>Esférico (Sph)</strong>, <strong>Gausiano(Gau)</strong> <strong>Lineal(Lin)</strong> y la <strong>parametrización de Stein (Ste)</strong>.</p>
+<div id="b-kriging-manual-1" class="section level5">
+<h5>|5.1.b| Kriging manual:<a name="id51b"></a></h5>
+<p>Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un Kriging partiendo de ese modelo y se visualiza cómo quedaría gráficamente.</p>
+<p>Antes de realizar el Kriging manual y, para mejorar la precisión del Kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud. Esto, podemos observarlo mediante el comando “autofitVariogram” seguido de los diferentes modelos estudiados: <strong>Exponencial (Exp)</strong>, <strong>Esférico (Sph)</strong>, <strong>Gausiano(Gau)</strong> <strong>Lineal(Lin)</strong> y la <strong>parametrización de Stein (Ste)</strong>.</p>
 <p>Ejemplo:</p>
 <pre><code>autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr</code></pre>
-<p>Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano esté este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).</p>
-<p>Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando <strong><em>Xlocal</em></strong> como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el kriging.</p>
+<p>Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano está este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).</p>
+<p>Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando <strong><em>Xlocal</em></strong> como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la Cartografía mediante el Kriging.</p>
 </div>
 </div>
-<div id="cartografía-de-la-variable-clucosidasa" class="section level3">
-<h3>|4.2| Cartografía de la variable CLUCOSIDASA<a name="id42"></a></h3>
-<div id="aautokriging-de-glucosidasa" class="section level4">
-<h4>|4.2.a|Autokriging de Glucosidasa:<a name="id42a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.GLUC.ST &lt;- autoKrige(log(GLUC) ~ 1, VariablesSuelo, pts1 )</code></pre>
-</div>
-</div>
-</div>
-<div id="visualizamos-como-sería-la-representación-gráfica-sin-tendencia" class="section level1">
-<h1>Visualizamos como sería la representación gráfica sin tendencia:</h1>
-<pre><code>plot(Autok.GLUC.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.GLUC.CT &lt;- autoKrige(log(GLUC) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.GLUC.CT)</code></pre>
-<div id="b-kriging-manual-de-glucosidasa-1" class="section level4">
-<h4>|4.2.b| Kriging manual de Glucosidasa:<a name="id42b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo:</p>
-<p>Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”.</em></p>
-<pre><code>MatrizGLUC &lt;- matrix(NA,2,5)
-colnames(MatrizGLUC) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizGLUC) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo:<br />
-Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizGLUC[1,1] &lt;- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizGLUC[1,2] &lt;- autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizGLUC[1,3] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizGLUC[1,4] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizGLUC[1,5] &lt;- autofitVariogram(log(GLUC)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizGLUC[2,1] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizGLUC[2,2] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizGLUC[2,3] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizGLUC[2,4] &lt;- autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizGLUC[2,5] &lt;- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
-<p>Le decimos al programa “Dime qué coordenada de la matriz tiene un valor menor”.</p>
-<pre><code>which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong><em>“STE CON TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“ste”</em> con tendencia:</p>
-<pre><code>v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje de la Glucosidasa:</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de VariablesSuelo adaptados al modelo</em> <strong><em>“Ste”</em></strong> <em>con tendencia en la malla</em> <strong><em>pts1&quot;</em></strong>.</p>
-<pre><code>GLUC.mapa &lt;- krige(log(GLUC) ~  Xlocal, VariablesSuelo, pts1, v.fitGLUCsteCT)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de glucosidasa. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>GLUC.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“GLUCOSIDASA”</em></strong> <em>.</em></p>
-<pre><code>plot(GLUC.mapa, main= &quot;GLUCOSIDASA&quot;) </code></pre>
-</div>
-<div id="cartografía-de-la-variable-fosfatasa" class="section level3">
-<h3>|4.3| Cartografía de la variable FOSFATASA<a name="id43"></a></h3>
-<div id="a-autokriging-de-fosfatasa-1" class="section level4">
-<h4>|4.3.a| Autokriging de Fosfatasa:<a name="id43a"></a></h4>
+<div id="ejemplo-de-generación-de-mapas-de-dos-variables" class="section level4">
+<h4>|5.2| Ejemplo de generación de mapas de dos variables</h4>
+<p>Para ilustrar cómo se generan los diferentes mapas edáficos, se realizarán dos mapas de las variables que en el punto <code>4.5</code> hemos normalizado. Se mostrará cómo es el proceso de creación de los mapas usando tanto el autokriging como el Kriging manual.</p>
+<div id="a-cartografía-de-la-variable-fosfatasa-1" class="section level5">
+<h5>|5.2.a| Cartografía de la variable FOSFATASA<a name="id52a"></a></h5>
+<div id="autokriging-de-fosfatasa" class="section level6">
+<h6>Autokriging de Fosfatasa:</h6>
 <p>Autokriging sin tendencia:</p>
 <pre><code>Autok.FOSF.ST &lt;- autoKrige(log(FOSF+1) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
+<p>Visualizamos como seráa la representación gráfica sin tendencia:</p>
 <pre><code>plot(Autok.FOSF.ST)</code></pre>
 <p>Autokriging con tendencia:</p>
 <pre><code>Autok.FOSF.CT &lt;- autoKrige(log(FOSF+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia: ~~<sub> plot(Autok.FOSF.CT) </sub>~~</p>
+<p>Visualizamos como seráa la representación gráfica con tendencia: ~~<sub> plot(Autok.FOSF.CT) </sub>~~</p>
 </div>
-<div id="b-kriging-manual-de-fosfatasa-1" class="section level4">
-<h4>|4.3.b| Kriging manual de Fosfatasa:<a name="id43b"></a></h4>
+<div id="kriging-manual-de-fosfatasa" class="section level6">
+<h6>Kriging manual de Fosfatasa:</h6>
 <p>Generamos una matriz donde exponer las semivarianzas de cada modelo. Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”.</em></p>
 <pre><code>MatrizFOSF &lt;- matrix(NA,2,5)
 colnames(MatrizFOSF) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
@@ -949,250 +702,29 @@ MatrizFOSF[2,5] &lt;- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,mod
 <pre><code>which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)</code></pre>
 <p>En este caso nos dice que <strong><em>“GAU SIN TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“Gau” sin tendencia</em>:</p>
 <pre><code>v.fitFOSFgauST = autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje de la fosfatasa:</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>“VariablesSuelo”</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” sin tendencia</em></strong> <em>en la malla pts1&quot;.</em></p>
+<p>A continuación podemos realizar el kriging de la fosfatasa:</p>
+<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriging de los datos de</em> <strong><em>“VariablesSuelo”</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” sin tendencia</em></strong> <em>en la malla pts1&quot;.</em></p>
 <pre><code>FOSF.mapa &lt;- krige(log(FOSF+1) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:</p>
-<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>FOSF.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“FOSFATASA”</em></strong> <em>.</em></p>
+<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:</p>
+<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>FOSF.mapa</em></strong> <em>(que es el resultado del kriging de los datos) y cuyo título sea</em> <strong><em>“FOSFATASA”</em></strong> <em>.</em></p>
 <pre><code>plot(FOSF.mapa, main= &quot;FOSFATASA&quot;)</code></pre>
 </div>
 </div>
-<div id="cartografía-de-la-variable-nitrógeno" class="section level3">
-<h3>|4.4| Cartografía de la variable NITRÓGENO<a name="id44"></a></h3>
-<div id="a-autokriging-de-nitrógeno-1" class="section level4">
-<h4>|4.4.a| Autokriging de Nitrógeno:<a name="id44a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.N.ST &lt;- autoKrige((N) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.N.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.N.CT &lt;- autoKrige((N) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.N.CT)</code></pre>
-</div>
-<div id="b-kriging-manual-de-nitrógeno-1" class="section level4">
-<h4>|4.4.b| Kriging manual de Nitrógeno:<a name="id44b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa: <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizN &lt;- matrix(NA,2,5)
-colnames(MatrizN) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizN) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo: Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizN[1,1] &lt;- autofitVariogram((N) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizN[1,2] &lt;- autofitVariogram((N) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizN[1,3] &lt;- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizN[1,4] &lt;- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizN[1,5] &lt;- autofitVariogram((N)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizN[2,1] &lt;- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizN[2,2] &lt;- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizN[2,3] &lt;- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizN[2,4] &lt;- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizN[2,5] &lt;- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
-<p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”:</em></p>
-<pre><code>which((MatrizN) == min(MatrizN), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong><em>“LIN CON TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong><em>“Lin” con tendencia</em></strong>:</p>
-<pre><code>v.fitNlinCT = autofitVariogram((N) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje del Nitrógeno: Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Lin” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1&quot;</em></strong> <em>.</em></p>
-<pre><code>N.mapa &lt;- krige((N) ~  1, VariablesSuelo, pts1, v.fitNlinCT)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Nitrógeno:</p>
-<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>N.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“NITRÓGENO”</em></strong> <em>.</em></p>
-<pre><code>plot(N.mapa, main= &quot;NITRÓGENO&quot;) </code></pre>
-</div>
-</div>
-<div id="cartografía-de-la-variable-fósforo" class="section level3">
-<h3>|4.5| Cartografía de la variable fósforo<a name="id45"></a></h3>
-<div id="a-autokriging-de-fósforo-1" class="section level4">
-<h4>|4.5.a| Autokriging de Fósforo:<a name="id45a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.P.ST &lt;- autoKrige((P) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.P.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.P.CT &lt;- autoKrige((P) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.P.CT)</code></pre>
-</div>
-<div id="a-kriging-manual-de-fósforo" class="section level4">
-<h4>|4.5.a| Kriging manual de Fósforo:<a name="id45b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizP &lt;- matrix(NA,2,5)
-colnames(MatrizP) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizP) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo:</p>
-<p>Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizP[1,1] &lt;- autofitVariogram((P) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizP[1,2] &lt;- autofitVariogram((P) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizP[1,3] &lt;- autofitVariogram((P) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizP[1,4] &lt;- autofitVariogram((P) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizP[1,5] &lt;- autofitVariogram((P) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizP[2,1] &lt;- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizP[2,2] &lt;- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizP[2,3] &lt;- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizP[2,4] &lt;- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizP[2,5] &lt;- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima:</p>
-<p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizP) == min(MatrizP), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“GAU CON TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Gau” con tendencia</strong>:</p>
-<pre><code>v.fitPgauCT = autofitVariogram((P) ~ Xlocal, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje del Fósforo.</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1&quot;</em></strong> <em>.</em></p>
-<pre><code>P.mapa &lt;- krige((P) ~  Xlocal, VariablesSuelo, pts1, v.fitPgauCT)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Fósforo, la siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>P.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“FÓSFORO”</em></strong> <em>.</em></p>
-<pre><code>plot(P.mapa, main= &quot;FÓSFORO&quot;)</code></pre>
-</div>
-</div>
-<div id="cartografía-de-la-variable-potasio" class="section level3">
-<h3>|4.6| Cartografía de la variable POTASIO<a name="id46"></a></h3>
-<div id="a-autokriging-de-potasio" class="section level4">
-<h4>|4.6.a| Autokriging de Potasio:<a name="id46a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.K.ST &lt;- autoKrige(log(K) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.K.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.K.CT &lt;- autoKrige(log(K) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.K.CT)</code></pre>
-</div>
-<div id="a-kriging-manual-de-potasio" class="section level4">
-<h4>|4.6.a| Kriging manual de Potasio:<a name="id46b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizK &lt;- matrix(NA,2,5)
-colnames(MatrizK) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizK) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo: Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizK[1,1] &lt;- autofitVariogram(log(K) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizK[1,2] &lt;- autofitVariogram(log(K) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizK[1,3] &lt;- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizK[1,4] &lt;- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizK[1,5] &lt;- autofitVariogram(log(K)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizK[2,1] &lt;- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizK[2,2] &lt;- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizK[2,3] &lt;- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizK[2,4] &lt;- autofitVariogram(log(K) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizK[2,5] &lt;- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima. Con el siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizK) == min(MatrizK), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“LIN CON TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Lin” con tendencia</strong>:</p>
-<pre><code>v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, VariablesSuelo, model = c(&quot;Lin&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje del Potasio.</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Lin” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1&quot;</em></strong> <em>.</em></p>
-<pre><code>K.mapa &lt;- krige(log(K) ~  Xlocal, VariablesSuelo, pts1, v.fitKlinCT)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Potasio. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>K.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“POTASIO”</em></strong><em>.</em></p>
-<pre><code>plot(K.mapa, main= &quot;POTASIO&quot;) </code></pre>
-</div>
-</div>
-<div id="cartografía-de-la-variable-carbono" class="section level3">
-<h3>|4.7| Cartografía de la variable CARBONO<a name="id47"></a></h3>
-<div id="a-autokriging-de-carbono-1" class="section level4">
-<h4>|4.7.a| Autokriging de Carbono:<a name="id47a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.C.ST &lt;- autoKrige(log(C) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.C.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.C.CT &lt;- autoKrige(log(C) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.C.CT)</code></pre>
-</div>
-<div id="b-kriging-manual-de-carbono-1" class="section level4">
-<h4>|4.7.b| Kriging manual de Carbono:<a name="id47b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizC &lt;- matrix(NA,2,5)
-colnames(MatrizC) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizC) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo, le decimos al programa <em>&quot;rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia</em>&quot;. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizC[1,1] &lt;- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizC[1,2] &lt;- autofitVariogram(log(C) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizC[1,3] &lt;- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizC[1,4] &lt;- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizC[1,5] &lt;- autofitVariogram(log(C)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizC[2,1] &lt;- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizC[2,2] &lt;- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizC[2,3] &lt;- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizC[2,4] &lt;- autofitVariogram(log(C) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizC[2,5] &lt;- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
-<p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizC) == min(MatrizC), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“GAU CON TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Gau” con tendencia</strong>:</p>
-<pre><code>v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje del Carbono.</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
-<pre><code>C.mapa &lt;- krige(log(C) ~  Xlocal, VariablesSuelo, pts1, v.fitCgauCT)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Carbono:</p>
-<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>C.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CARBONO”</em></strong> <em>.</em></p>
-<pre><code>plot(C.mapa, main= &quot;CARBONO&quot;)</code></pre>
-</div>
-</div>
-<div id="cartografía-de-la-variable-ph" class="section level3">
-<h3>|4.8| Cartografía de la variable pH<a name="id48"></a></h3>
-<div id="a-autokriging-de-ph-1" class="section level4">
-<h4>|4.8.a| Autokriging de pH:<a name="id48a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.pH.ST &lt;- autoKrige((pH) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.pH.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.pH.CT &lt;- autoKrige((pH) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.pH.CT)</code></pre>
-</div>
-<div id="b-kriging-manual-de-ph-1" class="section level4">
-<h4>|4.8.b| Kriging manual de pH:<a name="id48b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo:</p>
-<p>Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizpH &lt;- matrix(NA,2,5)
-colnames(MatrizpH) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizpH) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo:</p>
-<p>Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizpH[1,1] &lt;- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizpH[1,2] &lt;- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizpH[1,3] &lt;- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizpH[1,4] &lt;- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizpH[1,5] &lt;- autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizpH[2,1] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizpH[2,2] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizpH[2,3] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizpH[2,4] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizpH[2,5] &lt;- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“STE SIN TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Ste” sin tendencia</strong>:</p>
-<pre><code>v.fitpHsteST = autofitVariogram((pH) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje del pH, con la siguiente función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
-<pre><code>pH.mapa &lt;- krige((pH) ~  1, VariablesSuelo, pts1, v.fitpHsteST)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de pH. Con la siguiente función expresamos lo siguiente: <em>&quot;Genera un gráfico del objeto</em> <strong><em>pH.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“pH”</em></strong> <em>.</em></p>
-<pre><code>plot(pH.mapa, main= &quot;pH&quot;) </code></pre>
-</div>
-</div>
-<div id="generación-de-la-variable-arena" class="section level3">
-<h3>|4.9| Generación de la variable ARENA<a name="id49"></a></h3>
-<div id="a-autokriging-de-arena-1" class="section level4">
-<h4>|4.9.a| Autokriging de Arena:<a name="id49a"></a></h4>
+<div id="b-cartografía-de-la-variable-contenido-en-arenas" class="section level5">
+<h5>|5.2.b| Cartografía de la variable CONTENIDO EN ARENAS<a name="id52b"></a></h5>
+<div id="autokriging-de-arena" class="section level6">
+<h6>Autokriging de Arena:</h6>
 <p>Autokriging sin tendencia:</p>
 <pre><code>Autok.Arena.ST &lt;- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
+<p>Visualizamos como será la representación gráfica sin tendencia:</p>
 <pre><code>plot(Autok.Arena.ST)</code></pre>
 <p>Autokriging con tendencia:</p>
 <pre><code>Autok.Arena.CT &lt;- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
+<p>Visualizamos como seráa la representación gráfica con tendencia:</p>
 <pre><code>plot(Autok.Arena.CT)</code></pre>
 </div>
-<div id="b-kriging-manual-de-arena-1" class="section level4">
-<h4>|4.9.b| Kriging manual de Arena:<a name="id49b"></a></h4>
+<div id="kriging-manual-de-arena" class="section level6">
+<h6>Kriging manual de Arena:</h6>
 <p>Generamos una matriz donde exponer las semivarianzas de cada modelo, Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
 <pre><code>MatrizArena &lt;- matrix(NA,2,5)
 colnames(MatrizArena) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
@@ -1214,97 +746,12 @@ MatrizArena[2,5] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model 
 <pre><code>which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)</code></pre>
 <p>En este caso nos dice que <strong>“STE SIN TENDENCIA”</strong> es el mejor, así que será el utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Ste” sin tendencia</strong>:</p>
 <pre><code>v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje de la Arena. Con la siguiente función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
+<p>A continuación podemos realizar el kriging de la Arena. Con la siguiente función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriging de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
 <pre><code>Arena.mapa &lt;- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arena.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARENAS”</em></strong> <em>.</em></p>
+<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arena.mapa</em></strong> <em>(que es el resultado del kriging de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARENAS”</em></strong> <em>.</em></p>
 <pre><code>plot(Arena.mapa, main= &quot;CONTENIDO EN ARENAS&quot;)</code></pre>
 </div>
 </div>
-<div id="generación-de-la-variable-limo" class="section level3">
-<h3>|4.10| Generación de la variable LIMO<a name="id410"></a></h3>
-<div id="a-autokriging-de-limo-1" class="section level4">
-<h4>|4.10.a| Autokriging de Limo:<a name="id410a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.Limo.ST &lt;- autoKrige((Limo) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.Limo.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.Limo.CT &lt;- autoKrige((Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.Limo.CT)</code></pre>
-</div>
-<div id="b-kriging-manual-de-limo-1" class="section level4">
-<h4>|4.10.b| Kriging manual de Limo:<a name="id410b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizLimo &lt;- matrix(NA,2,5)
-colnames(MatrizLimo) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizLimo) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo:</p>
-<p>Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizLimo[1,1] &lt;- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizLimo[1,2] &lt;- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizLimo[1,3] &lt;- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizLimo[1,4] &lt;- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizLimo[1,5] &lt;- autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizLimo[2,1] &lt;- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizLimo[2,2] &lt;- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizLimo[2,3] &lt;- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizLimo[2,4] &lt;- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizLimo[2,5] &lt;- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor, con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con él le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“STE SIN TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Ste” sin tendencia</strong>:</p>
-<pre><code>v.fitLimosteST = autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje de la variable Limos. Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
-<pre><code>Limo.mapa &lt;- krige((Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)</code></pre>
-<p>Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Limos. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Limo.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN LIMO”</em></strong> <em>.</em></p>
-<pre><code>plot(Limo.mapa, main= &quot;CONTENIDO EN LIMO&quot;) </code></pre>
-</div>
-</div>
-<div id="cartografía-de-la-variable-arcilla" class="section level3">
-<h3>|4.11| Cartografía de la variable ARCILLA<a name="id411"></a></h3>
-<div id="a-autokriging-de-arcilla-1" class="section level4">
-<h4>|4.11.a| Autokriging de Arcilla:<a name="id411a"></a></h4>
-<p>Autokriging sin tendencia:</p>
-<pre><code>Autok.Arcilla.ST &lt;- autoKrige(log(Arcilla+1) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica sin tendencia:</p>
-<pre><code>plot(Autok.Arcilla.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
-<pre><code>Autok.Arcilla.CT &lt;- autoKrige(log(Arcilla+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como sería la representación gráfica con tendencia:</p>
-<pre><code>plot(Autok.Arcilla.CT)</code></pre>
-</div>
-<div id="b-kriging-manual-de-arcillas" class="section level4">
-<h4>|4.11.b| Kriging manual de Arcillas:<a name="id411b"></a></h4>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
-<pre><code>MatrizArcilla &lt;- matrix(NA,2,5)
-colnames(MatrizArcilla) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
-rownames(MatrizArcilla) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo, para ello le decimos al programa con la siguiente línea de código <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
-<pre><code>MatrizArcilla[1,1] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
-MatrizArcilla[1,2] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
-MatrizArcilla[1,3] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
-MatrizArcilla[1,4] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
-MatrizArcilla[1,5] &lt;- autofitVariogram(log(Arcilla+1) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos Xlocal como tendencia):</p>
-<pre><code>MatrizArcilla[2,1] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
-MatrizArcilla[2,2] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
-MatrizArcilla[2,3] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
-MatrizArcilla[2,4] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
-MatrizArcilla[2,5] &lt;- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
-<pre><code>which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“LIN CON TENDENCIA”</strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Lin” con tendencia</strong>:</p>
-<pre><code>v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo, model = c(&quot;Lin&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriaje de las arcillas, con esta función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriaje de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Lin” con tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
-<pre><code>Arcilla.mapa &lt;- krige(log(Arcilla+1) ~  Xlocal, VariablesSuelo, pts1, v.fitArcillalinCT)</code></pre>
-<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arcilla. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arcilla.mapa</em></strong> <em>(que es el resultado del kriaje de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARCILLA”</em></strong> <em>.</em></p>
-<pre><code>plot(Arcilla.mapa, main= &quot;CONTENIDO EN ARCILLAS&quot;)</code></pre>
-<hr />
-<p>Á É Í Ó Ú á é í ó ú Ñ ñ</p>
 </div>
 </div>
 </div>

@@ -1,6 +1,6 @@
 ---
-title: "**TUTORIAL CARTOGRAFÍA EDÁFICA**"
-author: "Ignacio Fernández Ruiz"
+title: '**TUTORIAL CARTOGRAF?A ED?FICA**'
+author: "Ignacio Fern?ndez Ruiz"
 date: "23/5/2020"
 output: html_document
 ---
@@ -9,126 +9,126 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##### **¡ATENCIÓN!**
+##### **?ATENCI?N!**
 ##### **LEA ANTENTAMENTE EL ARCHIVO "README" ANTES DE INICIAR ESTE TUTORIAL.**
 
-Para cualquier información adicional sobre el funcionamiento de algún comando, puede utilizar ***"?NombreDelComando"***. Lo que abrirá una nueva pestaña con más información sobre su uso y la gramática que utiliza. Si el comando pertenece a un paquete de R concreto, puede utilizar el comando ***"??NombreDelComando"*** para recibir la misma información.
+Para cualquier informaci?n adicional sobre el funcionamiento de alg?n comando, puede utilizar ***"?NombreDelComando"***. Lo que abrir? una nueva pesta?a con m?s informaci?n sobre su uso y la gram?tica que utiliza. Si el comando pertenece a un paquete de R concreto, puede utilizar el comando ***"??NombreDelComando"*** para recibir la misma informaci?n.
 
 ___________________________________________________________________________________________
 
 
-## **ÍNDICE**
+## **?NDICE**
     
-###  [1.PREPARACIÓN DE LOS DATOS](#id1)
+###  [1. PREPARACI?N DE LOS DATOS](#id1)
 #### [1.1 Carga de datos iniciales](#id11)
 #### [1.2 Comprobaciones iniciales](#id11)
-###### [1.2.a Verificación de la versión de R](#id12a)
-###### [1.2.b Verificación de la versión de RStudio](#id12b)
-###### [1.2.c Verificación de los paquetes CRAN](#id12c)
-###### [1.2.d Finalización de las comprobaciones](#id12d)
+###### [1.2.a Verificaci?n de la versi?n de R](#id12a)
+###### [1.2.b Verificaci?n de la versi?n de RStudio](#id12b)
+###### [1.2.c Verificaci?n de los paquetes CRAN](#id12c)
+###### [1.2.d Finalizaci?n de las comprobaciones](#id12d)
 ###### [1.2.e Curating data](#id12e)
    
-### [2. PREPARACIÓN DEL ÁREA DE ESTUDIO](#id2)
-#### [2.1 Generación del mapa base](#id21)
-######  [2.1.a Generación del polígono](#id21a)
-###### [2.1.b Generación de la malla](#id21b)
-#### [2.2 Adaptación de los datos al mapa base](#id22)
+### [2. PREPARACI?N DEL ?REA DE ESTUDIO](#id2)
+#### [2.1 Generaci?n del mapa base](#id21)
+######  [2.1.a Generaci?n del pol?gono](#id21a)
+###### [2.1.b Generaci?n de la malla](#id21b)
+#### [2.2 Adaptaci?n de los datos al mapa base](#id22)
    
-### [3. NORMALIZACIÓN DE LAS VARIABLES](#id3)
-#### [3.1 Metodología de normalización de variables](#id31)
+### [3. NORMALIZACI?N DE LAS VARIABLES](#id3)
+#### [3.1 Metodolog?a de normalizaci?n de variables](#id31)
 ###### [3.1.a Histograma](#id31a)
-###### [3.1.b Gráfico cuantil-cuantil](#id31b)
+###### [3.1.b Gr?fico cuantil-cuantil](#id31b)
 ###### [3.1.c Test de shapiro](#id31c)
-###### [3.1.d Modificación de los datos](#id31d)
-#### [3.2 Normalización variable GLUCOSIDASA](#id32)
-#### [3.3 Normalización variable FOSFATASA](#id33)
-#### [3.4 Normalización variable NITRÓGENO](#id34)
-#### [3.5 Normalización variable FÓSFORO](#id35)
-#### [3.6 Normalización variable POTASIO](#id36)
-#### [3.7 Normalización variable CARBONO](#id37)
-#### [3.8 Normalización variable pH](#id38)
-#### [3.9 Normalización variable ARENA](#id39)
-#### [3.10 Normalización variable LIMO](#id310)
-#### [3.11 Normalización variable ARCILLA](#id311)
+###### [3.1.d Modificaci?n de los datos](#id31d)
+#### [3.2 Normalizaci?n variable GLUCOSIDASA](#id32)
+#### [3.3 Normalizaci?n variable FOSFATASA](#id33)
+#### [3.4 Normalizaci?n variable NITR?GENO](#id34)
+#### [3.5 Normalizaci?n variable F?SFORO](#id35)
+#### [3.6 Normalizaci?n variable POTASIO](#id36)
+#### [3.7 Normalizaci?n variable CARBONO](#id37)
+#### [3.8 Normalizaci?n variable pH](#id38)
+#### [3.9 Normalizaci?n variable ARENA](#id39)
+#### [3.10 Normalizaci?n variable LIMO](#id310)
+#### [3.11 Normalizaci?n variable ARCILLA](#id311)
    
-### [4. GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA](#id4)
-#### [4.1 Metodología de cartografía edáfica](#id41)
-###### [4.1.a Función "autokriging()"](#id41a)
+### [4. GENERACI?N DE LA CARTOGRAF?A ED?FICA](#id4)
+#### [4.1 Metodolog?a de cartograf?a ed?fica](#id41)
+###### [4.1.a Funci?n "autokriging()"](#id41a)
 ###### [4.1.b Kriging manual](#id41b)
-#### [4.2 Cartografía de variable GLUCOSIDASA](#id42)
+#### [4.2 Cartograf?a de variable GLUCOSIDASA](#id42)
 ###### [4.2.a Autokriging de Glucosidasa](#id42a)
 ###### [4.2.b Kriging manual de Glucosidasa](#id42b)
-#### [4.3 Cartografía de variable FOSFATASA](#id43)
+#### [4.3 Cartograf?a de variable FOSFATASA](#id43)
 ###### [4.3.a Autokriging de Fosfatasa](#id43a)
 ###### [4.3.b Kriging manual de Fosfatasa](#id43b)
-#### [4.4 Cartografía de variable NITRÓGENO](#id44)
-###### [4.4.a Autokriging de Nitrógeno](#id44a)
-###### [4.4.b Kriging manual de Nitrógeno](#id44b)
-#### [4.5 Cartografía de variable FÓSFORO](#id45)
-###### [4.5.a Autokriging de Fósforo](#id45a)
-###### [4.5.b Kriging manual de Fósforo](#id45b)
-#### [4.6 Cartografía de variable POTASIO](#id46)
+#### [4.4 Cartograf?a de variable NITR?GENO](#id44)
+###### [4.4.a Autokriging de Nitr?geno](#id44a)
+###### [4.4.b Kriging manual de Nitr?geno](#id44b)
+#### [4.5 Cartograf?a de variable F?SFORO](#id45)
+###### [4.5.a Autokriging de F?sforo](#id45a)
+###### [4.5.b Kriging manual de F?sforo](#id45b)
+#### [4.6 Cartograf?a de variable POTASIO](#id46)
 ######  [4.6.aAutokriging de Potasio](#id46a)
 ######  [4.6.b Kriging manual de Potasio](#id46b)
-#### [4.7 Cartografía de variable CARBONO](#id47)
+#### [4.7 Cartograf?a de variable CARBONO](#id47)
 ###### [4.7.a Autokriging de Carbono](#id47a)
 ###### [4.7.b Kriging manual de Carbono](#id47b)
-#### [C4.8 artografía de variable pH](#id48)
+#### [C4.8 artograf?a de variable pH](#id48)
 ###### [4.8.a Autokriging de pH](#id48a)
 ###### [4.8.b Kriging manual de pH](#id48b)
-#### [4.9 Cartografía de variable ARENA](#id49)
+#### [4.9 Cartograf?a de variable ARENA](#id49)
 ###### [4.9.a Autokriging de Arena](#id49a)
 ###### [4.9.b Kriging manual de Arena](#id49b)
-#### [4.10 Cartografía de variable LIMO](#id410)
+#### [4.10 Cartograf?a de variable LIMO](#id410)
 ###### [4.10.a Autokriging de Limo](#id410a)
 ###### [4.10.b Kriging manual de Limo](#id410b)
-#### [4.11 Cartografía de variable ARCILLA](#id411)
+#### [4.11 Cartograf?a de variable ARCILLA](#id411)
 ###### [4.11.a Autokriging de Arcilla](#id411a)
 ###### [4.11.b Kriging manual de Arcilla](#id411b)
 
 ___
 
-## |1| PREPARACIÓN DE LOS DATOS<a name="id1"></a>
-En esta fase, realizaremos todas las operaciones previas a la generación de la cartografía. Comprobaremos las versiones utilizadas, descargaremos los datos y paquetes necesarios para las fases posteriores y transformaremos los datos a  los formatos espaciales necesarios.
+## |1| PREPARACI?N DE LOS DATOS<a name="id1"></a>
+En esta fase, realizaremos todas las operaciones previas a la generaci?n de la cartograf?a. Comprobaremos las versiones utilizadas, descargaremos los datos y paquetes necesarios para las fases posteriores y transformaremos los datos a  los formatos espaciales necesarios.
 
 
 ### |1.1| Carga de datos iniciales<a name="id11"></a>
-Antes de realizar ninguna operación, debemos decirle al proyecto de R con qué datos vamos a trabajar. En nuestro caso, hemos generado en formato ***".txt"*** los datos a partir de un archivo de excel ***".xlsx"***. De esta forma podremos trabajar con ellos en forma de código (Eliminando la necesidad de programas externos).
+Antes de realizar ninguna operaci?n, debemos decirle al proyecto de R con qu? datos vamos a trabajar. En nuestro caso, hemos generado en formato ***".txt"*** los datos a partir de un archivo de excel ***".xlsx"***. De esta forma podremos trabajar con ellos en forma de c?digo (Eliminando la necesidad de programas externos).
 
-El comando que utilizaremos será ***"read.delim"***, este comando lee un archivo y crea un nuevo objeto con la información de este archivo como una si fuera una base de datos.
+El comando que utilizaremos ser? ***"read.delim"***, este comando lee un archivo y crea un nuevo objeto con la informaci?n de este archivo como una si fuera una base de datos.
 
 ~~~
 VariablesSuelo <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
 load("data/AerialRoot.community.corregido.Rdata")
 ~~~
 
-Este comando dice: *"Crea un nuevo objeto con el archivo de .txt con los datos, su  separación será con barras, el símbolo que marca el decimal es coma* **","** *y  la primera fila de los datos corresponde al enunciado de las variables (por eso le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)"*.
+Este comando dice: *"Crea un nuevo objeto con el archivo de .txt con los datos, su  separaci?n ser? con barras, el s?mbolo que marca el decimal es coma* **","** *y  la primera fila de los datos corresponde al enunciado de las variables (por eso le decimos que los datos tienen enunciado, y que lo tenga en cuenta como tal)"*.
 
 
 ### |1.2| Comprobaciones iniciales<a name="id12"></a>
 
-Las siguientes operaciones, cargan algunos parámetros imprescindibles para la realización de este tutorial. A su vez, comprueba que la versión de R es apta para trabajar y confirma la correcta instalación de todos los paquetes que vamos a necesitar. Por último, se realiza un "curating data" de los datos, que es un  proceso en el que se homogeniza la base de datos brutos  y se eliman los parámetros innecesarios para el tutorial. (Los datos contienen información extra que otro investigador podría utilizar en el futuro para sus estudios)
+Las siguientes operaciones, cargan algunos par?metros imprescindibles para la realizaci?n de este tutorial. A su vez, comprueba que la versi?n de R es apta para trabajar y confirma la correcta instalaci?n de todos los paquetes que vamos a necesitar. Por ?ltimo, se realiza un "curating data" de los datos, que es un  proceso en el que se homogeniza la base de datos brutos  y se eliman los par?metros innecesarios para el tutorial. (Los datos contienen informaci?n extra que otro investigador podr?a utilizar en el futuro para sus estudios)
 
-#### |1.2.a| Verificación de la versión de R:<a name="id12a"></a>
-Comprobaremos que la versión sea igual o superior a la 3.6.0.
-
-~~~
-if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee es antigua\nPor favor, instale la última versión\n##########")}
-~~~
-
-El comando aplica lo siguiente: *"Si la versión de R es menor que la* ***3.6.0*** *, genera un mensaje de alerta donde especifique el mensaje"* (En este caso, el mensaje elegido es un aviso de que la versión de R es antigua y se necesita actualizar).
-
-#### |1.2.b| Verificación de la versión de RStudio::<a name="id12b"></a>
-Comprobaremos que la versión sea igual o superior a la 1.0.1.
+#### |1.2.a| Verificaci?n de la versi?n de R:<a name="id12a"></a>
+Comprobaremos que la versi?n sea igual o superior a la 3.6.0.
 
 ~~~
-if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########")}
+if(getRversion() < "3.6.0") {stop("##########\nLa versi?n de R que posee es antigua\nPor favor, instale la ?ltima versi?n\n##########")}
 ~~~
 
-El comando aplica lo siguiente: *"Si la versión de RStudio es menor que la* ***3.6.0*** *, genera un mensaje de alerta donde especifique el mensaje"* (En este caso, el mensaje elegido es un aviso de que la versión de RStudio es antigua y se necesita actualizar).
+El comando aplica lo siguiente: *"Si la versi?n de R es menor que la* ***3.6.0*** *, genera un mensaje de alerta donde especifique el mensaje"* (En este caso, el mensaje elegido es un aviso de que la versi?n de R es antigua y se necesita actualizar).
 
-#### |1.2.c| Verificación de los paquetes CRAN:<a name="id12c"></a>
-Comprobaremos si los paquetes necesarios están instalados.
+#### |1.2.b| Verificaci?n de la versi?n de RStudio::<a name="id12b"></a>
+Comprobaremos que la versi?n sea igual o superior a la 1.0.1.
+
+~~~
+if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versi?n de RStudio que posee es antigua\nPor favor, instale la ?ltima versi?n\n##########")}
+~~~
+
+El comando aplica lo siguiente: *"Si la versi?n de RStudio es menor que la* ***3.6.0*** *, genera un mensaje de alerta donde especifique el mensaje"* (En este caso, el mensaje elegido es un aviso de que la versi?n de RStudio es antigua y se necesita actualizar).
+
+#### |1.2.c| Verificaci?n de los paquetes CRAN:<a name="id12c"></a>
+Comprobaremos si los paquetes necesarios est?n instalados.
 
 ~~~
 PaquetesNecesarios <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
@@ -143,23 +143,23 @@ if(length(PaquetesNecesarios2) > 0){install.packages(PaquetesNecesarios2)}
 stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))
 ~~~
 
-#### |1.2.d| Finalización de las comprobaciones:<a name="id12d"></a>
+#### |1.2.d| Finalizaci?n de las comprobaciones:<a name="id12d"></a>
 
 ~~~
 rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)
 ~~~
 
-El comando ***"rm()"*** elimina los objetos puestos entre paréntesis, en este caso los objetos que hemos utilizado para confirmar que los paquetes están instalados.
+El comando ***"rm()"*** elimina los objetos puestos entre par?ntesis, en este caso los objetos que hemos utilizado para confirmar que los paquetes est?n instalados.
 
 #### |1.2.e| Curating data:<a name="id12e"></a>
 
-Renombramos el título de de la columna 11 (COD -> Codigo_muestra):
+Renombramos el t?tulo de de la columna 11 (COD -> Codigo_muestra):
 
 ~~~
 colnames(VariablesSuelo)[11] <- "Codigo_muestra"
 ~~~
 
-Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así los datos:
+Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando as? los datos:
 
 ~~~
 orusco.soil <- VariablesSuelo
@@ -186,11 +186,11 @@ library(raster)
 library(automap)
 ~~~
 
-### |1.4| Reclasificación de los datos originales a datos espaciales<a name="id14"></a>
-Con las siguientes operaciones vamos a modificar el tipo de objeto que son los datos, para así poder trabajar con ellos espacialmente. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.
+### |1.4| Reclasificaci?n de los datos originales a datos espaciales<a name="id14"></a>
+Con las siguientes operaciones vamos a modificar el tipo de objeto que son los datos, para as? poder trabajar con ellos espacialmente. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el n?mero de decimales que puedan tener los datos a 10.
 
-Como trabajaremos de forma local, no necesitamos coordenadas globales, y por ello utilizaremos como nuevas coordenadas los valores de ***Xlocal**** e ***Ylocal*** en relación a ***"VariablesSuelo"***. Al dar coordenadas a los datos de ***VariablesSuelo*** los convierte de un objeto ***"data.frame"*** a un objeto ***"SpatialPointDataFrame"***.
-Para esta operación utilizaremos el comando ***"coordinates()"***:
+Como trabajaremos de forma local, no necesitamos coordenadas globales, y por ello utilizaremos como nuevas coordenadas los valores de ***Xlocal**** e ***Ylocal*** en relaci?n a ***"VariablesSuelo"***. Al dar coordenadas a los datos de ***VariablesSuelo*** los convierte de un objeto ***"data.frame"*** a un objeto ***"SpatialPointDataFrame"***.
+Para esta operaci?n utilizaremos el comando ***"coordinates()"***:
 
 ~~~
 coordinates(VariablesSuelo) <- ~ Xlocal + Ylocal
@@ -204,9 +204,9 @@ Con el siguiente comando podemos cerciorarnos si ***VariablesSuelo*** ha cambiad
 class(VariablesSuelo)
 ~~~
 
-Efectivamente, la contestación que nos da la consola es que ahora el objeto ***VariablesSuelo*** es un ***"SpatialPointsDataFrame"***.
+Efectivamente, la contestaci?n que nos da la consola es que ahora el objeto ***VariablesSuelo*** es un ***"SpatialPointsDataFrame"***.
 
-Por ultimo, limitaremos el número de decimales de los datos a 10, para evitar cifras excesivamente largas, para ello usaremos el siguiente comando:
+Por ultimo, limitaremos el n?mero de decimales de los datos a 10, para evitar cifras excesivamente largas, para ello usaremos el siguiente comando:
 
 ~~~
 options(digits=10)
@@ -214,24 +214,24 @@ options(digits=10)
 
 ___
 
-## |2| PREPARACIÓN DEL ÁREA DE ESTUDIO<a name="id2"></a>
-En este proceso, vamos a generar el mapa base desde el cual vamos a realizar posteriormente el mapa de cada variable. En esta fase indicaremos el tamaño  del área de estudio, las coordenadas que poseen y el tamaño de malla que  utilizaremos para el posterior análisis por kriging.También refinaremos y adaptaremos los datos al tamaño y forma del área estudiada.
+## |2| PREPARACI?N DEL ?REA DE ESTUDIO<a name="id2"></a>
+En este proceso, vamos a generar el mapa base desde el cual vamos a realizar posteriormente el mapa de cada variable. En esta fase indicaremos el tama?o  del ?rea de estudio, las coordenadas que poseen y el tama?o de malla que  utilizaremos para el posterior an?lisis por kriging.Tambi?n refinaremos y adaptaremos los datos al tama?o y forma del ?rea estudiada.
 
-### |2.1| Generación del mapa base<a name="id21"></a>
+### |2.1| Generaci?n del mapa base<a name="id21"></a>
 
-#### |2.1.a| Creación del polígono base:<a name="id21a"></a>
-Generaremos un rectángulo con dimensiones iguales al área de estudio donde posteriormente plasmaremos los diferentes mapas que generemos.
+#### |2.1.a| Creaci?n del pol?gono base:<a name="id21a"></a>
+Generaremos un rect?ngulo con dimensiones iguales al ?rea de estudio donde posteriormente plasmaremos los diferentes mapas que generemos.
 
 
-Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro área de estudio. Hemos cargado una matriz llamada ***"esquinas.parcela"***. Esta matriz tiene los datos en ***Xlocal*** e ***Ylocal*** de dónde se sitúan los vertices del rectángulo que forma nuestra parcela. Con estos datos, crearemos un polígono rectangular que cubra exactamente el área de estudio.
+Para ello, vamos a usar los cuatro puntos de las esquinas de nuestro ?rea de estudio. Hemos cargado una matriz llamada ***"esquinas.parcela"***. Esta matriz tiene los datos en ***Xlocal*** e ***Ylocal*** de d?nde se sit?an los vertices del rect?ngulo que forma nuestra parcela. Con estos datos, crearemos un pol?gono rectangular que cubra exactamente el ?rea de estudio.
 
-Creamos el objeto ***"p1"***, que es básicamente el cuadrado que se forma al dibujar la matriz de ***"esquinas.parcela"***.
+Creamos el objeto ***"p1"***, que es b?sicamente el cuadrado que se forma al dibujar la matriz de ***"esquinas.parcela"***.
 
 ~~~
 p1 <- Polygon(esquinas.parcela[,1:2])
 ~~~
 
-Ahora dotaremos a este polígono de un atributo espacial, utilizando el comando ***"Polygons()"***:
+Ahora dotaremos a este pol?gono de un atributo espacial, utilizando el comando ***"Polygons()"***:
 
 ~~~
 ps1 <- Polygons(list(p1),1)
@@ -243,7 +243,7 @@ Creamos un nuevo objeto para convertir ***"ps1"*** de la clase ***"Polygons"*** 
 sps1 <- SpatialPolygons(list(ps1))
 ~~~
 
-Podemos ver qué clase es ***"sps1"*** con el comando ***"class()"*** y cerciorarnos con el comando ***class()***.
+Podemos ver qu? clase es ***"sps1"*** con el comando ***"class()"*** y cerciorarnos con el comando ***class()***.
 
 ~~~
 class(sps1)
@@ -252,17 +252,17 @@ class(sps1)
 Observamos que la clase es efectivamente ***"SpatialPolygons"***.
 
 
-#### |2.1.b| Generación de la malla:<a name="id21b"></a>
+#### |2.1.b| Generaci?n de la malla:<a name="id21b"></a>
 
-Generaremos una malla con la ayuda del polígono creado en el paso anterior que nos servirá para los posteriores análisis estadísticos de kriaje.El tamaño de la rejilla será de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de este rectángulo.
+Generaremos una malla con la ayuda del pol?gono creado en el paso anterior que nos servir? para los posteriores an?lisis estad?sticos de kriaje.El tama?o de la rejilla ser? de 0,05 x 0,05 m y eliminaremos los puntos que queden fuera de este rect?ngulo.
 
-El siguiente comando dice: *"Creáme una malla regular con los datos de* ***VariablesSuelo*** *, donde el tamaño de celda sean 5 cm".*
+El siguiente comando dice: *"Cre?me una malla regular con los datos de* ***VariablesSuelo*** *, donde el tama?o de celda sean 5 cm".*
 
 ~~~
 grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05, 0.05))
 ~~~
 
-Con la siguiente línea de comando eliminaremos los puntos que quedan fuera de nuestro grid:
+Con la siguiente l?nea de comando eliminaremos los puntos que quedan fuera de nuestro grid:
 
 ~~~
 pts1 <- as.data.frame(grid[!is.na(over(grid, sps1,))])
@@ -282,7 +282,7 @@ coordinates(pts1) <- c("Xlocal", "Ylocal")
 pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.frame"), tolerance=0.077)
 ~~~
 
-Podemos observar cómo quedaría gráficamente el objeto ***"pts1"*** con el comando ***"plot()"***:
+Podemos observar c?mo quedar?a gr?ficamente el objeto ***"pts1"*** con el comando ***"plot()"***:
 
 ~~~
 plot(pts1)
@@ -296,37 +296,37 @@ grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05,0.05), proj4
 ___
 
 
-## |3| NORMALIZACIÓN DE LAS VARIABLES<a name="id3"></a>
-En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitirá realizar la cartografía de cada variable utilizando el método de kriging y autokriging en la fase 4.
+## |3| NORMALIZACI?N DE LAS VARIABLES<a name="id3"></a>
+En esta tercera fase, vamos a transformar los datos brutos para conseguir que sigan una tendencia normalizada. Esto nos permitir? realizar la cartograf?a de cada variable utilizando el m?todo de kriging y autokriging en la fase 4.
 
-### |3.1| Metodología de normalización de variables<a name="id31"></a>
+### |3.1| Metodolog?a de normalizaci?n de variables<a name="id31"></a>
 
-Para la realización de los mapas, utilizaremos la técnica de kriging, que esun método de interpolación geoestadístico de estimación de puntos.Este método requiere que los datos de cada variable sigan una tendencia más o menos normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el objetivo de normalizarlos.
+Para la realizaci?n de los mapas, utilizaremos la t?cnica de kriging, que esun m?todo de interpolaci?n geoestad?stico de estimaci?n de puntos.Este m?todo requiere que los datos de cada variable sigan una tendencia m?s o menos normalizada. En caso de que esta no lo sea, realizaremos modificaciones con el objetivo de normalizarlos.
 
-Observaremos gráficamente si los datos están normalizados visualizando gráficamente su histograma y su gráfico cuantil-cuantil. Por último se hará un test de shapiro para comprobar si cumple con una tendencia normalizada.
+Observaremos gr?ficamente si los datos est?n normalizados visualizando gr?ficamente su histograma y su gr?fico cuantil-cuantil. Por ?ltimo se har? un test de shapiro para comprobar si cumple con una tendencia normalizada.
 
 #### |3.1.a| Histograma:<a name="id31a"></a>
-Representación de distribuciones de frecuencias, en el que se emplean rectángulos dentro de unas coordenadas. Si el gráfico realiza una forma de U invertida en la parte central del dibujo, tendrá una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando ***"hist()"***.
+Representaci?n de distribuciones de frecuencias, en el que se emplean rect?ngulos dentro de unas coordenadas. Si el gr?fico realiza una forma de U invertida en la parte central del dibujo, tendr? una tendencia normalizada. Para realizar este gr?fico, utilizaremos el comando ***"hist()"***.
 
-#### |3.1.b| Gráfico cuantil-cuantil:<a name="id31b"></a>
-También denominada "qqnorm" nos permite observar cómo de cerca está la distribución observada a una distribución normal idealizada. Si la línea del gráfico dibuja una linea recta y ascendente indicará que los valores siguen una tendencia normalizada. Para realizar este gráfico, utilizaremos el comando ***"qqnorm()"***.
+#### |3.1.b| Gr?fico cuantil-cuantil:<a name="id31b"></a>
+Tambi?n denominada "qqnorm" nos permite observar c?mo de cerca est? la distribuci?n observada a una distribuci?n normal idealizada. Si la l?nea del gr?fico dibuja una linea recta y ascendente indicar? que los valores siguen una tendencia normalizada. Para realizar este gr?fico, utilizaremos el comando ***"qqnorm()"***.
 
 #### |3.1.c| Test de shapiro:<a name="id31c"></a>
-Es una prueba estadística para contrastar la normalidad de un conjunto de datos. El test nos dará un p-valor, si este indicador es mayor al **0.07**, indica que los datos se adaptan a un patrón normalizado. Para realizar esta comprobación, utilizaremos el comando ***"shapiro.test()"***.
+Es una prueba estad?stica para contrastar la normalidad de un conjunto de datos. El test nos dar? un p-valor, si este indicador es mayor al **0.07**, indica que los datos se adaptan a un patr?n normalizado. Para realizar esta comprobaci?n, utilizaremos el comando ***"shapiro.test()"***.
 
-#### |3.1.d| Modificación de los datos:<a name="id31d"></a>
+#### |3.1.d| Modificaci?n de los datos:<a name="id31d"></a>
 En caso de que los datos no se ajusten a la tendecia normalidad, debemos ejecutar transformaciones de los datos para intentar que se adapten. Para ello podemos hacer algunas de las siguientes transformaciones:
 
 1Âº Realizar el logaritmo                           --> Log(variable)  
 2Âº Realizar el logaritmo +1                        --> Log (variable+1)  
-3Âº Realizar (Variable - media)/desviación estándar --> var-median(var)/sd(var)  
-4Âº Realizar raíz cuadrada                          --> sqrt(variable)  
+3Âº Realizar (Variable - media)/desviaci?n est?ndar --> var-median(var)/sd(var)  
+4Âº Realizar ra?z cuadrada                          --> sqrt(variable)  
 5Âº Realizar box-cox **NOTA**                       --> boxcox(variable)  
 
 
-**NOTA**: Para el uso de la función ***"boxcox()"*** debemos abrir antes ***library(MASS)***.
+**NOTA**: Para el uso de la funci?n ***"boxcox()"*** debemos abrir antes ***library(MASS)***.
 
-### |3.2| Normalización variable GLUCOSIDASA<a name="id32"></a>
+### |3.2| Normalizaci?n variable GLUCOSIDASA<a name="id32"></a>
 
 ~~~
 hist(VariablesSuelo$GLUC)
@@ -334,7 +334,7 @@ qqnorm(VariablesSuelo$GLUC)
 shapiro.test((VariablesSuelo$GLUC))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$GLUC)) 
@@ -342,11 +342,11 @@ qqnorm(log(VariablesSuelo$GLUC))
 shapiro.test(log(VariablesSuelo$GLUC)) 
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos el logaritmo de la glucosidasa para el mapeado --> LOG(GLUC).**
 
-### |3.3| Normalización variable FOSFATASA<a name="id33"></a>
+### |3.3| Normalizaci?n variable FOSFATASA<a name="id33"></a>
 
 ~~~
 hist(VariablesSuelo$FOSF)
@@ -354,7 +354,7 @@ qqnorm(VariablesSuelo$FOSF)
 shapiro.test((VariablesSuelo$FOSF))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$FOSF)) 
@@ -362,19 +362,19 @@ qqnorm(log(VariablesSuelo$FOSF))
 shapiro.test(log(VariablesSuelo$FOSF)) 
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$FOSF+1)) 
 qqnorm(log(VariablesSuelo$FOSF+1))
 shapiro.test(log(VariablesSuelo$FOSF+1)) 
 ~~~
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos el logaritmo de la Fosfatasa para el mapeado --> LOG(FOSF).**
 
 
-### |3.4| Normalización variable NITRÓGENO<a name="id34"></a>
+### |3.4| Normalizaci?n variable NITR?GENO<a name="id34"></a>
 
 ~~~
 hist(VariablesSuelo$N)
@@ -382,12 +382,12 @@ qqnorm(VariablesSuelo$N)
 shapiro.test((VariablesSuelo$N))
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
-##### **Utilizaremos directamente el valor Nitrógeno para el mapeado --> (N).**
+##### **Utilizaremos directamente el valor Nitr?geno para el mapeado --> (N).**
 
 
-### |3.5| Normalización variable FÓSFORO<a name="id35"></a>
+### |3.5| Normalizaci?n variable F?SFORO<a name="id35"></a>
 
 ~~~
 hist(VariablesSuelo$P)
@@ -395,12 +395,12 @@ qqnorm(VariablesSuelo$P)
 shapiro.test((VariablesSuelo$P))
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
-##### **Utilizaremos directamente el valor Fósforo para el mapeado --> (P).**
+##### **Utilizaremos directamente el valor F?sforo para el mapeado --> (P).**
 
 
-### |3.6| Normalización variable POTASIO<a name="id36"></a>
+### |3.6| Normalizaci?n variable POTASIO<a name="id36"></a>
 
 ~~~
 hist(VariablesSuelo$K)
@@ -408,7 +408,7 @@ qqnorm(VariablesSuelo$K)
 shapiro.test((VariablesSuelo$K))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$K)) 
@@ -416,13 +416,13 @@ qqnorm(log(VariablesSuelo$K))
 shapiro.test(log(VariablesSuelo$K)) 
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos el logaritmo del Potasio para el mapeado --> LOG(K).**
 
 
 
-### |3.7| Normalización variable CARBONO<a name="id37"></a>
+### |3.7| Normalizaci?n variable CARBONO<a name="id37"></a>
 
 ~~~
 hist(VariablesSuelo$C)
@@ -430,7 +430,7 @@ qqnorm(VariablesSuelo$C)
 shapiro.test((VariablesSuelo$C))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$C)) 
@@ -438,12 +438,12 @@ qqnorm(log(VariablesSuelo$C))
 shapiro.test(log(VariablesSuelo$C)) 
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos el logaritmo del Carbono para el mapeado --> LOG(C).**
 
 
-### |3.8| Normalización variable pH ECHARLE UN OJO<a name="id38"></a>
+### |3.8| Normalizaci?n variable pH ECHARLE UN OJO<a name="id38"></a>
 
 ~~~
 hist(VariablesSuelo$pH)
@@ -451,12 +451,12 @@ qqnorm(VariablesSuelo$pH)
 shapiro.test((VariablesSuelo$pH))
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos directamente el valor pH para el mapeado --> (pH).**
 
 
-### |3.9| Normalización variable ARENA<a name="id39"></a>
+### |3.9| Normalizaci?n variable ARENA<a name="id39"></a>
 
 ~~~
 hist(VariablesSuelo$Arena)
@@ -464,12 +464,12 @@ qqnorm(VariablesSuelo$Arena)
 shapiro.test((VariablesSuelo$Arena))
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos directamente el valor Arena para el mapeado --> (Arena).**
 
 
-### |3.10| Normalización variable LIMO<a name="id310"></a>
+### |3.10| Normalizaci?n variable LIMO<a name="id310"></a>
 
 ~~~
 hist(VariablesSuelo$Limo)
@@ -477,12 +477,12 @@ qqnorm(VariablesSuelo$Limo)
 shapiro.test((VariablesSuelo$Limo))
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos directamente el valor Limo para el mapeado  --> (Limo).**
 
 
-### |3.11| Normalización variable ARCILLA ECHARLE UN OJO<a name="id311"></a>
+### |3.11| Normalizaci?n variable ARCILLA ECHARLE UN OJO<a name="id311"></a>
 
 ~~~
 hist(VariablesSuelo$Arcilla)
@@ -490,7 +490,7 @@ qqnorm(VariablesSuelo$Arcilla)
 shapiro.test((VariablesSuelo$Arcilla))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$Arcilla)) 
@@ -498,7 +498,7 @@ qqnorm(log(VariablesSuelo$Arcilla))
 shapiro.test(log(VariablesSuelo$Arcilla)) 
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. **No es válida**.
+Esta variable no muestra un patr?n normalizado y su p-valor es muy bajo. **No es v?lida**.
 
 ~~~
 hist(log(VariablesSuelo$Arcilla)+1) 
@@ -506,24 +506,24 @@ qqnorm(log(VariablesSuelo$Arcilla)+1)
 shapiro.test(log(VariablesSuelo$Arcilla)+1) 
 ~~~
 
-Esta variable muestra un patrón normalizado y su p-valor es aceptable. **Es válida**.
+Esta variable muestra un patr?n normalizado y su p-valor es aceptable. **Es v?lida**.
 
 ##### **Utilizaremos el logaritmo del Arcilla para el mapeado --> LOG((Arcilla)+1).**
 
 
 
-## |4| GENERACIÓN CARTOGRAFÍA EDÁFICA <a name="id4"></a>
-En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado kriging. Esta  técnica de interpolación, utiliza un modelo de variograma para poder estimar  el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
+## |4| GENERACI?N CARTOGRAF?A ED?FICA <a name="id4"></a>
+En esta ?ltima fase, vamos a realizar los mapas de cada una de las variables utilizando el m?todo de estimaci?n geoestad?stico denominado kriging. Esta  t?cnica de interpolaci?n, utiliza un modelo de variograma para poder estimar  el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
 
-### |4.1| Metodología de cartografía edáfica<a name="id41"></a>
-Existen dos formas para la realización de cartografía edáfica utilizando el método de kriaje:
-#### |4.1.a| Automáticamente con la función *"autokriging()"*:<a name="id41a"></a>
-El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.
+### |4.1| Metodolog?a de cartograf?a ed?fica<a name="id41"></a>
+Existen dos formas para la realizaci?n de cartograf?a ed?fica utilizando el m?todo de kriaje:
+#### |4.1.a| Autom?ticamente con la funci?n *"autokriging()"*:<a name="id41a"></a>
+El propio programa estad?stico R, realiza los c?lculos y elige el sistema con una mejor relaci?n con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisi?n que desee el estudio.
 
 #### |4.1.b| Kriging manual:<a name="id41b"></a>
-Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado partiendo de ese modelo y se visualiza cómo quedaría gráficamente.  
+Ejecutamos cinco modelos matem?ticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un krigeado partiendo de ese modelo y se visualiza c?mo quedar?a gr?ficamente.  
 
-Antes de realizar el kriging manual y, para mejorar la precisión del kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud.  Esto, podemos observarlo mediante el comando "autofitVariogram" seguido de los diferentes modelos estudiados: **Exponencial (Exp)**, **Esférico (Sph)**, **Gausiano(Gau)** **Lineal(Lin)** y la **parametrización de Stein (Ste)**.  
+Antes de realizar el kriging manual y, para mejorar la precisi?n del kriging, necesitamos observar a qu? modelo matem?tico concreto se ajusta el variograma con mayor exactitud.  Esto, podemos observarlo mediante el comando "autofitVariogram" seguido de los diferentes modelos estudiados: **Exponencial (Exp)**, **Esf?rico (Sph)**, **Gausiano(Gau)** **Lineal(Lin)** y la **parametrizaci?n de Stein (Ste)**.  
 
 Ejemplo:
 
@@ -531,11 +531,11 @@ Ejemplo:
 autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
 ~~~
 
-Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano esté este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).  
+Esta l?nea de c?digo nos informar? c?mo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dar? como salida un valor de semivarianza, cuanto m?s cercano est? este valor a 0, mayor se ajustar? los datos a la modelizaci?n Exponencial (en este caso).  
 
-Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando ***Xlocal*** como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el kriging.  
+Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vac?a donde poner los resultados de semivarianza sin tendencia o con ella (utilizando ***Xlocal*** como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qu? valor de semivarianza es menor (es decir, a qu? modelo se ajustan mejor los datos) y utilizar ese modelo matem?tico para producir la cartograf?a mediante el kriging.  
 
-### |4.2| Cartografía de la variable CLUCOSIDASA<a name="id42"></a>
+### |4.2| Cartograf?a de la variable CLUCOSIDASA<a name="id42"></a>
 #### |4.2.a|Autokriging de Glucosidasa:<a name="id42a"></a>
 Autokriging sin tendencia:
 
@@ -543,7 +543,7 @@ Autokriging sin tendencia:
 Autok.GLUC.ST <- autoKrige(log(GLUC) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-# Visualizamos como sería la representación gráfica sin tendencia:
+# Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.GLUC.ST)
@@ -555,7 +555,7 @@ Autokriging con tendencia:
 Autok.GLUC.CT <- autoKrige(log(GLUC) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.GLUC.CT)
@@ -574,7 +574,7 @@ rownames(MatrizGLUC) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
 Rellenamos con los datos de cada modelo:  
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
@@ -597,37 +597,37 @@ MatrizGLUC[2,4] <- autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo,model = c
 MatrizGLUC[2,5] <- autofitVariogram(log(GLUC)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima.
 
-Le decimos al programa "Dime qué coordenada de la matriz tiene un valor menor".
+Le decimos al programa "Dime qu? coordenada de la matriz tiene un valor menor".
 
 ~~~
 which((MatrizGLUC) == min(MatrizGLUC), arr.ind=TRUE)
 ~~~
 
 
-En este caso nos dice que ***"STE CON TENDENCIA"*** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo *"ste"* con tendencia:
+En este caso nos dice que ***"STE CON TENDENCIA"*** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo *"ste"* con tendencia:
 
 ~~~
 v.fitGLUCsteCT = autofitVariogram(log(GLUC) ~ Xlocal, VariablesSuelo, model = c("Ste"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje de la Glucosidasa:
+A continuaci?n podemos realizar el kriaje de la Glucosidasa:
 
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de VariablesSuelo adaptados al modelo* ***"Ste"*** *con tendencia en la malla* ***pts1"***.
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de VariablesSuelo adaptados al modelo* ***"Ste"*** *con tendencia en la malla* ***pts1"***.
 
 ~~~
 GLUC.mapa <- krige(log(GLUC) ~  Xlocal, VariablesSuelo, pts1, v.fitGLUCsteCT)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de glucosidasa. La siguiente función expresa *"Genera un gráfico del objeto* ***GLUC.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"GLUCOSIDASA"*** *.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de glucosidasa. La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***GLUC.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"GLUCOSIDASA"*** *.*
 
 ~~~
 plot(GLUC.mapa, main= "GLUCOSIDASA") 
 ~~~
 
 
-### |4.3| Cartografía de la variable FOSFATASA<a name="id43"></a>
+### |4.3| Cartograf?a de la variable FOSFATASA<a name="id43"></a>
 #### |4.3.a| Autokriging de Fosfatasa:<a name="id43a"></a>
 Autokriging sin tendencia:
 
@@ -635,7 +635,7 @@ Autokriging sin tendencia:
 Autok.FOSF.ST <- autoKrige(log(FOSF+1) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.FOSF.ST)
@@ -647,7 +647,7 @@ Autokriging con tendencia:
 Autok.FOSF.CT <- autoKrige(log(FOSF+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 ~~~
 plot(Autok.FOSF.CT)
 ~~~
@@ -663,7 +663,7 @@ rownames(MatrizFOSF) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
 Rellenamos con los datos de cada modelo:
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -685,46 +685,46 @@ MatrizFOSF[2,4] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model 
 MatrizFOSF[2,5] <- autofitVariogram(log(FOSF+1)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.  
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima.  
 
-El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que ***"GAU SIN TENDENCIA"*** es el mejor, así que será el  utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo *"Gau" sin tendencia*:
+En este caso nos dice que ***"GAU SIN TENDENCIA"*** es el mejor, as? que ser? el  utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo *"Gau" sin tendencia*:
 
 ~~~
 v.fitFOSFgauST = autofitVariogram(log(FOSF+1) ~ 1, VariablesSuelo, model = c("Gau"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje de la fosfatasa:  
+A continuaci?n podemos realizar el kriaje de la fosfatasa:  
 
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***"VariablesSuelo"*** *adaptados al modelo* ***"Gau" sin tendencia*** *en la malla pts1".*
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***"VariablesSuelo"*** *adaptados al modelo* ***"Gau" sin tendencia*** *en la malla pts1".*
 
 ~~~
 FOSF.mapa <- krige(log(FOSF+1) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:  
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:  
 
-La siguiente función expresa *"Genera un gráfico del objeto* ***FOSF.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"FOSFATASA"*** *.*
+La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***FOSF.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"FOSFATASA"*** *.*
 
 ~~~
 plot(FOSF.mapa, main= "FOSFATASA")
 ~~~
 
 
-### |4.4| Cartografía de la variable NITRÓGENO<a name="id44"></a>
-#### |4.4.a| Autokriging de Nitrógeno:<a name="id44a"></a>
+### |4.4| Cartograf?a de la variable NITR?GENO<a name="id44"></a>
+#### |4.4.a| Autokriging de Nitr?geno:<a name="id44a"></a>
 Autokriging sin tendencia:
 
 ~~~
 Autok.N.ST <- autoKrige((N) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.N.ST)
@@ -736,13 +736,13 @@ Autokriging con tendencia:
 Autok.N.CT <- autoKrige((N) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.N.CT)
 ~~~
 
-#### |4.4.b| Kriging manual de Nitrógeno:<a name="id44b"></a>
+#### |4.4.b| Kriging manual de Nitr?geno:<a name="id44b"></a>
 
 Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa: *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
 
@@ -753,7 +753,7 @@ rownames(MatrizN) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
 Rellenamos con los datos de cada modelo:
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -775,39 +775,39 @@ MatrizN[2,4] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Lin"))
 MatrizN[2,5] <- autofitVariogram((N)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima.
 
-El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor":*
+El siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor":*
 
 ~~~
 which((MatrizN) == min(MatrizN), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que ***"LIN CON TENDENCIA"*** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo ***"Lin" con tendencia***:
+En este caso nos dice que ***"LIN CON TENDENCIA"*** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo ***"Lin" con tendencia***:
 
 ~~~
 v.fitNlinCT = autofitVariogram((N) ~ 1, VariablesSuelo, model = c("Lin"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje del Nitrógeno:
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1"*** *.*
+A continuaci?n podemos realizar el kriaje del Nitr?geno:
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1"*** *.*
 
 ~~~
 N.mapa <- krige((N) ~  1, VariablesSuelo, pts1, v.fitNlinCT)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Nitrógeno:
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Nitr?geno:
 
-La siguiente función expresa *"Genera un gráfico del objeto* ***N.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"NITRÓGENO"*** *.*
+La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***N.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"NITR?GENO"*** *.*
 
 ~~~
-plot(N.mapa, main= "NITRÓGENO") 
+plot(N.mapa, main= "NITR?GENO") 
 ~~~
 
 
 
-### |4.5| Cartografía de la variable fósforo<a name="id45"></a>
-#### |4.5.a| Autokriging de Fósforo:<a name="id45a"></a>
+### |4.5| Cartograf?a de la variable f?sforo<a name="id45"></a>
+#### |4.5.a| Autokriging de F?sforo:<a name="id45a"></a>
 
 Autokriging sin tendencia:
 
@@ -815,7 +815,7 @@ Autokriging sin tendencia:
 Autok.P.ST <- autoKrige((P) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.P.ST)
@@ -827,13 +827,13 @@ Autokriging con tendencia:
 Autok.P.CT <- autoKrige((P) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.P.CT)
 ~~~
 
-#### |4.5.a| Kriging manual de Fósforo:<a name="id45b"></a>
+#### |4.5.a| Kriging manual de F?sforo:<a name="id45b"></a>
 
 Generamos una matriz donde exponer las semivarianzas de cada modelo, le decimos al programa *"genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente"*.
 
@@ -845,7 +845,7 @@ rownames(MatrizP) <- c("Sin tendencia", "Con tendencia")
 
 Rellenamos con los datos de cada modelo:
 
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -867,35 +867,35 @@ MatrizP[2,4] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Lin"))$
 MatrizP[2,5] <- autofitVariogram((P) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima:
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima:
 
-El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizP) == min(MatrizP), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Gau" con tendencia**:
+En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Gau" con tendencia**:
 
 ~~~
 v.fitPgauCT = autofitVariogram((P) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje del Fósforo.
+A continuaci?n podemos realizar el kriaje del F?sforo.
 
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1"*** *.*
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1"*** *.*
 
 ~~~
 P.mapa <- krige((P) ~  Xlocal, VariablesSuelo, pts1, v.fitPgauCT)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Fósforo, la siguiente función expresa *"Genera un gráfico del objeto* ***P.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"FÓSFORO"*** *.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de F?sforo, la siguiente funci?n expresa *"Genera un gr?fico del objeto* ***P.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"F?SFORO"*** *.*
 
 ~~~
-plot(P.mapa, main= "FÓSFORO")
+plot(P.mapa, main= "F?SFORO")
 ~~~
 
-### |4.6| Cartografía de la variable POTASIO<a name="id46"></a>
+### |4.6| Cartograf?a de la variable POTASIO<a name="id46"></a>
 #### |4.6.a| Autokriging de Potasio:<a name="id46a"></a>
 Autokriging sin tendencia:
 
@@ -903,7 +903,7 @@ Autokriging sin tendencia:
 Autok.K.ST <- autoKrige(log(K) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.K.ST)
@@ -915,7 +915,7 @@ Autokriging con tendencia:
 Autok.K.CT <- autoKrige(log(K) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.K.CT)
@@ -932,7 +932,7 @@ rownames(MatrizK) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
 Rellenamos con los datos de cada modelo:
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -954,34 +954,34 @@ MatrizK[2,4] <- autofitVariogram(log(K) ~ Xlocal, VariablesSuelo,model = c("Lin"
 MatrizK[2,5] <- autofitVariogram(log(K)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima. Con el siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima. Con el siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizK) == min(MatrizK), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"LIN CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Lin" con tendencia**:
+En este caso nos dice que **"LIN CON TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Lin" con tendencia**:
 
 ~~~
 v.fitKlinCT = autofitVariogram(log(K) ~ Xlocal, VariablesSuelo, model = c("Lin"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje del Potasio.
+A continuaci?n podemos realizar el kriaje del Potasio.
 
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1"*** *.*
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1"*** *.*
 
 ~~~
 K.mapa <- krige(log(K) ~  Xlocal, VariablesSuelo, pts1, v.fitKlinCT)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Potasio. La siguiente función expresa *"Genera un gráfico del objeto* ***K.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"POTASIO"****.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Potasio. La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***K.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"POTASIO"****.*
 
 ~~~
 plot(K.mapa, main= "POTASIO") 
 ~~~
 
 
-### |4.7| Cartografía de la variable CARBONO<a name="id47"></a>
+### |4.7| Cartograf?a de la variable CARBONO<a name="id47"></a>
 #### |4.7.a| Autokriging de Carbono:<a name="id47a"></a>
 
 Autokriging sin tendencia:
@@ -990,7 +990,7 @@ Autokriging sin tendencia:
 Autok.C.ST <- autoKrige(log(C) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.C.ST)
@@ -1002,7 +1002,7 @@ Autokriging con tendencia:
 Autok.C.CT <- autoKrige(log(C) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.C.CT)
@@ -1018,7 +1018,7 @@ colnames(MatrizC) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizC) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
-Rellenamos con los datos de cada modelo, le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia*". Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Rellenamos con los datos de cada modelo, le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia*". Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -1040,37 +1040,37 @@ MatrizC[2,4] <- autofitVariogram(log(C) ~ Xlocal, VariablesSuelo,model = c("Lin"
 MatrizC[2,5] <- autofitVariogram(log(C)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima.
 
-El siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizC) == min(MatrizC), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Gau" con tendencia**:
+En este caso nos dice que **"GAU CON TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Gau" con tendencia**:
 
 ~~~
 v.fitCgauCT = autofitVariogram(log(C) ~ Xlocal, VariablesSuelo, model = c("Gau"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje del Carbono.
+A continuaci?n podemos realizar el kriaje del Carbono.
 
-Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1*** *".*
+Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Gau" con tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
 C.mapa <- krige(log(C) ~  Xlocal, VariablesSuelo, pts1, v.fitCgauCT)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Carbono:
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Carbono:
 
-La siguiente función expresa *"Genera un gráfico del objeto* ***C.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CARBONO"*** *.*
+La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***C.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"CARBONO"*** *.*
 
 ~~~
 plot(C.mapa, main= "CARBONO")
 ~~~
 
-### |4.8| Cartografía de la variable pH<a name="id48"></a>
+### |4.8| Cartograf?a de la variable pH<a name="id48"></a>
 #### |4.8.a| Autokriging de pH:<a name="id48a"></a>
 
 Autokriging sin tendencia:
@@ -1079,7 +1079,7 @@ Autokriging sin tendencia:
 Autok.pH.ST <- autoKrige((pH) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.pH.ST)
@@ -1091,7 +1091,7 @@ Autokriging con tendencia:
 Autok.pH.CT <- autoKrige((pH) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.pH.CT)
@@ -1112,7 +1112,7 @@ rownames(MatrizpH) <- c("Sin tendencia", "Con tendencia")
 
 Rellenamos con los datos de cada modelo:
 
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.  
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.  
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -1134,32 +1134,32 @@ MatrizpH[2,4] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Lin")
 MatrizpH[2,5] <- autofitVariogram((pH) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima, con el siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizpH) == min(MatrizpH), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
+En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Ste" sin tendencia**:
 
 ~~~
 v.fitpHsteST = autofitVariogram((pH) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje del pH, con la siguiente función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
+A continuaci?n podemos realizar el kriaje del pH, con la siguiente funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
 pH.mapa <- krige((pH) ~  1, VariablesSuelo, pts1, v.fitpHsteST)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de pH. Con la siguiente función expresamos lo siguiente: *"Genera un gráfico del objeto* ***pH.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"pH"*** *.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de pH. Con la siguiente funci?n expresamos lo siguiente: *"Genera un gr?fico del objeto* ***pH.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"pH"*** *.*
 
 ~~~
 plot(pH.mapa, main= "pH") 
 ~~~
 
 
-### |4.9| Generación de la variable ARENA<a name="id49"></a>
+### |4.9| Generaci?n de la variable ARENA<a name="id49"></a>
 #### |4.9.a| Autokriging de Arena:<a name="id49a"></a>
 
 Autokriging sin tendencia:
@@ -1168,7 +1168,7 @@ Autokriging sin tendencia:
 Autok.Arena.ST <- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.Arena.ST)
@@ -1180,7 +1180,7 @@ Autokriging con tendencia:
 Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.Arena.CT)
@@ -1196,7 +1196,7 @@ colnames(MatrizArena) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizArena) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
-Rellenamos con los datos de cada modelo, con el siguiente código le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Rellenamos con los datos de cada modelo, con el siguiente c?digo le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -1218,32 +1218,32 @@ MatrizArena[2,4] <- autofitVariogram((Arena) ~ Xlocal, VariablesSuelo,model = c(
 MatrizArena[2,5] <- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, para ello, le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima, para ello, le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
+En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, as? que ser? el utilizado.Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Ste" sin tendencia**:
 
 ~~~
 v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje de la Arena. Con la siguiente función, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
+A continuaci?n podemos realizar el kriaje de la Arena. Con la siguiente funci?n, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
 Arena.mapa <- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa *"Genera un gráfico del objeto* ***Arena.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN ARENAS"*** *.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***Arena.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"CONTENIDO EN ARENAS"*** *.*
 
 ~~~
 plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 ~~~
 
 
-### |4.10| Generación de la variable LIMO<a name="id410"></a>
+### |4.10| Generaci?n de la variable LIMO<a name="id410"></a>
 #### |4.10.a|  Autokriging de Limo:<a name="id410a"></a>
 Autokriging sin tendencia:
 
@@ -1251,7 +1251,7 @@ Autokriging sin tendencia:
 Autok.Limo.ST <- autoKrige((Limo) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.Limo.ST)
@@ -1263,7 +1263,7 @@ Autokriging con tendencia:
 Autok.Limo.CT <- autoKrige((Limo) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.Limo.CT)
@@ -1283,7 +1283,7 @@ rownames(MatrizLimo) <- c("Sin tendencia", "Con tendencia")
 
 Rellenamos con los datos de cada modelo:
 
-Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Le decimos al programa *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -1305,32 +1305,32 @@ MatrizLimo[2,4] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("L
 MatrizLimo[2,5] <- autofitVariogram((Limo) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor, con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con él le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor, con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima, con ?l le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizLimo) == min(MatrizLimo), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Ste" sin tendencia**:
+En este caso nos dice que **"STE SIN TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Ste" sin tendencia**:
 
 ~~~
 v.fitLimosteST = autofitVariogram((Limo) ~ 1, VariablesSuelo, model = c("Ste"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje de la variable Limos. Con esta función pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
+A continuaci?n podemos realizar el kriaje de la variable Limos. Con esta funci?n pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Ste" sin tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
 Limo.mapa <- krige((Limo) ~  1, VariablesSuelo, pts1, v.fitLimosteST)
 ~~~
 
-Por útlimo, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Limos. La siguiente función expresa *"Genera un gráfico del objeto* ***Limo.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN LIMO"*** *.*
+Por ?tlimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Limos. La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***Limo.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"CONTENIDO EN LIMO"*** *.*
 
 ~~~
 plot(Limo.mapa, main= "CONTENIDO EN LIMO") 
 ~~~
 
 
-### |4.11| Cartografía de la variable ARCILLA<a name="id411"></a>
+### |4.11| Cartograf?a de la variable ARCILLA<a name="id411"></a>
 #### |4.11.a| Autokriging de Arcilla:<a name="id411a"></a>
 
 Autokriging sin tendencia:
@@ -1339,7 +1339,7 @@ Autokriging sin tendencia:
 Autok.Arcilla.ST <- autoKrige(log(Arcilla+1) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica sin tendencia:
+Visualizamos como ser?a la representaci?n gr?fica sin tendencia:
 
 ~~~
 plot(Autok.Arcilla.ST)
@@ -1351,7 +1351,7 @@ Autokriging con tendencia:
 Autok.Arcilla.CT <- autoKrige(log(Arcilla+1) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como sería la representación gráfica con tendencia:
+Visualizamos como ser?a la representaci?n gr?fica con tendencia:
 
 ~~~
 plot(Autok.Arcilla.CT)
@@ -1368,7 +1368,7 @@ colnames(MatrizArcilla) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizArcilla) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
-Rellenamos con los datos de cada modelo, para ello le decimos  al programa con la siguiente línea de código *"rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
+Rellenamos con los datos de cada modelo, para ello le decimos  al programa con la siguiente l?nea de c?digo *"rellena la matriz generada con la semivarianza de cada modelo matem?tico y con o sin tendencia"*. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.
 
 Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):
 
@@ -1390,25 +1390,25 @@ MatrizArcilla[2,4] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,m
 MatrizArcilla[2,5] <- autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo,model = c("Ste"))$sserr
 ~~~
 
-El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, con el siguiente comando le decimos al programa *"Dime qué coordenada de la matriz tiene un valor menor"*.
+El modelo que se ajuste mejor ser? el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qu? modelo nos aporta la semivarianza m?nima, con el siguiente comando le decimos al programa *"Dime qu? coordenada de la matriz tiene un valor menor"*.
 
 ~~~
 which((MatrizArcilla) == min(MatrizArcilla), arr.ind=TRUE)
 ~~~
 
-En este caso nos dice que **"LIN CON TENDENCIA"** es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo **"Lin" con tendencia**:
+En este caso nos dice que **"LIN CON TENDENCIA"** es el mejor, as? que ser? el utilizado. Realizamos un autofitting de nuestros datos adapt?ndolo al modelo **"Lin" con tendencia**:
 
 ~~~
 v.fitArcillalinCT = autofitVariogram(log(Arcilla+1) ~ Xlocal, VariablesSuelo, model = c("Lin"))$var_model
 ~~~
 
-A continuación podemos realizar el kriaje de las arcillas, con esta función, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1*** *".*
+A continuaci?n podemos realizar el kriaje de las arcillas, con esta funci?n, pedimos al programa *"Genera un objeto que sea el fruto del kriaje de los datos de* ***VariablesSuelo*** *adaptados al modelo* ***"Lin" con tendencia*** *en la malla* ***pts1*** *".*
 
 ~~~
 Arcilla.mapa <- krige(log(Arcilla+1) ~  Xlocal, VariablesSuelo, pts1, v.fitArcillalinCT)
 ~~~
 
-Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arcilla. La siguiente función expresa *"Genera un gráfico del objeto* ***Arcilla.mapa*** *(que es el resultado del kriaje de los datos) y cuyo título sea* ***"CONTENIDO EN ARCILLA"*** *.*
+Por ?ltimo, observaremos el resultado gr?ficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arcilla. La siguiente funci?n expresa *"Genera un gr?fico del objeto* ***Arcilla.mapa*** *(que es el resultado del kriaje de los datos) y cuyo t?tulo sea* ***"CONTENIDO EN ARCILLA"*** *.*
 
 ~~~
 plot(Arcilla.mapa, main= "CONTENIDO EN ARCILLAS")
@@ -1418,4 +1418,4 @@ ___
 
 
 
-Á É Í Ó Ú    á é í ó ú    Ñ ñ
+? ? ? ? ?    ? ? ? ? ?    ? ?

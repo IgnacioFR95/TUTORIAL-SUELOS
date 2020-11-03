@@ -8,7 +8,7 @@ output: html_document
 
 # **TUTORIAL SOBRE CARTOGRAFÍA EDÁFICA**
 
-Tutorial sobre cartografia edáfica realizado por **Ignacio Fernández Ruiz** para el Trabajo de Fin de Grado de la carrera de Ciencias Ambientales de la Universidad Rey Juan Carlos, dirigido por los investigadores **Julia Chacón Labella** y **Marcelino de la Cruz Rot**.
+Tutorial sobre cartografia edáfica realizado para el Trabajo de Fin de Grado de **Ignacio Fernández Ruiz** de la carrera de Ciencias Ambientales de la Universidad Rey Juan Carlos, dirigido por los investigadores **Julia Chacón Labella** y **Marcelino de la Cruz Rot**.
 
 Este tutorial será una explicación paso a paso para la realización de mapas de diferentes variables edáficas con los datos recogidos en la tesis doctoral de la investigadora y coautora de este TFG Julia Chacón Labella. 
 
@@ -29,13 +29,6 @@ Se recomienda emparejar el proyecto con un repositorio web como GITHUB. De esta 
 Puede descargar GIT gratuitamente desde su página web oficial [Descarga GIT] <https://git-scm.com/downloads>.
 Puede crear una cuenta en GITHUB siguiendo el siguiente enlace [Regístrate en GITHUB] <https://github.com>
 
-##### **Tutoriales de descarga e instalación:**
-Puede consultar los tutoriales de instalación en la carpeta **"Tutoriales de descarga"** anexionada en este mismo repositorio. En ellos puede ver cómo es el proceso de instalación de los diferentes programas y cómo enlazar RStudio a GITHUB.
 
 
-#### **CONTACTO:**
-Puede contactar con el autor para comentar cualquier duda o aclaración en el siguiente correo electrónico: <ignaciofr95@gmail.com>
 
-Los datos de las variables edáficas estudiados en este trabajo pertenecen íntegramente a la tésis doctoral de la investigadora Julia Chacón, y es por tanto, dueña y responsable de la autoría de los mismos. Puede consultar el uso de los datos en su correo de contacto: <juliachacon@gmail.com>
-
-Á É Í Ó Ú  ---- á é í ó ú  ---- Ñ ñ 

@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Ignacio Fernández Ruiz" />
+<meta name="author" content="Trabajo de fin de grado de Ignacio Fernández Ruiz" />
 
 
 <title>TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS</title>
@@ -363,8 +363,7 @@ summary {
 
 
 <h1 class="title toc-ignore"><strong>TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS</strong></h1>
-<h4 class="author">Ignacio Fernández Ruiz</h4>
-<h4 class="date">23/5/2020</h4>
+<h4 class="author">Trabajo de fin de grado de Ignacio Fernández Ruiz</h4>
 
 </div>
 
@@ -374,55 +373,22 @@ p.caption {
   font-size: 0.8em;
 }
 </style>
-<div id="te-sugiero-leer-el-documento-readme-antes-de-comenzar-con-el-tutorial" class="section level5">
-<h5><strong>Te sugiero leer el documento “README” antes de comenzar con el tutorial</strong></h5>
+<div id="se-sugiere-leer-el-documento-readme-antes-de-comenzar-con-el-tutorial" class="section level5">
+<h5><strong>Se sugiere leer el documento “README” antes de comenzar con el tutorial</strong></h5>
 <hr />
 </div>
 <div id="índice" class="section level2">
 <h2><strong>ÍNDICE</strong></h2>
 <div id="preparación-del-entorno-de-trabajo" class="section level4">
 <h4><a href="#id1">1.PREPARACIÓN DEL ENTORNO DE TRABAJO</a></h4>
-<div id="comprobación-de-versiones-y-paquetes" class="section level5">
-<h5><a href="#id11">1.1 Comprobación de versiones y paquetes</a></h5>
-<div id="a-verificación-de-la-versión-de-r" class="section level6">
-<h6><a href="#id11a">1.1.a Verificación de la versión de R</a></h6>
-</div>
-<div id="b-verificación-de-la-versión-de-rstudio" class="section level6">
-<h6><a href="#id11b">1.1.b Verificación de la versión de RStudio</a></h6>
-</div>
-<div id="c-verificación-de-los-paquetes" class="section level6">
-<h6><a href="#id11c">1.1.c Verificación de los paquetes</a></h6>
-</div>
-<div id="d-fin-de-las-comprobaciones" class="section level6">
-<h6><a href="#id11d">1.1.d Fin de las comprobaciones</a></h6>
-</div>
-</div>
-<div id="cargando-las-librerías" class="section level5">
-<h5><a href="#id12">1.2 Cargando las librerías</a></h5>
-</div>
 </div>
 <div id="carga-de-los-datos-crudos" class="section level4">
 <h4><a href="#id2">2. CARGA DE LOS DATOS CRUDOS</a></h4>
-<div id="carga-de-datos-crudos" class="section level5">
-<h5><a href="#id21">2.1 Carga de datos crudos</a></h5>
-</div>
-<div id="homogeneizar-y-limpiar-los-datos" class="section level5">
-<h5><a href="#id22">2.2. Homogeneizar y limpiar los datos</a></h5>
-</div>
-<div id="transformación-de-los-datos-originales-a-datos-espaciales" class="section level5">
-<h5><a href="#id23">2.3 Transformación de los datos originales a datos espaciales</a></h5>
-</div>
 </div>
 <div id="preparación-del-entorno-de-trabajo-1" class="section level4">
 <h4><a href="#id3">3. PREPARACIÓN DEL ENTORNO DE TRABAJO</a></h4>
 <div id="generación-del-mapa-base" class="section level5">
 <h5><a href="#id31">3.1 Generación del mapa base</a></h5>
-<div id="a-generación-del-polígono" class="section level6">
-<h6><a href="#id31a">3.1.a Generación del polígono</a></h6>
-</div>
-<div id="b-generación-de-la-malla" class="section level6">
-<h6><a href="#id31b">3.1.b Generación de la malla</a></h6>
-</div>
 </div>
 <div id="adaptación-de-los-datos-al-mapa-base" class="section level5">
 <h5><a href="#id32">3.2 Adaptación de los datos al mapa base</a></h5>
@@ -430,25 +396,16 @@ p.caption {
 </div>
 <div id="normalización-de-las-variables" class="section level4">
 <h4><a href="#id4">4. NORMALIZACIÓN DE LAS VARIABLES</a></h4>
-<div id="histograma" class="section level5">
-<h5><a href="#id41a">4.1 Histograma</a></h5>
+<div id="metodología-de-normalización-de-variables" class="section level5">
+<h5><a href="#id41">4.1 Metodología de normalización de variables</a></h5>
 </div>
-<div id="gráfico-cuantil-cuantil" class="section level5">
-<h5><a href="#id42">4.2 Gráfico cuantil-cuantil</a></h5>
-</div>
-<div id="test-de-shapiro" class="section level5">
-<h5><a href="#id43">4.3 Test de shapiro</a></h5>
-</div>
-<div id="transformación-de-los-datos" class="section level5">
-<h5><a href="#id44">4.4 Transformación de los datos</a></h5>
-</div>
-<div id="ejemplo-de-normalización-de-dos-variables" class="section level5">
-<h5><a href="#id45">4.5 Ejemplo de normalización de dos variables</a></h5>
+<div id="ejemplo-de-normalización-de-variables" class="section level5">
+<h5><a href="#id42">4.2 Ejemplo de normalización de variables</a></h5>
 <div id="a-normalización-de-la-variable-fosfatasa" class="section level6">
-<h6><a href="#id45a">4.5.a Normalización de la variable FOSFATASA</a></h6>
+<h6><a href="#id42a">4.2.a Normalización de la variable “fosfatasa”</a></h6>
 </div>
 <div id="b-normalización-de-la-variable-contenido-en-arena" class="section level6">
-<h6><a href="#id46b">4.5.b Normalización de la variable CONTENIDO EN ARENA</a></h6>
+<h6><a href="#id42b">4.2.b Normalización de la variable “contenido en arena”</a></h6>
 </div>
 </div>
 </div>
@@ -456,60 +413,34 @@ p.caption {
 <h4><a href="#id5">5. GENERACIÓN DE LA CARTOGRAFÍA EDÁFICA</a></h4>
 <div id="metodología-de-cartografía-edáfica" class="section level5">
 <h5><a href="#id51">5.1 Metodología de cartografía edáfica</a></h5>
-<div id="a-función-autokriging" class="section level6">
-<h6><a href="#id41a">5.1.a Función “autokriging()”</a></h6>
 </div>
-<div id="b-kriging-manual" class="section level6">
-<h6><a href="#id51b">5.1.b Kriging manual</a></h6>
-</div>
-</div>
-<div id="ejemplo-de-generación-mapas-de-dos-variables" class="section level5">
-<h5><a href="#id52">5.2 Ejemplo de generación mapas de dos variables</a></h5>
+<div id="ejemplo-de-generación-mapas" class="section level5">
+<h5><a href="#id52">5.2 Ejemplo de generación mapas</a></h5>
 <div id="a-cartografía-de-la-variable-fosfatasa" class="section level6">
-<h6><a href="#id52a">5.2.a Cartografía de la variable FOSFATASA</a></h6>
+<h6><a href="#id52a">5.2.a Cartografía de la variable “fosfatasa”</a></h6>
 </div>
 <div id="b-cartografía-de-la-variable-contenido-en-arena" class="section level6">
-<h6><a href="#id52b">5.2.b Cartografía de la variable CONTENIDO EN ARENA</a></h6>
+<h6><a href="#id52b">5.2.b Cartografía de la variable “contenido en arena”</a></h6>
 <hr />
 </div>
 </div>
 </div>
 <div id="preparación-del-entorno-de-trabajo-2" class="section level3">
 <h3>|1| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id1"></a></h3>
-<p>En primer lugar, comprobamos la versión de <code>R</code> utilizada y cargamos los paquetes necesarios para realizar los análisis</p>
-<div id="comprobación-de-versiones-y-paquetes-1" class="section level4">
-<h4>|1.1| Comprobación de versiones y paquetes <a name="id11"></a></h4>
-<div id="a-verificación-de-la-versión-de-r-1" class="section level5">
-<h5>|1.1.a| Verificación de la versión de R:<a name="id11a"></a></h5>
-<p>Con el siguiente código comprobamos que la versión de <code>R</code> sea igual o superior a la <code>3.6.0</code>.</p>
-<p>El comando aplica la siguiente orden: “Si la versión de R es menor que la <code>3.6.0</code>, genera un mensaje de alerta donde especifique el mensaje” (En este caso, el mensaje elegido es un aviso de que la versión de <code>R</code> es antigua y se necesita actualizar).</p>
+<p>En este primer paso, comprobaremos si la versión de <code>R</code> está actualizada y cargaremos los paquetes necesarios para realizar los análisis.</p>
+<p>Con la siguiente función, el programa determina si nuestra versión de <code>R</code> es la <code>3.6.0</code> o superior, en caso de que la versión sea anterior se nos mostrará un mensaje informándonos de que debemos actualizarla.</p>
 <pre><code>if(getRversion() &lt; &quot;3.6.0&quot;) {stop(&quot;##########\nLa versión de R que posee está desactualizada\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
-</div>
-<div id="b-verificación-de-la-versión-de-rstudio-1" class="section level5">
-<h5>|1.1.b| Verificación de la versión de RStudio::<a name="id11b"></a></h5>
-<p>Comprobamos que la versión de <code>RStudio</code> sea igual o superior a la <code>1.0.1</code>.</p>
-<p>El comando aplica la siguiente orden: “Si la versión de RStudio es menor que la <code>3.6.0</code>, genera un mensaje de alerta donde especifique el mensaje”. En este caso, el mensaje elegido es un aviso de que la versión de <code>RStudio</code> está desactualizada y se necesita actualizarse.</p>
+<p>Con la siguiente función comprobamos si la versión de <code>RStudio</code> es igual o superior a la <code>1.0.1</code>. En caso contrario, el programa generará un mensaje informándonos de que tenemos una versión anterior de RStudio y que este programa debe actualizarse.</p>
 <pre><code>if(RStudio.Version()$version &lt; &quot;1.0.1&quot;){stop(&quot;##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########&quot;)}</code></pre>
-</div>
-<div id="c-verificación-de-los-paquetes-1" class="section level5">
-<h5>|1.1.c| Verificación de los paquetes:<a name="id11c"></a></h5>
-<p>Comprobamos si los paquetes que necesiaremos más adelante están instalados.</p>
+<p>En el siguiente paso, comprobaremos si los paquetes necesarios para la realización del tutorial están instalados y en caso contrario se instalarán automáticamente.</p>
 <pre><code>PaquetesNecesarios &lt;- c(&quot;lattice&quot;,&quot;sp&quot;,&quot;gstat&quot;,&quot;maptools&quot;,&quot;spatstat&quot;,&quot;raster&quot;,&quot;automap&quot;)
 installed_packages &lt;- .packages(all.available = TRUE)
-PaquetesNecesarios2 &lt;- PaquetesNecesarios[!PaquetesNecesarios %in% installed_packages]</code></pre>
-<p>Y a continuación descargamos los paquetes faltantes desde <code>CRAN</code>:</p>
-<pre><code>if(length(PaquetesNecesarios2) &gt; 0){install.packages(PaquetesNecesarios2)}
+PaquetesNecesarios2 &lt;- PaquetesNecesarios[!PaquetesNecesarios %in% installed_packages]
+if(length(PaquetesNecesarios2) &gt; 0){install.packages(PaquetesNecesarios2)}
 stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))</code></pre>
-</div>
-<div id="d-fin-de-las-comprobaciones-1" class="section level5">
-<h5>|1.1.d| Fin de las comprobaciones:<a name="id11d"></a></h5>
-<p>La función <code>rm()</code> elimina los objetos que no ncesitamos, en este caso se eliminarán los objetos que hemos utilizado para confirmar que los paquetes están instalados.</p>
+<p>Tras comprobar que todos los paquetes están instalados correctamente, utilizaremos la función <code>rm()</code> para eliminarlos objetos que hemos utilizado para confirmar que los paquetes están instalados.</p>
 <pre><code>rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)</code></pre>
-</div>
-</div>
-<div id="cargando-las-librerías-1" class="section level4">
-<h4>|1.2| Cargando las librerías<a name="id12"></a></h4>
-<p>En el paso <code>1.1</code> ya hemos descargado los paquetes de <code>R</code> que necesitamos para hacer el tutorial. Ahora vamos a cargar las librerías.</p>
+<p>Por último, cargaremos las librerías de <code>R</code> que vamos a utilizar y que hemos descargado en el paso anterior.</p>
 <pre><code>library(lattice)
 library(sp)
 library(gstat)
@@ -518,22 +449,16 @@ library(spatstat)
 library(raster)
 library(automap)</code></pre>
 </div>
-</div>
 <div id="carga-de-los-datos-crudos-1" class="section level3">
 <h3>|2| CARGA DE LOS DATOS CRUDOS <a name="id2"></a></h3>
-<div id="cargar-los-datos-crudos-o-de-origen" class="section level4">
-<h4>|2.1| Cargar los datos “crudos” o de origen <a name="id21"></a></h4>
-<p>A continuación cargaremos los datos con los que vamos a trabajar. En nuestro caso, hemos generado un archivo en formato <code>.txt</code> con los datos.</p>
-<p>Para leer los datos usaremos la función <code>read.delim()</code>, indicaremos que los datos están separados por tabulaciones, que el símbolo decimal es la <code>,</code> y que nuestro archivo tiene encabezados.</p>
+<p>En este apartado, cargaremos el conjunto de datos brutos con los que vamos a trabajar, y los trataremos para eliminar todos los datos que no nos resulten útiles para el tutorial. En nuestro caso, hemos generado un archivo en formato <code>.txt</code> con los datos, pero existen otros formatos útiles como <code>.csv</code>o <code>.xls</code>.</p>
+<p>Para leer los datos, usaremos la función <code>read.delim()</code>, indicaremos que los datos están separados por tabulaciones, que el símbolo decimal es la <code>,</code> y que nuestro archivo tiene encabezados.</p>
 <pre><code>VariablesSuelo &lt;- read.delim(&quot;data/Orusco_suelos.txt&quot;, sep=&quot;\t&quot;, dec=&quot;,&quot;, header=T)
 load(&quot;data/AerialRoot.community.corregido.Rdata&quot;)</code></pre>
-</div>
-<div id="homogeneizar-y-limpiar-los-datos-1" class="section level4">
-<h4>|2.2| Homogeneizar y limpiar los datos:<a name="id22"></a></h4>
-<p>Para continuar trabajando debemos homogeneizar y limpiar los datos originales o crudos. En este caso, los datos ya están muy limpios, pero eliminaremos aquellas variables con las que no vamos a trabajar. No modificaremos nunca los datos originales.</p>
-<p>En el objeto VariablesSuelo, renombramos el nombre de de la columna 11 y cambiamos <code>COD</code> por <code>codigo_muestra</code></p>
+<p>Para continuar trabajando, debemos homogeneizar y limpiar los datos originales o crudos. En este caso, los datos ya están muy limpios, pero eliminaremos aquellas variables con las que no se va a trabajar. ¡Importante! Nunca modificaremos los datos originales y siempre realizaremos una copia de seguridad.</p>
+<p>En el objeto <code>VariablesSuelo</code>, renombramos el nombre de de la columna 11 y cambiamos <code>COD</code> por <code>codigo_muestra</code></p>
 <pre><code>colnames(VariablesSuelo)[11] &lt;- &quot;codigo_muestra&quot;</code></pre>
-<p>Eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así el data frame:</p>
+<p>A continuación, eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así el data frame:</p>
 <pre><code>VariablesSuelo$Fecha &lt;- NULL
 VariablesSuelo$COND &lt;- NULL
 VariablesSuelo$Altura.elipsoidal &lt;- NULL
@@ -541,47 +466,31 @@ VariablesSuelo$id_suelo_raiz &lt;- NULL
 VariablesSuelo$Nº &lt;- NULL
 VariablesSuelo$Marco &lt;- NULL
 VariablesSuelo$ID_GPS &lt;- NULL</code></pre>
-</div>
-<div id="transformación-de-los-datos-originales-a-datos-espaciales-1" class="section level4">
-<h4>|2.3| Transformación de los datos originales a datos espaciales <a name="id23"></a></h4>
-<p>Vamos a transformar los datos al tipo de datos <code>SpatialPointDataFrame</code>. Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.</p>
-<p>Como estamos trabajando localmente, no necesitamos utilizar coordenadas globales. Dentro del objeto <code>VariablesSuelo</code> vamos a utilizar unas coordenadas que son relativas al sitio de estudio. Las columnas con los valores de las coordenadas locales se llaman <code>Xlocal</code> y <code>Ylocal</code>. Es posible que otros data sets contengan coordenadas globales, no es ningún problema, simplemente depende del trabajo que estés realizando</p>
-<p>La función <code>coordinates()</code> del paquete <code>sp</code> nos permite asignar coordenadas a un <code>data.frame</code> transformandolo en <code>SpatialPointDataFrame</code>. Para ello tenemos que indicale qué columnas son las que queremos que utilice como coordenadas, en este caso se llaman <code>Xlocal</code> y <code>Ylocal</code>.</p>
+<p>Posteriormente, vamos a transformar los datos al tipo de datos <code>SpatialPointDataFrame</code>.Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.</p>
+<p>Como estamos trabajando localmente, no necesitamos utilizar coordenadas globales. Dentro del objeto <code>VariablesSuelo</code> vamos a utilizar unas coordenadas que son relativas al sitio de estudio. Las columnas con los valores de las coordenadas locales se llaman <code>Xlocal</code> y <code>Ylocal</code>. Es posible que otros <code>data sets</code> contengan coordenadas globales, no es ningún problema, simplemente depende del trabajo que estés realizando.</p>
+<p>La función <code>coordinates()</code> del paquete <code>sp</code> nos permite asignar coordenadas a un <code>data.frame</code> transformándolo en <code>SpatialPointDataFrame</code>. Para ello tenemos que indicarle qué columnas son las que queremos que utilice como coordenadas, en este caso se llaman <code>Xlocal</code> y <code>Ylocal</code>.</p>
 <pre><code>coordinates(VariablesSuelo) &lt;- ~ Xlocal + Ylocal</code></pre>
-<p>Comprobamos que efectivamente el objeto <code>VariablesSuelo</code> es ahora un objeto de clase <code>SpatialPointsDataFrame</code></p>
+<p>Comprobamos que efectivamente el objeto <code>VariablesSuelo</code> es ahora un objeto de clase <code>SpatialPointsDataFrame</code> con la función <code>class()</code></p>
 <pre><code>class(VariablesSuelo)</code></pre>
-<p>Por ultimo, limitamos el número de decimales de los datos a 10, para evitar cifras excesivamente largas utilizando la función <code>options()</code></p>
+<p>Por último, limitamos el número de decimales de los datos a 10, para evitar cifras excesivamente largas utilizando la función <code>options()</code></p>
 <pre><code>options(digits=10)</code></pre>
-</div>
 </div>
 <div id="preparación-del-entorno-de-trabajo-3" class="section level3">
 <h3>|3| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id3"></a></h3>
-<div id="generación-del-mapa-base-1" class="section level4">
-<h4>|3.1| Generación del mapa base<a name="id31"></a></h4>
-<p>A continuación, vamos a generar un mapa al que denominamos “base” y sobre el cual vamos a dibujar el mapa de cada variable. Para ello necesitamos indicar el tamaño del área de estudio o plot, las coordenadas que poseen y el tamaño de malla que utilizaremos para el posterior análisis mediante Kriging.</p>
-<div id="a-generación-del-polígono-1" class="section level5">
-<h5>|3.1.a| Generación del polígono<a name="id31a"></a></h5>
-<p>En primer lugar vamos a crear un rectángulo con las dimensiones del área de estudio. En nuestro caso, hacemos un rectángulo porque la parcela tiene esa forma. Para definir el rectángulo usamos las cuatro esquinas de la parcela.</p>
-<p>Ya tenemos cargada una matriz denomin <code>esquinas.parcela</code> que contiene esos cuatro puntos. Los nombres de las columnas que contienen las coordnadas X y Y son <code>Xlocal</code> y <code>Ylocal</code>.</p>
-<p>Utilizamos la función <code>Polygon()</code> para crear el polígono.</p>
+<p>En este apartado, generaremos un mapa al que denominaremos “mapa base” y sobre el cual, vamos a dibujar el mapa de cada variable posteriormente. Para ello, necesitamos indicar el tamaño del área de estudio o <code>plot</code>, las coordenadas donde se localiza y el tamaño de malla que utilizaremos para el posterior análisis mediante Kriging.</p>
+<p>En primer lugar vamos a crear un rectángulo con las dimensiones del área de estudio. En nuestro caso, hacemos un rectángulo porque la parcela tiene esa forma, pero el proceso sería similar para áreas con otras geometrías. Para definir el rectángulo usamos las cuatro esquinas de la parcela.</p>
+<p>Ya tenemos cargada una matriz denominada <code>esquinas.parcela</code> que contiene esos cuatro puntos. Los nombres de las columnas que contienen las coordnadas X y Y son <code>Xlocal</code> y <code>Ylocal</code>. Utilizaremos la función <code>Polygon()</code> para crear el polígono que representa nuestra parcela.</p>
 <pre><code>p1 &lt;- Polygon(esquinas.parcela[,1:2])</code></pre>
-<p>Hacemos dos transformaciones: con la función <code>Polygons()</code> convertimos el poligono en un objeto de tipo espacial, y con la funcion <code>SpatialPolygons()</code> lo convertimos en un objeto de tipo <code>SpatialPolygons</code></p>
+<p>A continuación, hacemos dos transformaciones: con la función <code>Polygons()</code> convertimos el polígono en un objeto de tipo espacial, y con la función <code>SpatialPolygons()</code> lo convertimos en un objeto de tipo <code>SpatialPolygons</code>.</p>
 <pre><code>ps1 &lt;- Polygons(list(p1),1)
 sps1 &lt;- SpatialPolygons(list(ps1))</code></pre>
 <p>Podemos consultar la clase del objeto <code>sps1</code> con la función <code>class()</code></p>
 <pre><code>class(sps1)</code></pre>
-</div>
-<div id="b-generación-de-la-malla-1" class="section level5">
-<h5>|3.1.b| Generación de la malla<a name="id31b"></a></h5>
-<p>A continuación dotamos al polígono que hemos creado de de una rejilla de 0.05 x 0.05 m. Utilizamos para ello la función <code>spsample()</code> y definimos el tamaños de la celda o rejilla con el argumento <code>cellsize</code>. Además eliminamos todos los puntos que quedan fuera de los límites del rectángulo.</p>
+<p>Tras crear el polígono que representa nuestra parcela, crearemos una rejilla de 0.05 x 0.05 m. Para ello, utilizaremos la función <code>spsample()</code> y definiremos el tamaño de la celda o rejilla con el argumento <code>cellsize</code>. Además eliminaremos todos los puntos de muestreo que se han quedado fuera de los límites del rectángulo.</p>
 <pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05, 0.05))
 pts1 &lt;- as.data.frame(grid[!is.na(over(grid, sps1,))])</code></pre>
-<p>Ya tenemos la malla o rejilla lista.</p>
-</div>
-</div>
-<div id="adaptación-de-los-datos-al-mapa-base-1" class="section level4">
-<h4>|3.2| Adaptación de los datos al mapa base<a name="id32"></a></h4>
-<p>A continuación, vamos a modificar el nombre de las coordenadas <code>X</code> e <code>Y</code> para indicar que son coordenadas locales. ~~~ names(pts1) &lt;- c(“Xlocal”, “Ylocal”) ~~~</p>
+<p>Ya tenemos la malla o rejilla lista. En el siguiente paso modificaremos el nombre de las coordenadas <code>X</code> e <code>Y</code> para indicar que son coordenadas locales.</p>
+<pre><code>names(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)</code></pre>
 <p>A continuación indicamos con la función <code>coordinates()</code> que esas dos columnas son columnas de coordenadas y transformamos el objeto pts1 a un objeto de clase <code>SpatialPoints</code></p>
 <pre><code>coordinates(pts1) &lt;- c(&quot;Xlocal&quot;, &quot;Ylocal&quot;)
 pts1 &lt;- SpatialPixelsDataFrame(as(pts1, &quot;SpatialPoints&quot;), data=as(pts1, &quot;data.frame&quot;), tolerance=0.077)</code></pre>
@@ -590,144 +499,111 @@ pts1 &lt;- SpatialPixelsDataFrame(as(pts1, &quot;SpatialPoints&quot;), data=as(p
 <p>Por último, asignamos un sistema de coordenadas a la malla:</p>
 <pre><code>grid = spsample(VariablesSuelo, type = &quot;regular&quot;, cellsize = c(0.05,0.05), proj4string = CRS(&quot;+proj=utm +ellps=WGS84 +datum=WGS84&quot;))</code></pre>
 </div>
-</div>
 <div id="normalización-de-las-variables-1" class="section level3">
 <h3>|4| NORMALIZACIÓN DE LAS VARIABLES<a name="id4"></a></h3>
-<p>Una vez tenemos preparado el polígono y la rejilla donde “dibujaremos” los mapas, tenemos que hacer una exploración de los datos para ver si cumple con los requisitos de normalidad de los datos necesarios para realizar un Kriging.</p>
-<p>El método de Kriging asume que los datos siguen una distribución normal. Lo que vamos a hacer es visualizar la distribución de los datos para ver si siguen una tendencia normal y realizar un Test de Shapiro para comprobar si la distribución de los datos se ajusta a una distribución normal.</p>
-<div id="histograma-1" class="section level4">
-<h4>|4.1| Histograma:<a name="id41"></a></h4>
-<p>Se trata de una representación de una distribución de frecuencias. Para realizar este gráfico, utilizamos la función <code>hist()</code></p>
+<div id="metodología-de-normalización-de-variables-1" class="section level4">
+<h4>|4.1| Metodología de normalización de variables<a name="id41"></a></h4>
+<p>Una vez tenemos preparado el polígono y la rejilla donde se “dibujarán” los mapas, tenemos que hacer una exploración de los datos de las variables para ver si poseen una distribución normal, puesto que el Kriging asume que los datos siguen dicha distribución. Para ello, realizaremos diferentes análisis estadísticos (histograma, gráfico cuantil-cuantil y Test de Shapiro) para observar cómo se adaptan los datos de cada variable a una distribución normal. En aquellos casos en que los datos no sigan dicha distribución, realizaremos transformaciones para ajustar nuestros datos a una distribución normal.</p>
 </div>
-<div id="gráfico-cuantil-cuantil-1" class="section level4">
-<h4>|4.2| Gráfico cuantil-cuantil:<a name="id42"></a></h4>
-<p>También denominado QQplot permite comparar la distribución de nuestros datos con una distribución normal teórica. Si la distribución de nuestra variable es la misma que la distribución de comparación se obtendrá, aproximadamente, una línea recta. Si la distribución de nuestros datos se desvía sustancialmente de la linealidad, significa que la distribución de nuestros datos no es similar a la distribución normal. Para realizar este gráfico, utilizamos la función <code>qqnorm()</code></p>
-</div>
-<div id="test-de-shapiro-1" class="section level4">
-<h4>|4.3| Test de Shapiro:<a name="id43"></a></h4>
-<p>Es un test estadístico para contrastar la normalidad de un conjunto de datos. La hipótesis nula es que la muestra de interés sigue una distribución normal. El test nos da un p-valor. Si el p-valor es superior a 0.05 (o al nivel de significancia alpha que determinemos), es decir, no significativo, no podemos rechazar la hipótesis nula. Si el p-valor es menor o igual a 0.05, podemos rechazar la hipótesis nula (la distribución de nuestros datos no es normal). En este tutorial hemos utilizado la función <code>shapiro.test()</code></p>
-</div>
-<div id="transformación-de-los-datos-1" class="section level4">
-<h4>|4.4| Transformación de los datos:<a name="id44"></a></h4>
-<p>En aquellos casos en que los datos no sigan una distribución normal, realizaremos transformaciones para ajustar la distribución de nuestros datos a una distribución normal.</p>
-</div>
-<div id="ejemplo-de-normalización-de-dos-variables-edáficas" class="section level4">
-<h4>|4.5| Ejemplo de normalización de dos variables edáficas:<a name="id45"></a></h4>
-<p>Para mostrar cómo sería el proceso de normalización de las diferentes variables, se pondrán como ejemplo la variable Fosfatasa y pH.En estos ejemplos, estudiaremos cómo son su histografa, su gráfico cuantil-cuantil y qué p-valor ofrece el test de Shapiro. Si los valores no poseen una tendencia normal, procederemos a realizar transformaciones para adaptarlos.</p>
-<div id="a-normalización-variable-fosfatasa" class="section level5">
-<h5>|4.5.a| Normalización variable FOSFATASA<a name="id45a"></a></h5>
+<div id="ejemplo-de-normalización-de-variables-1" class="section level4">
+<h4>|4.2| Ejemplo de normalización de variables:<a name="id42"></a></h4>
+<p>Para mostrar cómo sería el proceso de normalización de las diferentes variables, pondremos como ejemplo las variables <code>fosfatasa</code> y <code>pH</code>. En estos ejemplos, estudiaremos cómo es su histograma (mediante la función <code>hist()</code>), su gráfico cuantil-cuantil (mediante la función <code>qqnorm()</code>) y qué p-valor ofrece el test de Shapiro (mediante la función <code>shapiro.test()</code>). Si los valores no poseen una distribución normal, procederemos a realizar transformaciones para adaptarlos.</p>
+<div id="a-normalización-de-la-variable-fosfatasa-1" class="section level5">
+<h5>|4.2.a| Normalización de la variable “fosfatasa”<a name="id42a"></a></h5>
+<p>Comencemos con la variable <code>fosfatasa</code>:</p>
 <pre><code>hist(VariablesSuelo$FOSF)
 qqnorm(VariablesSuelo$FOSF) 
 shapiro.test((VariablesSuelo$FOSF))</code></pre>
-<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. <strong>No es válida</strong>.</p>
+<p>Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. Por lo tanto, no es válida y debemos proceder a normalizarla. Probaremos realizando el logaritmo de la variable:</p>
 <pre><code>hist(log(VariablesSuelo$FOSF)) 
 qqnorm(log(VariablesSuelo$FOSF))
 shapiro.test(log(VariablesSuelo$FOSF)) </code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
+<p>Ahora sí, la variable <code>fosfatasa</code> muestra un patrón normalizado y su p-valor es aceptable. Por lo tanto, será la que utilizaremos para realizar el Kriging.</p>
 </div>
-<div id="utilizaremos-el-logaritmo-de-la-fosfatasa-para-el-mapeado-logfosf." class="section level5">
-<h5><strong>Utilizaremos el logaritmo de la Fosfatasa para el mapeado –&gt; LOG(FOSF).</strong></h5>
-</div>
-<div id="b-normalización-variable-contenido-en-arenas" class="section level5">
-<h5>|4.5.b| Normalización variable CONTENIDO EN ARENAS<a name="id45b"></a></h5>
+<div id="b-normalización-de-la-variable-contenido-en-arena-1" class="section level5">
+<h5>|4.2.b| Normalización de la variable “contenido en arena”<a name="id42b"></a></h5>
+<p>Ahora, realizaremos las mismas comprobaciones, pero con la variable relacionada con el <code>contenido de arena</code> en el suelo:</p>
 <pre><code>hist(VariablesSuelo$Arena)
 qqnorm(VariablesSuelo$Arena) 
 shapiro.test((VariablesSuelo$Arena))</code></pre>
-<p>Esta variable muestra un patrón normalizado y su p-valor es aceptable. <strong>Es válida</strong>.</p>
-</div>
-<div id="utilizaremos-directamente-el-valor-arena-para-el-mapeado-arena." class="section level5">
-<h5><strong>Utilizaremos directamente el valor Arena para el mapeado –&gt; (Arena).</strong></h5>
+<p>La variable <code>arena</code>, muestra un patrón normalizado y su p-valor es aceptable sin necesidad de realizar la normalización. Por lo tanto, utilizaremos sus valores originales para realizar el Kriging.</p>
 </div>
 </div>
 </div>
 <div id="generación-de-cartografía-edáfica" class="section level3">
 <h3>|5| GENERACIÓN DE CARTOGRAFÍA EDÁFICA <a name="id5"></a></h3>
-<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestaistico denominado Kriging. Esta técnica de interpolación, utiliza un modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
+<p>En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado Kriging. Esta técnica de interpolación, utiliza el modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.</p>
 <div id="metodología-de-cartografía-edáfica-1" class="section level4">
-<h4>|5.1| Metodología de Cartografía edáfica<a name="id51"></a></h4>
-<p>Existen dos formas para la realización de Cartografía edáfica utilizando el método de kriging:</p>
-<div id="a-automáticamente-con-la-función-autokriging" class="section level5">
-<h5>|5.1.a| Automáticamente con la función <em>“autokriging()”</em>:<a name="id51a"></a></h5>
-<p>El propio programa estadístico R, realiza los cálculos y elige el sistema con una mejor relación con la realidad. Sus estimaciones aunque bastante precisas, suelen incurrir en cierto error, este puede ser asumible dependiendo del grado de precisión que desee el estudio.</p>
-</div>
-<div id="b-kriging-manual-1" class="section level5">
-<h5>|5.1.b| Kriging manual:<a name="id51b"></a></h5>
-<p>Ejecutamos cinco modelos matemáticos con y sin tendencia y observamos cual se adapta mejor a nuestra serie de datos, posteriormente, se genera un Kriging partiendo de ese modelo y se visualiza cómo quedaría gráficamente.</p>
-<p>Antes de realizar el Kriging manual y, para mejorar la precisión del Kriging, necesitamos observar a qué modelo matemático concreto se ajusta el variograma con mayor exactitud. Esto, podemos observarlo mediante el comando “autofitVariogram” seguido de los diferentes modelos estudiados: <strong>Exponencial (Exp)</strong>, <strong>Esférico (Sph)</strong>, <strong>Gausiano(Gau)</strong> <strong>Lineal(Lin)</strong> y la <strong>parametrización de Stein (Ste)</strong>.</p>
+<h4>|5.1| Metodología de cartografía edáfica<a name="id51"></a></h4>
+<p>Existen dos formas para la realización de cartografía edáfica utilizando el método de Kriging en <code>R</code> : Por un lado, se puede utilizar la función <code>autokriging()</code>, donde el propio programa estadístico <code>R</code> realiza los cálculos, elige el sistema con una mejor relación con la realidad y genera un gráfico con el variograma y el mapa de la variable. Sus estimaciones, aunque bastante precisas, suelen incurrir en cierto error, aunque este puede ser asumible dependiendo del grado de precisión que desee el estudio.</p>
+<p>La otra forma de realizar el Kriging, es ejecutarlo de forma manual. Este método exige que el usuario evalúe qué modelo matemático es el adecuado y se genera el Kriging partiendo del modelo elegido y posteriormente, se visualiza cómo quedaría gráficamente mediante la función <code>plot()</code>.</p>
+<p>Para conocer qué modelo matemático es el más adecuado para la variable que se quiere mapear, utilizaremos la función <code>autofitVariogram()</code>. En ella, determinaremos qué modelo matemático de los cinco disponibles vamos a utilizar (modelo exponencial <code>Exp</code>, modelo esférico <code>Sph</code>, modelo gaussiano <code>Gau</code>, modelo lineal <code>Lin</code> o la parametrización de Stein <code>Ste</code>) y si lo haremos teniendo en cuenta la tendencia <code>xlocal</code> o no (representada en la función con un <code>1</code>.</p>
 <p>Ejemplo:</p>
 <pre><code>autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr</code></pre>
-<p>Esta línea de código nos informará cómo se adapta el variograma de datos de la Glucosidasa al modelo exponencial sin ninguna tendencia. Este comando nos dará como salida un valor de semivarianza, cuanto más cercano está este valor a 0, mayor se ajustará los datos a la modelización Exponencial (en este caso).</p>
-<p>Para procesar todos los modelos a la vez, vamos a crear una matriz (una tabla) vacía donde poner los resultados de semivarianza sin tendencia o con ella (utilizando <strong><em>Xlocal</em></strong> como valores de tendencia) de los 5 modelos estudiados. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la Cartografía mediante el Kriging.</p>
+<p>Esta línea de código informa cómo se adapta el variograma de datos de la glucosidasa <code>GLUC</code> al modelo exponencial <code>Exp</code> sin ninguna tendencia <code>1</code>. La función, nos dará como respuesta un valor de semivarianza. Cuanto más cercano a 0 sea este valor, indicará un mejor ajuste al modelo seleccionado.</p>
+<p>Para procesar todos los modelos a la vez y ahorrar tiempo, vamos a crear una matriz vacía donde poner los resultados de semivarianza de los 5 modelos estudiados con y sin tendencia. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el Kriging.</p>
 </div>
-</div>
-<div id="ejemplo-de-generación-de-mapas-de-dos-variables" class="section level4">
-<h4>|5.2| Ejemplo de generación de mapas de dos variables</h4>
-<p>Para ilustrar cómo se generan los diferentes mapas edáficos, se realizarán dos mapas de las variables que en el punto <code>4.5</code> hemos normalizado. Se mostrará cómo es el proceso de creación de los mapas usando tanto el autokriging como el Kriging manual.</p>
+<div id="ejemplos-de-generación-de-mapas" class="section level4">
+<h4>|5.2| Ejemplos de generación de mapas<a name="id52"></a></h4>
+<p>Para ilustrar cómo se generan los diferentes mapas edáficos, en este apartado se realizan dos mapas de las variables fosfatasa <code>FOSF</code> y contenido en arena <code>Arena</code>. A continuación se muestra cómo es el proceso de creación de los mapas usando tanto el autokriging como el Kriging manual.</p>
 <div id="a-cartografía-de-la-variable-fosfatasa-1" class="section level5">
-<h5>|5.2.a| Cartografía de la variable FOSFATASA<a name="id52a"></a></h5>
-<div id="autokriging-de-fosfatasa" class="section level6">
-<h6>Autokriging de Fosfatasa:</h6>
-<p>Autokriging sin tendencia:</p>
+<h5>|5.2.a| Cartografía de la variable “fosfatasa”<a name="id52a"></a></h5>
+<p>Autokriging de fosfatasa: Sin tendencia:</p>
 <pre><code>Autok.FOSF.ST &lt;- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )</code></pre>
-<p>Visualizamos como seráa la representación gráfica sin tendencia:</p>
+<p>Visualizamos como es la representación gráfica sin tendencia:</p>
 <pre><code>plot(Autok.FOSF.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
+<p>Con tendencia:</p>
 <pre><code>Autok.FOSF.CT &lt;- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
-<p>Visualizamos como seráa la representación gráfica con tendencia: ~~<sub> plot(Autok.FOSF.CT) </sub>~~</p>
-</div>
+<p>Visualizamos como es la representación gráfica con tendencia:</p>
+<pre><code>plot(Autok.FOSF.CT)</code></pre>
 <div id="kriging-manual-de-fosfatasa" class="section level6">
-<h6>Kriging manual de Fosfatasa:</h6>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo. Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”.</em></p>
+<h6>Kriging manual de fosfatasa:</h6>
+<p>Primero, se debe generar una matriz donde exponer las semivarianzas de cada modelo. La siguiente línea de código produce una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente:</p>
 <pre><code>MatrizFOSF &lt;- matrix(NA,2,5)
 colnames(MatrizFOSF) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
 rownames(MatrizFOSF) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo: Le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<p>Posteriormente, se rellena la matriz con el valor producido del ajuste de la variable a cada modelo. Es imprescindible asegurarse de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso:</p>
+<p>Sin tendencia (se debe escribir un <code>1</code>, para indicar que no hay tendencia):</p>
 <pre><code>MatrizFOSF[1,1] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
 MatrizFOSF[1,2] &lt;- autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
 MatrizFOSF[1,3] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
 MatrizFOSF[1,4] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Lin&quot;))$sserr
 MatrizFOSF[1,5] &lt;- autofitVariogram(log(FOSF)  ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>Con tendencia (Utilizamos <strong><em>Xlocal</em></strong> como tendencia):</p>
+<p>Con tendencia (debemos utilizar<code>Xlocal</code> como tendencia):</p>
 <pre><code>MatrizFOSF[2,1] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Exp&quot;))$sserr
 MatrizFOSF[2,2] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Sph&quot;))$sserr
 MatrizFOSF[2,3] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
 MatrizFOSF[2,4] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
 MatrizFOSF[2,5] &lt;- autofitVariogram(log(FOSF)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima.</p>
-<p>El siguiente comando le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
+<p>El modelo que se ajuste mejor es el que tenga un valor de semivarianza menor. Con la siguiente función se averigua qué modelo nos aporta la semivarianza mínima:</p>
 <pre><code>which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong><em>“GAU SIN TENDENCIA”</em></strong> es el mejor, así que será el utilizado. Realizamos un autofitting de nuestros datos adaptándolo al modelo <em>“Gau” sin tendencia</em>:</p>
+<p>En este caso, el modelo gaussiano sin la utilización de la tendencia es el que más se aproxima a nuestra serie de datos, por lo tanto, se debe adaptar los valores de la variable a este modelo con la función <code>autofitvariogram()</code>.</p>
 <pre><code>v.fitFOSFgauST = autofitVariogram(log(FOSF) ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriging de la fosfatasa:</p>
-<p>Con esta función pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriging de los datos de</em> <strong><em>“VariablesSuelo”</em></strong> <em>adaptados al modelo</em> <strong><em>“Gau” sin tendencia</em></strong> <em>en la malla pts1&quot;.</em></p>
+<p>Con nuestros datos ajustados al modelo matemático idóneo, procedemos a realizar el Kriging con la función <code>Krige()</code>:</p>
 <pre><code>FOSF.mapa &lt;- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)</code></pre>
-<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de fosfatasa:</p>
-<p>La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>FOSF.mapa</em></strong> <em>(que es el resultado del kriging de los datos) y cuyo título sea</em> <strong><em>“FOSFATASA”</em></strong> <em>.</em></p>
+<p>Por último, generaremos el mapa de fosfatasa con la función <code>plot()</code>:</p>
 <pre><code>plot(FOSF.mapa, main= &quot;FOSFATASA&quot;)</code></pre>
 </div>
 </div>
-<div id="b-cartografía-de-la-variable-contenido-en-arenas" class="section level5">
-<h5>|5.2.b| Cartografía de la variable CONTENIDO EN ARENAS<a name="id52b"></a></h5>
-<div id="autokriging-de-arena" class="section level6">
-<h6>Autokriging de Arena:</h6>
-<p>Autokriging sin tendencia:</p>
+<div id="b-cartografía-de-la-variable-contenido-en-arena-1" class="section level5">
+<h5>|5.2.b| Cartografía de la variable “contenido en arena”<a name="id52b"></a></h5>
+<p>Autokriging de Arena:</p>
+<p>Sin tendencia:</p>
 <pre><code>Autok.Arena.ST &lt;- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )</code></pre>
 <p>Visualizamos como será la representación gráfica sin tendencia:</p>
 <pre><code>plot(Autok.Arena.ST)</code></pre>
-<p>Autokriging con tendencia:</p>
+<p>Con tendencia:</p>
 <pre><code>Autok.Arena.CT &lt;- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )</code></pre>
 <p>Visualizamos como seráa la representación gráfica con tendencia:</p>
 <pre><code>plot(Autok.Arena.CT)</code></pre>
-</div>
 <div id="kriging-manual-de-arena" class="section level6">
 <h6>Kriging manual de Arena:</h6>
-<p>Generamos una matriz donde exponer las semivarianzas de cada modelo, Le decimos al programa <em>“genera una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente”</em>.</p>
+<p>Primero, se debe generar una matriz donde exponer las semivarianzas de cada modelo. La siguiente línea de código produce una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente:</p>
 <pre><code>MatrizArena &lt;- matrix(NA,2,5)
 colnames(MatrizArena) &lt;- c(&quot;Exponencial&quot;,&quot;Esferico&quot;,&quot;Gausiano&quot;,&quot;Lineal&quot;,&quot;Ste&quot;)
 rownames(MatrizArena) &lt;- c(&quot;Sin tendencia&quot;, &quot;Con tendencia&quot;)</code></pre>
-<p>Rellenamos con los datos de cada modelo, con el siguiente código le decimos al programa <em>“rellena la matriz generada con la semivarianza de cada modelo matemático y con o sin tendencia”</em>. Se debe asegurar de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso.</p>
-<p>Sin tendencia (Ponemos un 1, para indicar que no hay tendencia):</p>
+<p>Posteriormente, se rellena la matriz con el valor producido del ajuste de la variable a cada modelo. Es imprescindible asegurarse de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso:</p>
+<p>Sin tendencia (se debe escribir un <code>1</code>, para indicar que no hay tendencia):</p>
 <pre><code>MatrizArena[1,1] &lt;- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Exp&quot;))$sserr
 MatrizArena[1,2] &lt;- autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Sph&quot;))$sserr
 MatrizArena[1,3] &lt;- autofitVariogram((Arena)  ~ 1, VariablesSuelo, model = c(&quot;Gau&quot;))$sserr
@@ -739,13 +615,13 @@ MatrizArena[2,2] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model 
 MatrizArena[2,3] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Gau&quot;))$sserr
 MatrizArena[2,4] &lt;- autofitVariogram((Arena) ~ Xlocal, VariablesSuelo,model = c(&quot;Lin&quot;))$sserr
 MatrizArena[2,5] &lt;- autofitVariogram((Arena)  ~ Xlocal, VariablesSuelo,model = c(&quot;Ste&quot;))$sserr</code></pre>
-<p>El modelo que se ajuste mejor será el que tenga un valor de semivarianza menor. Con el siguiente comando sabremos qué modelo nos aporta la semivarianza mínima, para ello, le decimos al programa <em>“Dime qué coordenada de la matriz tiene un valor menor”</em>.</p>
+<p>El modelo que se ajuste mejor es el que tenga un valor de semivarianza menor. Con la siguiente función se averigua qué modelo nos aporta la semivarianza mínima:</p>
 <pre><code>which((MatrizArena) == min(MatrizArena), arr.ind=TRUE)</code></pre>
-<p>En este caso nos dice que <strong>“STE SIN TENDENCIA”</strong> es el mejor, así que será el utilizado.Realizamos un autofitting de nuestros datos adaptándolo al modelo <strong>“Ste” sin tendencia</strong>:</p>
+<p>En este caso, el modelo de parametrización de Stein sin la utilización de la tendencia es el que más se aproxima a nuestra serie de datos, por lo tanto, se debe adaptar los valores de la variable a este modelo con la función <code>autofitvariogram()</code>.</p>
 <pre><code>v.fitArenasteST = autofitVariogram((Arena) ~ 1, VariablesSuelo, model = c(&quot;Ste&quot;))$var_model</code></pre>
-<p>A continuación podemos realizar el kriging de la Arena. Con la siguiente función, pedimos al programa <em>&quot;Genera un objeto que sea el fruto del kriging de los datos de</em> <strong><em>VariablesSuelo</em></strong> <em>adaptados al modelo</em> <strong><em>“Ste” sin tendencia</em></strong> <em>en la malla</em> <strong><em>pts1</em></strong> <em>&quot;.</em></p>
+<p>Con nuestros datos ajustados al modelo matemático idóneo, procedemos a realizar el Kriging con la función <code>Krige()</code>:</p>
 <pre><code>Arena.mapa &lt;- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)</code></pre>
-<p>Por último, observaremos el resultado gráficamente, dando como fruto un mapa de la zona en el que se observan las concentraciones de Arena. La siguiente función expresa <em>&quot;Genera un gráfico del objeto</em> <strong><em>Arena.mapa</em></strong> <em>(que es el resultado del kriging de los datos) y cuyo título sea</em> <strong><em>“CONTENIDO EN ARENAS”</em></strong> <em>.</em></p>
+<p>Por último, generaremos el mapa de <code>contenido en arena</code> con la función <code>plot()</code>:</p>
 <pre><code>plot(Arena.mapa, main= &quot;CONTENIDO EN ARENAS&quot;)</code></pre>
 </div>
 </div>

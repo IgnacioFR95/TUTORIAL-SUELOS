@@ -2,9 +2,9 @@
 title: '**TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS**'
 author: "Trabajo de fin de grado de Ignacio Fernández Ruiz"
 output:
-  word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
+  word_document: default
 ---
 
 <style>
@@ -30,16 +30,10 @@ ________________________________________________________________________________
 ## **ÍNDICE**
     
 #### [1.PREPARACIÓN DEL ENTORNO DE TRABAJO](#id1)
-
-
-    
 #### [2. CARGA DE LOS DATOS CRUDOS](#id2)
-
-
 #### [3. PREPARACIÓN DEL ENTORNO DE TRABAJO](#id3)
 ##### [3.1 Generación del mapa base](#id31)
 ##### [3.2 Adaptación de los datos al mapa base](#id32)
-   
 #### [4. NORMALIZACIÓN DE LAS VARIABLES](#id4)
 ##### [4.1 Metodología de normalización de variables](#id41)
 ##### [4.2 Ejemplo de normalización de variables](#id42)

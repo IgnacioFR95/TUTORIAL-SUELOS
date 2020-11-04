@@ -2,9 +2,9 @@
 title: '**TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS**'
 author: "Trabajo de fin de grado de Ignacio Fernández Ruiz"
 output:
+  word_document: default
   html_document: default
   pdf_document: default
-  word_document: default
 ---
 
 <style>
@@ -57,7 +57,8 @@ ___
 En este primer paso, comprobaremos si la versión de `R` está actualizada y cargaremos los paquetes necesarios para realizar los análisis.
 
 
-Con la siguiente función, el programa determina si nuestra versión de `R` es la `3.6.0` o superior, en caso de que la versión sea anterior se nos mostrará un mensaje informándonos de que debemos actualizarla
+Con la siguiente función, el programa determina si nuestra versión de `R` es la `3.6.0` o superior, en caso de que la versión sea anterior se nos mostrará un mensaje informándonos de que debemos actualizarla.
+
 ~~~
 if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee está desactualizada\nPor favor, instale la última versión\n##########")}
 ~~~
@@ -68,7 +69,6 @@ Con la siguiente función comprobamos si la versión de `RStudio` es igual o sup
 ~~~
 if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########")}
 ~~~
-
 
 En el siguiente paso, comprobaremos si los paquetes necesarios para la realización del tutorial están instalados y en caso contrario se instalarán automáticamente.
 
@@ -276,8 +276,8 @@ Para ilustrar cómo se generan los diferentes mapas edáficos, en este apartado 
 
 
 ##### |5.2.a| Cartografía de la variable "fosfatasa"<a name="id52a"></a>
-###### Autokriging de fosfatasa:
-Autokriging sin tendencia:
+Autokriging de fosfatasa:
+Sin tendencia:
 
 ~~~
 Autok.FOSF.ST <- autoKrige(log(FOSF) ~ 1, VariablesSuelo, pts1 )
@@ -289,13 +289,14 @@ Visualizamos como es la representación gráfica sin tendencia:
 plot(Autok.FOSF.ST)
 ~~~
 
-Autokriging con tendencia:
+Con tendencia:
 
 ~~~
 Autok.FOSF.CT <- autoKrige(log(FOSF) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
 Visualizamos como es la representación gráfica con tendencia:
+
 ~~~
 plot(Autok.FOSF.CT)
 ~~~
@@ -303,6 +304,7 @@ plot(Autok.FOSF.CT)
 ###### Kriging manual de fosfatasa:
 
 Primero, se debe generar una matriz donde exponer las semivarianzas de cada modelo. La siguiente línea de código produce una matriz de 2x5 y nombra las columnas y las filas con los nombres de los modelos y la tendencia respectivamente:
+
 ~~~
 MatrizFOSF <- matrix(NA,2,5)
 colnames(MatrizFOSF) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
@@ -336,6 +338,7 @@ El modelo que se ajuste mejor es el que tenga un valor de semivarianza menor. Co
 ~~~
 which((MatrizFOSF) == min(MatrizFOSF), arr.ind=TRUE)
 ~~~
+
 En este caso, el modelo gaussiano sin la utilización de la tendencia es el que más se aproxima a nuestra serie de datos, por lo tanto, se debe adaptar los valores de la variable a este modelo con la función `autofitvariogram()`. 
 
 
@@ -358,9 +361,9 @@ plot(FOSF.mapa, main= "FOSFATASA")
 
 ##### |5.2.b| Cartografía de la variable "contenido en arena"<a name="id52b"></a>
 
-###### Autokriging de Arena:
+Autokriging de Arena:
 
-Autokriging sin tendencia:
+Sin tendencia:
 
 ~~~
 Autok.Arena.ST <- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )
@@ -372,7 +375,7 @@ Visualizamos como será la representación gráfica sin tendencia:
 plot(Autok.Arena.ST)
 ~~~
 
-Autokriging con tendencia:
+Con tendencia:
 
 ~~~
 Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )

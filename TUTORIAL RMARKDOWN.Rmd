@@ -2,9 +2,9 @@
 title: '**TUTORIAL PARA ELABORACIÓN DE MAPAS DE PROPIEDADES EDÁFICAS**'
 author: "Trabajo de fin de grado de Ignacio Fernández Ruiz"
 output:
+  word_document: default
   pdf_document: default
   html_document: default
-  word_document: default
 ---
 
 <style>
@@ -48,7 +48,7 @@ ___
 
 ### |1| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id1"></a>
 
-En este primer paso, comprobaremos si la versión de `R` está actualizada y cargaremos los paquetes necesarios para realizar los análisis.
+En este primer paso, comprobamos si la versión de `R` está actualizada y cargamos los paquetes necesarios para realizar los análisis.
 
 
 Con la siguiente función, el programa determina si nuestra versión de `R` es la `3.6.0` o superior, en caso de que la versión sea anterior se nos mostrará un mensaje informándonos de que debemos actualizarla.
@@ -57,14 +57,14 @@ Con la siguiente función, el programa determina si nuestra versión de `R` es l
 if(getRversion() < "3.6.0") {stop("##########\nLa versión de R que posee está desactualizada\nPor favor, instale la última versión\n##########")}
 ~~~
 
-Con la siguiente función comprobamos si la versión de `RStudio` es igual o superior a la `1.0.1`. En caso contrario, el programa generará un mensaje informándonos de que tenemos una versión anterior de RStudio y que este programa debe actualizarse.
+Con la siguiente función comprobamos si la versión de `RStudio` es igual o superior a la `1.0.1`. En caso contrario, el programa genera un mensaje informando de que tenemos una versión anterior de RStudio y que este programa debe actualizarse.
 
 
 ~~~
 if(RStudio.Version()$version < "1.0.1"){stop("##########\nLa versión de RStudio que posee es antigua\nPor favor, instale la última versión\n##########")}
 ~~~
 
-En el siguiente paso, comprobaremos si los paquetes necesarios para la realización del tutorial están instalados y en caso contrario se instalarán automáticamente.
+En el siguiente paso, comprobamos si los paquetes necesarios para la realización del tutorial están instalados y, en caso contrario, se instalan automáticamente.
 
 ~~~
 PaquetesNecesarios <- c("lattice","sp","gstat","maptools","spatstat","raster","automap")
@@ -74,13 +74,13 @@ if(length(PaquetesNecesarios2) > 0){install.packages(PaquetesNecesarios2)}
 stopifnot(all(c(PaquetesNecesarios) %in% .packages(all.available = TRUE)))
 ~~~
 
-Tras comprobar que todos los paquetes están instalados correctamente, utilizaremos la función `rm()` para eliminarlos objetos que hemos utilizado para confirmar que los paquetes están instalados.
+Tras comprobar que todos los paquetes están instalados correctamente, utilizaramos la función `rm()`, que elimina los objetos no necesarios en el futuro.
 
 ~~~
 rm(PaquetesNecesarios, PaquetesNecesarios2, installed_packages)
 ~~~
 
-Por último, cargaremos las librerías de `R` que vamos a utilizar y que hemos descargado en el paso anterior.
+Por último, cargamos las librerías de `R` que vamos a utilizar y que hemos descargado en el paso anterior.
 
 
 ~~~
@@ -95,9 +95,9 @@ library(automap)
 
 ###  |2| CARGA DE LOS DATOS CRUDOS <a name="id2"></a>
 
-En este apartado, cargaremos el conjunto de datos brutos con los que vamos a trabajar, y los trataremos para eliminar todos los datos que no nos resulten útiles para el tutorial. En nuestro caso, hemos generado un archivo en formato `.txt` con los datos, pero existen otros formatos útiles como `.csv`o `.xls`.
+En este apartado, cargamos el conjunto de datos brutos con los que vamos a trabajar, y los tratamos para eliminar todos los datos que no nos resulten útiles para el tutorial. En nuestro caso, hemos generado un archivo en formato `.txt` con los datos, pero existen otros formatos útiles como `.csv`o `.xls`.
 
-Para leer los datos, usaremos la función `read.delim()`, indicaremos que los datos están separados por tabulaciones, que el símbolo decimal es la `,` y que nuestro archivo tiene encabezados. 
+Para leer los datos, usamos la función `read.delim()`, indicamos que los datos están separados por tabulaciones, que el símbolo decimal es la `,` y que nuestro archivo tiene encabezados. 
 
 ~~~
 VariablesSuelo <- read.delim("data/Orusco_suelos.txt", sep="\t", dec=",", header=T)
@@ -105,16 +105,16 @@ load("data/AerialRoot.community.corregido.Rdata")
 ~~~
 
 
-Para continuar trabajando, debemos homogeneizar y limpiar los datos originales o crudos. En este caso, los datos ya están muy limpios, pero eliminaremos aquellas variables con las que no se va a trabajar. ¡Importante! Nunca modificaremos los datos originales y siempre realizaremos una copia de seguridad.
+Para continuar trabajando, debemos homogenizar y limpiar los datos originales o crudos. En nuestro caso los datos ya están muy limpios, pero eliminamos aquellas variables con las que no se va a trabajar. ¡Importante! Nunca se modifican los datos originales y siempre se realiza una copia de seguridad.
 
 
-En el objeto `VariablesSuelo`, renombramos el nombre de de la columna 11 y cambiamos `COD` por `codigo_muestra`
+En el objeto `VariablesSuelo`, renombramos la columna 11 y cambiamos `COD` por `codigo_muestra`
 
 ~~~
 colnames(VariablesSuelo)[11] <- "codigo_muestra"
 ~~~
 
-A continuación, eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así el data frame:
+A continuación, eliminamos las columnas que no nos interesan para este tutorial en concreto, simplificando así el `data frame`:
 
 ~~~
 VariablesSuelo$Fecha <- NULL
@@ -126,9 +126,9 @@ VariablesSuelo$Marco <- NULL
 VariablesSuelo$ID_GPS <- NULL
 ~~~
 
-Posteriormente, vamos a transformar los datos al tipo de datos `SpatialPointDataFrame`.Para ello, asignaremos al objeto un nuevo sistema de coordenadas y limitaremos el número de decimales que puedan tener los datos a 10.
+Posteriormente, vamos a transformar los datos al tipo `SpatialPointDataFrame`. Para ello, asignamos al objeto un nuevo sistema de coordenadas y limitamos el número de decimales que pueden tener los datos a 10.
 
-Como estamos trabajando localmente, no necesitamos utilizar coordenadas globales. Dentro del  objeto `VariablesSuelo` vamos a utilizar unas coordenadas que son relativas al sitio de estudio. Las columnas con los valores de las coordenadas locales se llaman `Xlocal` y `Ylocal`. Es posible que otros `data sets` contengan coordenadas globales, no es ningún problema, simplemente depende del trabajo que estés realizando.
+Como estamos trabajando localmente, no necesitamos utilizar coordenadas globales. Dentro del  objeto `VariablesSuelo` vamos a utilizar unas coordenadas que son relativas al sitio de estudio. Las columnas con los valores de las coordenadas locales se llaman `Xlocal` y `Ylocal`. Es posible que otros `data sets` contengan coordenadas globales, no es ningún problema, simplemente depende del trabajo que se esté realizando.
 
 La función `coordinates()` del paquete `sp` nos permite asignar coordenadas a un `data.frame` transformándolo en `SpatialPointDataFrame`. Para ello tenemos que indicarle qué columnas son las que queremos que utilice como coordenadas, en este caso se llaman `Xlocal` y `Ylocal`. 
 
@@ -147,13 +147,14 @@ Por último, limitamos el número de decimales de los datos a 10, para evitar ci
 ~~~
 options(digits=10)
 ~~~
+
 ### |3| PREPARACIÓN DEL ENTORNO DE TRABAJO<a name="id3"></a>
 
-En este apartado, generaremos un mapa al que denominaremos "mapa base" y sobre el cual, vamos a dibujar el mapa de cada variable posteriormente. Para ello, necesitamos indicar el tamaño del área de estudio o `plot`, las coordenadas donde se localiza y el tamaño de malla que utilizaremos para el posterior análisis mediante Kriging. 
+En este apartado generamos un mapa al que denominamos "mapa base", y sobre él vamos a dibujar cada variable posteriormente. Para ello, necesitamos indicar el tamaño del área de estudio o `plot`, las coordenadas donde se localiza y el tamaño de malla que utilizamos para el posterior análisis mediante Kriging. 
 
-En primer lugar vamos a crear un rectángulo con las dimensiones del área de estudio. En nuestro caso, hacemos un rectángulo porque la parcela tiene esa forma, pero el proceso sería similar para áreas con otras geometrías. Para definir el rectángulo usamos las cuatro esquinas de la parcela. 
+En primer lugar, vamos a crear un rectángulo con las dimensiones del área de estudio. En nuestro caso, hacemos un rectángulo porque la parcela tiene esa forma, pero el proceso sería similar para áreas con otras geometrías. Para definir el rectángulo usamos las cuatro esquinas de la parcela. 
 
-Ya tenemos cargada una matriz denominada `esquinas.parcela` que contiene esos cuatro puntos. Los nombres de las columnas que contienen las coordnadas X y Y son `Xlocal` y `Ylocal`. Utilizaremos la función `Polygon()` para crear el polígono que representa nuestra parcela.
+Ya tenemos cargada una matriz denominada `esquinas.parcela` que contiene esos cuatro puntos. Los nombres de las columnas que contienen las coordenadas X e Y son `Xlocal` e `Ylocal`. Utilizamos la función `Polygon()` para crear el polígono que representa nuestra parcela.
 
 ~~~
 p1 <- Polygon(esquinas.parcela[,1:2])
@@ -173,26 +174,26 @@ class(sps1)
 ~~~
 
 
-Tras crear el polígono que representa nuestra parcela, crearemos una rejilla de 0.05 x 0.05 m. Para ello, utilizaremos la función `spsample()` y definiremos el tamaño de la celda o rejilla con el argumento `cellsize`. Además eliminaremos todos los puntos de muestreo que se han quedado fuera de los límites del rectángulo.
+Tras crear el polígono que representa nuestra parcela, creamos una rejilla de 0.05 x 0.05 m, utilizando la función `spsample()` y definiendo el tamaño de la celda o rejilla con el argumento `cellsize`. Además eliminamos todos los puntos de muestreo que se han quedado fuera de los límites del rectángulo.
 
 ~~~
 grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05, 0.05))
 pts1 <- as.data.frame(grid[!is.na(over(grid, sps1,))])
 ~~~
-Ya tenemos la malla o rejilla lista. En el siguiente paso modificaremos el nombre de las coordenadas `X` e `Y` para indicar que son coordenadas locales.
+Ya tenemos la malla o rejilla lista. En el siguiente paso modificamos el nombre de las coordenadas `X` e `Y` para indicar que son coordenadas locales.
 
 ~~~
 names(pts1) <- c("Xlocal", "Ylocal")
 ~~~
 
-A continuación indicamos con la función `coordinates()` que esas dos columnas son columnas de coordenadas y transformamos el objeto pts1 a un objeto de clase `SpatialPoints`
+A continuación indicamos con la función `coordinates()` que esas dos columnas son columnas de coordenadas y transformamos el objeto `pts1` en un objeto de clase `SpatialPoints`
 
 ~~~
 coordinates(pts1) <- c("Xlocal", "Ylocal")
 pts1 <- SpatialPixelsDataFrame(as(pts1, "SpatialPoints"), data=as(pts1, "data.frame"), tolerance=0.077)
 ~~~
 
-Podemos observar cómo quedaría gráficamente el objeto `pts1` con la función `plot()`
+Podemos observar la apariencia gráfica del objeto `pts1` con la función `plot()`
 
 ~~~
 plot(pts1)
@@ -206,10 +207,12 @@ grid = spsample(VariablesSuelo, type = "regular", cellsize = c(0.05,0.05), proj4
 
 ### |4| NORMALIZACIÓN DE LAS VARIABLES<a name="id4"></a>
 #### |4.1| Metodología de normalización de variables<a name="id41"></a>
-Una vez tenemos preparado el polígono y la rejilla donde se "dibujarán" los mapas, tenemos que hacer una exploración de los datos de las variables para ver si poseen una distribución normal, puesto que el Kriging asume que los datos siguen dicha distribución. Para ello, realizaremos diferentes análisis estadísticos (histograma, gráfico cuantil-cuantil y Test de Shapiro) para observar cómo se adaptan los datos de cada variable a una distribución normal. En aquellos casos en que los datos no sigan dicha distribución, realizaremos transformaciones para ajustar nuestros datos a una distribución normal. 
+
+Una vez tenemos preparado el polígono y la rejilla, tenemos que hacer una exploración de los datos de las variables para ver si poseen una distribución normal, puesto que el Kriging asume que los datos siguen dicha distribución. Para ello, realizamos diferentes análisis estadísticos (histograma, gráfico cuantil-cuantil y Test de Shapiro) para observar cómo se adaptan los datos de cada variable a una distribución normal. En aquellos casos en que los datos no sigan dicha distribución, los transformamos para ajustar nuestros datos a una distribución normal. 
 
 #### |4.2| Ejemplo de normalización de variables:<a name="id42"></a>
-Para mostrar cómo sería el proceso de normalización de las diferentes variables, pondremos como ejemplo las variables `fosfatasa` y `pH`. En estos ejemplos, estudiaremos cómo es su histograma (mediante la función `hist()`), su gráfico cuantil-cuantil (mediante la función `qqnorm()`) y qué p-valor ofrece el test de Shapiro (mediante la función `shapiro.test()`). Si los valores no poseen una distribución normal, procederemos a realizar transformaciones para adaptarlos.
+
+Para mostrar cómo es el proceso de normalización de las diferentes variables, vamos a poner como ejemplo las variables `fosfatasa` y `pH`. En estos ejemplos, estudiamos cómo es su histograma (mediante la función `hist()`), su gráfico cuantil-cuantil (mediante la función `qqnorm()`) y qué p-valor ofrece el test de Shapiro (mediante la función `shapiro.test()`). Si los valores no poseen una distribución normal, procedemos a realizar transformaciones para adaptarlos.
 
 ##### |4.2.a| Normalización de la variable "fosfatasa"<a name="id42a"></a>
 Comencemos con la variable `fosfatasa`:
@@ -220,17 +223,17 @@ qqnorm(VariablesSuelo$FOSF)
 shapiro.test((VariablesSuelo$FOSF))
 ~~~
 
-Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. Por lo tanto, no es válida y debemos proceder a normalizarla. Probaremos realizando el logaritmo de la variable:
+Esta variable no muestra un patrón normalizado y su p-valor es muy bajo. Por lo tanto, no es válida y debemos proceder a normalizarla. Probemos realizando el logaritmo de la variable:
 
 ~~~
 hist(log(VariablesSuelo$FOSF)) 
 qqnorm(log(VariablesSuelo$FOSF))
 shapiro.test(log(VariablesSuelo$FOSF)) 
 ~~~
-Ahora sí, la variable `fosfatasa` muestra un patrón normalizado y su p-valor es aceptable. Por lo tanto, será la que utilizaremos para realizar el Kriging.
+Ahora sí, la variable `fosfatasa` muestra un patrón normalizado y su p-valor es aceptable. Por lo tanto, será la que vamos a utilizar para realizar el Kriging.
 
 ##### |4.2.b| Normalización de la variable "contenido en arena"<a name="id42b"></a>
-Ahora, realizaremos las mismas comprobaciones, pero con la variable relacionada con el `contenido de arena` en el suelo:
+Ahora, realizamos las mismas comprobaciones, pero con la variable relacionada con el `contenido de arena` en el suelo:
 
 ~~~
 hist(VariablesSuelo$Arena)
@@ -238,11 +241,11 @@ qqnorm(VariablesSuelo$Arena)
 shapiro.test((VariablesSuelo$Arena))
 ~~~
 
-La variable `arena`, muestra un patrón normalizado y su p-valor es aceptable sin necesidad de realizar la normalización. Por lo tanto, utilizaremos sus valores originales para realizar el Kriging.
+La variable `arena`, muestra un patrón normalizado y su p-valor es aceptable sin necesidad de realizar la normalización. Por lo tanto, utilizamos sus valores originales para realizar el Kriging.
 
 ### |5| GENERACIÓN DE CARTOGRAFÍA EDÁFICA <a name="id5"></a>
 
-En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado Kriging. Esta  técnica de interpolación, utiliza el modelo de variograma para poder estimar  el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
+En esta última fase, vamos a realizar los mapas de cada una de las variables utilizando el método de estimación geoestadístico denominado Kriging. Esta  técnica de interpolación, utiliza el modelo de variograma para poder estimar el resto de puntos intermedios donde no se tiene un dato real recogido directamente del campo.
 
 #### |5.1| Metodología de cartografía edáfica<a name="id51"></a>
 Existen dos formas para la realización de cartografía edáfica utilizando el método de Kriging en `R` : 
@@ -251,7 +254,7 @@ Por un lado, se puede utilizar la función `autokriging()`, donde el propio prog
 La otra forma de realizar el Kriging, es ejecutarlo de forma manual. Este método exige que el usuario evalúe qué modelo matemático es el adecuado y se genera el Kriging partiendo del modelo elegido y posteriormente, se visualiza cómo quedaría gráficamente mediante la función `plot()`.
 
  
-Para conocer qué modelo matemático es el más adecuado para la variable que se quiere mapear, utilizaremos la función `autofitVariogram()`.  En ella, determinaremos qué modelo matemático de los cinco disponibles vamos a utilizar (modelo exponencial `Exp`, modelo esférico `Sph`, modelo gaussiano `Gau`, modelo lineal `Lin` o la parametrización de Stein `Ste`) y si lo haremos teniendo en cuenta la tendencia `xlocal` o no (representada en la función con un `1`.
+Para conocer qué modelo matemático es el más adecuado para la variable que se quiere mapear, utilizamos la función `autofitVariogram()`. En ella, determinamos qué modelo matemático de los cinco disponibles vamos a utilizar (modelo exponencial `Exp`, modelo esférico `Sph`, modelo gaussiano `Gau`, modelo lineal `Lin` o la parametrización de Stein `Ste`) y si lo hacemos teniendo en cuenta la tendencia `xlocal` o no (representada en la función con un `1`.
 
 
 Ejemplo:
@@ -260,10 +263,10 @@ Ejemplo:
 autofitVariogram(log(GLUC) ~ 1, VariablesSuelo, model = c("Exp"))$sserr
 ~~~
 
-Esta línea de código informa cómo se adapta el variograma de datos de la glucosidasa `GLUC` al modelo exponencial `Exp` sin ninguna tendencia `1`. La función, nos dará como respuesta un valor de semivarianza. Cuanto más cercano a 0 sea este valor, indicará un mejor ajuste al modelo seleccionado.
+Esta línea de código informa cómo se adapta el variograma de datos de la glucosidasa `GLUC` al modelo exponencial `Exp` sin ninguna tendencia `1`. La función, nos da como respuesta un valor de semivarianza. Cuanto más cercano a 0 sea este valor, indica un mejor ajuste al modelo seleccionado.
 
 
-Para procesar todos los modelos a la vez y ahorrar tiempo, vamos a crear una matriz vacía donde poner los resultados de semivarianza de los 5 modelos estudiados con y sin tendencia. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el Kriging.  
+Para procesar todos los modelos a la vez y ahorrar tiempo, creamos una matriz vacía donde poner los resultados de semivarianza de los 5 modelos estudiados con y sin tendencia. De esta forma, podremos observar qué valor de semivarianza es menor (es decir, a qué modelo se ajustan mejor los datos) y utilizar ese modelo matemático para producir la cartografía mediante el Kriging.  
 
 #### |5.2| Ejemplos de generación de mapas<a name="id52"></a>
 Para ilustrar cómo se generan los diferentes mapas edáficos, en este apartado se realizan dos mapas de las variables fosfatasa `FOSF` y contenido en arena `Arena`. A continuación se muestra cómo es el proceso de creación de los mapas usando tanto el autokriging como el Kriging manual.
@@ -346,7 +349,7 @@ Con nuestros datos ajustados al modelo matemático idóneo, procedemos a realiza
 FOSF.mapa <- krige(log(FOSF) ~  1, VariablesSuelo, pts1, v.fitFOSFgauST)
 ~~~
 
-Por último, generaremos el mapa de fosfatasa con la función `plot()`: 
+Por último, generamos el mapa de fosfatasa con la función `plot()`: 
 
 ~~~
 plot(FOSF.mapa, main= "FOSFATASA")
@@ -363,7 +366,7 @@ Sin tendencia:
 Autok.Arena.ST <- autoKrige((Arena) ~ 1, VariablesSuelo, pts1 )
 ~~~
 
-Visualizamos como será la representación gráfica sin tendencia:
+Visualizamos la representación gráfica sin tendencia:
 
 ~~~
 plot(Autok.Arena.ST)
@@ -375,7 +378,7 @@ Con tendencia:
 Autok.Arena.CT <- autoKrige((Arena) ~ Xlocal, VariablesSuelo, new_data=pts1 )
 ~~~
 
-Visualizamos como seráa la representación gráfica con tendencia:
+Visualizamos la representación gráfica con tendencia:
 
 ~~~
 plot(Autok.Arena.CT)
@@ -391,7 +394,7 @@ colnames(MatrizArena) <- c("Exponencial","Esferico","Gausiano","Lineal","Ste")
 rownames(MatrizArena) <- c("Sin tendencia", "Con tendencia")
 ~~~
 
-Posteriormente, se rellena la matriz con el valor producido del ajuste de la variable a cada modelo. Es imprescindible asegurarse de introducir los datos en el mismo orden que hemos facilitado a la matriz en el anterior paso:
+Posteriormente, se rellena la matriz con el valor producido del ajuste de la variable a cada modelo. Es imprescindible asegurarse de introducir los datos en el mismo orden que hemos facilitado a la matriz en el paso anterior:
 
 Sin tendencia (se debe escribir un `1`, para indicar que no hay tendencia):
 
@@ -432,7 +435,7 @@ Con nuestros datos ajustados al modelo matemático idóneo, procedemos a realiza
 Arena.mapa <- krige((Arena) ~  1, VariablesSuelo, pts1, v.fitArenasteST)
 ~~~
 
-Por último, generaremos el mapa de `contenido en arena` con la función `plot()`:
+Por último, generamos el mapa de `contenido en arena` con la función `plot()`:
 
 ~~~
 plot(Arena.mapa, main= "CONTENIDO EN ARENAS")

@@ -28,7 +28,3 @@ Se recomienda el uso del aplicativo RStudio para la mejora de la interfaz del pr
 Se recomienda emparejar el proyecto con un repositorio web como GITHUB. De esta forma podremos mantener un óptimo control de versiones y una copia de seguridad. 
 Puede descargar GIT gratuitamente desde su página web oficial [Descarga GIT] <https://git-scm.com/downloads>.
 Puede crear una cuenta en GITHUB siguiendo el siguiente enlace [Regístrate en GITHUB] <https://github.com>
-
-
-
-

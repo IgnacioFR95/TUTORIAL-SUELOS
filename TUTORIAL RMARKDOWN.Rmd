@@ -440,4 +440,3 @@ Por último, generamos el mapa de `contenido en arena` con la función `plot()`:
 ~~~
 plot(Arena.mapa, main= "CONTENIDO EN ARENAS")
 ~~~
-

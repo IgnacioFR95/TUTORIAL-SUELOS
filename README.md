@@ -10,8 +10,6 @@ output: html_document
 
 Tutorial sobre cartografia edáfica realizado para el Trabajo de Fin de Grado de **Ignacio Fernández Ruiz** de la carrera de Ciencias Ambientales de la Universidad Rey Juan Carlos, dirigido por los investigadores **Julia Chacón Labella** y **Marcelino de la Cruz Rot**.
 
-Este tutorial será una explicación paso a paso para la realización de mapas de diferentes variables edáficas con los datos recogidos en la tesis doctoral de la investigadora y coautora de este TFG Julia Chacón Labella. 
-
 El tutorial sigue una metodologÍa totalmente reproducible, lo que permite replicar todo el trabajo recogido en el manual de principio a fin (incluídas todas las figuras, gráficas y tablas). A su vez, las líneas de código expuestas permiten la extrapolación para su uso en otras áreas o variables, reutilizando la mayor parte de los comandos y funciones del tutorial.
 
 A su vez, se dará una extensa explicación de cada uno de los pasos realizados, así como una breve explicación de qué función hace cada comando utilizado. Facilitando en gran medida el aprendizaje y la comprensión.
